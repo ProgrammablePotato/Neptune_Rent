@@ -1,3 +1,4 @@
+import { AuthService } from './auth.service';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
@@ -22,6 +23,10 @@ import { ServersComponent } from './servers/servers.component';
 import { ServicesComponent } from './services/services.component';
 import { UserComponent } from './user/user.component';
 import { UserEditorComponent } from './user-editor/user-editor.component';
+import { FooterComponent } from './footer/footer.component';
+import { HttpClient, provideHttpClient } from '@angular/common/http';
+import { environment } from './environments/environments';
+import { AngularFireModule } from '@angular/fire/compat';
 
 @NgModule({
   declarations: [
@@ -44,13 +49,17 @@ import { UserEditorComponent } from './user-editor/user-editor.component';
     ServersComponent,
     ServicesComponent,
     UserComponent,
-    UserEditorComponent
+    UserEditorComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    // AngularFireModule.initializeApp(environment.firebaseConfig),
+    // AngularFireAuthModule,
+    // FormsModule,
   ],
-  providers: [],
+  providers: [provideHttpClient(),AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
