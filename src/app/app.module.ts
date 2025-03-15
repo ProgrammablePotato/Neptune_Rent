@@ -24,7 +24,6 @@ import { ServicesComponent } from './services/services.component';
 import { UserComponent } from './user/user.component';
 import { UserEditorComponent } from './user-editor/user-editor.component';
 import { FooterComponent } from './footer/footer.component';
-import { HttpClient, provideHttpClient } from '@angular/common/http';
 import { environment } from './environments/environments';
 import { AngularFireModule } from '@angular/fire/compat';
 
@@ -55,9 +54,9 @@ import { AngularFireModule } from '@angular/fire/compat';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    // AngularFireModule.initializeApp(environment.firebaseConfig),
-    // AngularFireAuthModule,
-    // FormsModule,
+    AngularFireModule.initializeApp(environment.firebaseConfig),
+    AngularFireAuthModule,
+    FormsModule,
   ],
   providers: [provideHttpClient(),AuthService],
   bootstrap: [AppComponent]
