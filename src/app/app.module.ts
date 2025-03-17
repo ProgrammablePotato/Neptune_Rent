@@ -28,6 +28,7 @@ import { environment } from './environments/environments';
 import { AngularFireModule } from '@angular/fire/compat';
 import { FormsModule } from '@angular/forms';
 import { provideHttpClient } from '@angular/common/http';
+import { CookieService } from 'ngx-cookie-service';
 
 @NgModule({
   declarations: [
@@ -60,7 +61,7 @@ import { provideHttpClient } from '@angular/common/http';
     AngularFireModule,
     FormsModule,
   ],
-  providers: [provideHttpClient(),AuthService],
+  providers: [provideHttpClient(),AuthService, CookieService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
