@@ -51,7 +51,14 @@ export class BaseService {
       }
     });
   }
-  
+
+  getProductByCategoryAndId(cat: string, id: number) {
+    return this.getProductsByCategory(cat).then((prods) => prods.find((prod) => prod.id === id));
+  }
+
+  generateRandomId(){
+    return Math.random().toString(36).substring(2, 10) + Math.random().toString(36).substring(2, 10);
+  }
 
   getUser(id:number) {
     

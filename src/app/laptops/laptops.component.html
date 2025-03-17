@@ -1,1 +1,58 @@
-<p>laptops works!</p>
+<div id="animation-carousel" class="relative w-full" data-carousel="static">
+    <div class="relative h-56 overflow-hidden rounded-lg md:h-96">
+        <div *ngFor="let techNews of laptopNews; let i = index" class="duration-100 ease-linear" [attr.data-carousel-item]="i === 0 ? 'active' : null">
+            <a [href]="techNews.url" target="_blank">
+                <img *ngIf="techNews.urlToImage" [src]="techNews.urlToImage" class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="{{techNews.title}}">
+            </a>
+            <a [href]="techNews.url" target="_blank">
+                <div class="absolute bottom-4 left-4 text-white bg-black/50 p-2 rounded-lg">
+                    <h3 class="text-xl font-semibold">{{ techNews.title }}</h3>
+                </div>
+            </a>
+        </div>
+    </div>
+
+    <button type="button" class="absolute top-0 start-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none" (click)="prevSlide()" data-carousel-prev>
+        <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
+            <svg class="w-4 h-4 text-white dark:text-gray-800 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 1 1 5l4 4"/>
+            </svg>
+            <span class="sr-only">Previous</span>
+        </span>
+    </button>
+    <button type="button" class="absolute top-0 end-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none" (click)="nextSlide()" data-carousel-next>
+        <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
+            <svg class="w-4 h-4 text-white dark:text-gray-800 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
+            </svg>
+            <span class="sr-only">Next</span>
+        </span>
+    </button>
+</div>
+
+
+<div class="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 rounded-lg xl:max-w-[90vw] xl:ml-auto xl:mr-auto 2xl:max-w-[80vw]">
+        
+    <div class="p-5 m-3 rounded-lg dark:bg-gray-800 dark:border-gray-700 " *ngFor="let laptop of laptops">
+        <div *ngIf="!laptop.image" class="h-40 w-full inline-block neptune-product-image" [style]="{'background-image':'url(cat.jfif)'}">
+        </div>
+        <div *ngIf="laptop.image" class="h-40 w-full inline-block neptune-product-image" [style]="{'background-image':'url('+laptop.image+')'}">
+        </div>
+            <h5 class="mb-2 text-1xl font-bold tracking-tight text-gray-900 dark:text-white">{{laptop.name}}</h5>
+        <div>
+            <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">{{laptop.description}}</p>
+        </div>
+        <div>
+            <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">{{laptop.price}}$</p>
+        </div>
+        <a routerLink="/details/{{laptop.category}}/{{laptop.id}}" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+            Tovább
+                <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
+            </svg>
+        </a>
+    </div>
+</div>
+
+<!-- {{accessorys|json}} -->
+

@@ -1,1 +1,39 @@
-<p>product-details works!</p>
+<div *ngIf="loading" class="inline-block ml-auto mr-auto bg-orange-700">Betöltés...</div>
+
+<div *ngIf="error" class="error-message">{{ error }}</div>
+
+<!-- <div *ngIf="!loading && product">
+    <h2>{{ product.name }}</h2>
+    <p><strong>Price:</strong> ${{ product.price }}</p>
+    <p><strong>Description:</strong> {{ product.description }}</p>
+
+    <div *ngIf="product.imageUrl">
+        <img [src]="product.imageUrl" alt="{{ product.name }}" />
+    </div>
+</div> -->
+
+
+<div *ngIf="!loading && product" class="dark:bg-gray-800 flex mt-10 mr-10 ml-10 rounded-xl">
+    <div class="flex-1 m-2 relative">
+        <h1 class="text-white m-2 text-5xl mb-5">{{ product.name }}</h1>
+        <hr>
+        <p class="text-white text-xl m-2"><span class="font-bold">Price: </span>${{ product.price }}</p>
+        <p class="text-white m-2 text-xl dark:bg-slate-700 rounded-lg p-5">{{ product.description }}</p>
+        <div class="absolute bottom-0 w-full flex">
+            <button class="text-xl text-white dark:bg-green-800 p-5 rounded-lg m-2 w-fit popup"><p class="block float-left">Add to cart</p>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 block float-right ml-2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25 5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" />
+                </svg>
+                <span class="popuptext " id="myPopup">Value must be between 1 and 99!</span>
+            </button>
+            <div>
+                <input id="cartAmount" type="number" value="1" max="99" min="1" class="text-xl text-white dark:bg-green-600 p-5 rounded-lg m-2 w-1/10 text-center" />
+                
+            </div>
+        </div>
+    </div>
+    <div class="flex-1 m-5">
+        <img [src]="product.image" alt="" onerror="src='cat.jfif'" class="float-right w-full rounded-lg">
+    </div>
+</div>
+
