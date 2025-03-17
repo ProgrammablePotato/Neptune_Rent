@@ -1,0 +1,63 @@
+{
+    "accessories": [
+      { "category": "accessories", "brand":"DELL", "description": "Ergonomic wireless mouse with adjustable DPI.", "id": 0, "name": "Wireless Mouse", "price": 25.99 },
+      { "category": "accessories", "brand":"HP", "description": "RGB backlit mechanical keyboard with blue switches.", "id": 1, "name": "Mechanical Keyboard", "price": 79.99 },
+      { "category": "accessories", "brand":"DELL", "description": "Multi-port USB-C hub with HDMI and Ethernet.", "id": 2, "name": "USB-C Hub", "price": 39.99 },
+      { "category": "accessories", "brand":"HP", "description": "Adjustable aluminum laptop stand for better ergonomics.", "id": 3, "name": "Laptop Stand", "price": 29.99 },
+      { "category": "accessories", "brand":"DELL", "description": "Over-ear noise cancelling headphones with Bluetooth.", "id": 4, "name": "Noise Cancelling Headphones", "price": 199.99 },
+      { "category": "accessories", "brand":"HP", "description": "Portable external SSD with 1TB storage.", "id": 5, "name": "External SSD", "price": 129.99 },
+      { "category": "accessories", "brand":"DELL", "description": "Wireless charging pad for smartphones and accessories.", "id": 6, "name": "Wireless Charger", "price": 49.99 },
+      { "category": "accessories", "brand":"HP", "description": "1080p HD webcam with built-in microphone.", "id": 7, "name": "HD Webcam", "price": 59.99 },
+      { "category": "accessories", "brand":"DELL", "description": "Ergonomic office chair with lumbar support.", "id": 8, "name": "Office Chair", "price": 299.99 },
+      { "category": "accessories", "brand":"HP", "description": "USB-powered LED desk lamp with adjustable brightness.", "id": 9, "name": "LED Desk Lamp", "price": 19.99 },
+      { "category": "accessories", "brand":"DELL", "description": "Noise-isolating in-ear earphones with mic.", "id": 10, "name": "In-Ear Earphones", "price": 29.99 },
+      { "category": "accessories", "brand":"HP", "description": "Gaming headset with surround sound and noise cancellation.", "id": 11, "name": "Gaming Headset", "price": 89.99 },
+      { "category": "accessories", "brand":"DELL", "description": "Multi-device Bluetooth keyboard for tablets and laptops.", "id": 12, "name": "Bluetooth Keyboard", "price": 69.99 },
+      { "category": "accessories", "brand":"HP", "description": "USB-powered cooling pad for laptops.", "id": 13, "name": "Laptop Cooling Pad", "price": 34.99 },
+      { "category": "accessories", "brand":"DELL", "description": "Smartwatch with heart rate and activity tracking.", "id": 14, "name": "Smartwatch", "price": 149.99 }
+    ],
+    "laptops": [
+      { "category": "laptops", "brand":"Asus", "description": "High-performance gaming laptop with RTX 3060.", "id": 0, "image": "laptop.jpg", "name": "Gaming Laptop", "price": 1499.99 },
+      { "category": "laptops", "brand":"HP", "description": "Slim and lightweight ultrabook with Intel i7.", "id": 1, "image": "laptop.webp", "name": "Ultrabook Laptop", "price": 999.99 },
+      { "category": "laptops", "brand":"Asus", "description": "Versatile 2-in-1 laptop with touch screen.", "id": 2, "image": "laptop.jfif", "name": "2-in-1 Convertible Laptop", "price": 849.99 },
+      { "category": "laptops", "brand":"HP", "description": "Reliable business laptop with extended battery life.", "id": 3, "image": "images-1.webp", "name": "Business Laptop", "price": 1299.99 },
+      { "category": "laptops", "brand":"Asus", "description": "Affordable laptop with essential features for students.", "id": 4, "image": "student-laptop.jpg", "name": "Student Laptop", "price": 499.99 },
+      { "category": "laptops", "brand":"HP", "description": "Professional-grade video editing laptop with high-end GPU.", "id": 5, "image": "video-editing-laptop.jpg", "name": "Video Editing Laptop", "price": 1799.99 },
+      { "category": "laptops", "brand":"Asus", "description": "Ultra-thin laptop with OLED display for content creators.", "id": 6, "image": "creator-laptop.jpg", "name": "Creator Laptop", "price": 2199.99 },
+      { "category": "laptops", "brand":"HP", "description": "Durable military-grade laptop for extreme conditions.", "id": 7, "image": "rugged-laptop.jpg", "name": "Rugged Laptop", "price": 2499.99 },
+      { "category": "laptops", "brand":"Asus", "description": "Lightweight Chromebook for web-based applications.", "id": 8, "image": "chromebook.jpg", "name": "Chromebook", "price": 399.99 },
+      { "category": "laptops", "brand":"HP", "description": "Convertible laptop with detachable keyboard.", "id": 9, "image": "detachable-laptop.jpg", "name": "Detachable Laptop", "price": 899.99 },
+      { "category": "laptops", "brand":"Asus", "description": "AI-powered laptop with neural processing unit.", "id": 10, "image": "ai-laptop.jpg", "name": "AI Laptop", "price": 1999.99 },
+      { "category": "laptops", "brand":"HP", "description": "Long battery life travel laptop with LTE connectivity.", "id": 11, "image": "travel-laptop.jpg", "name": "Travel Laptop", "price": 1199.99 },
+      { "category": "laptops", "brand":"Asus", "description": "Ultra-portable netbook with basic computing power.", "id": 12, "image": "netbook.jpg", "name": "Netbook", "price": 299.99 },
+      { "category": "laptops", "brand":"HP", "description": "Developer laptop with Linux and powerful hardware.", "id": 13, "image": "dev-laptop.jpg", "name": "Developer Laptop", "price": 1599.99 },
+      { "category": "laptops", "brand":"Asus", "description": "Secure laptop with biometric authentication.", "id": 14, "image": "secure-laptop.jpg", "name": "Secure Laptop", "price": 1899.99 }
+    ],
+    "pcs": [
+      { "category": "pcs", "brand":"AMD", "description": "High-end gaming PC with RTX 3080 and Ryzen 9.", "id": 0, "name": "Gaming PC", "price": 1799.99 },
+      { "category": "pcs", "brand":"HP", "description": "Powerful workstation PC for professional use.", "id": 1, "name": "Workstation PC", "price": 2499.99 },
+      { "category": "pcs", "brand":"AMD", "description": "Compact mini PC with Intel i5 and 8GB RAM.", "id": 2, "name": "Mini PC", "price": 599.99 },
+      { "category": "pcs", "brand":"HP", "description": "All-in-one PC with 27-inch 4K display.", "id": 3, "name": "All-in-One PC", "price": 1099.99 },
+      { "category": "pcs", "brand":"AMD", "description": "Affordable desktop PC for everyday tasks.", "id": 4, "name": "Budget PC", "price": 399.99 },
+      { "category": "pcs", "brand":"HP", "description": "Silent workstation PC with passive cooling.", "id": 5, "name": "Silent Workstation", "price": 1999.99 },
+      { "category": "pcs", "brand":"AMD", "description": "VR-ready gaming PC with top-tier performance.", "id": 6, "name": "VR Gaming PC", "price": 2299.99 },
+      { "category": "pcs", "brand":"HP", "description": "Custom-built enthusiast PC with water cooling.", "id": 7, "name": "Enthusiast PC", "price": 2799.99 },
+      { "category": "pcs", "brand":"AMD", "description": "Ultra-small form factor PC with high performance.", "id": 8, "name": "Compact Power PC", "price": 899.99 },
+      { "category": "pcs", "brand":"HP", "description": "High-speed rendering workstation for professionals.", "id": 9, "name": "Rendering Workstation", "price": 3599.99 }
+    ],
+    "servers": [
+      { "category": "servers", "brand":"HPE", "description": "High-performance rack server with dual Xeon CPUs.", "id": 0, "name": "Rack Server", "price": 2999.99 },
+      { "category": "servers", "brand":"HPE", "description": "Reliable tower server with RAID storage.", "id": 1, "name": "Tower Server", "price": 1999.99 },
+      { "category": "servers", "brand":"HPE", "description": "Scalable blade server for data centers.", "id": 2, "name": "Blade Server", "price": 3999.99 },
+      { "category": "servers", "brand":"DELL", "description": "Compact home server for personal use.", "id": 3, "name": "Home Server", "price": 499.99 },
+      { "category": "servers", "brand":"DELL", "description": "Virtual cloud server with flexible resources.", "id": 4, "name": "Cloud Server", "price": 149.99 },
+      { "category": "servers", "brand":"Synology", "description": "High-capacity NAS server for secure storage.", "id": 5, "name": "NAS Server", "price": 1299.99 },
+      { "category": "servers", "brand":"Cisco", "description": "Edge computing server for IoT applications.", "id": 6, "name": "Edge Server", "price": 2499.99 }
+    ],
+    "services": [
+      { "category": "services", "brand":"NeptuneRent", "description": "Comprehensive IT support for businesses.", "id": 0, "name": "IT Support Service", "price": 99.99 },
+      { "category": "services", "brand":"NeptuneRent", "description": "Reliable cloud hosting services with 99.9% uptime.", "id": 1, "name": "Cloud Hosting Service", "price": 49.99 },
+      { "category": "services", "brand":"NeptuneRent", "description": "Secure data backup solutions for critical data.", "id": 2, "name": "Data Backup Service", "price": 29.99 },
+      { "category": "services", "brand":"NeptuneRent", "description": "Professional network setup and configuration.", "id": 3, "name": "Network Setup Service", "price": 199.99 },
+      { "category": "services", "brand":"NeptuneRent", "description": "Advanced cybersecurity services to protect your business.", "id": 4, "name": "Cybersecurity Service", "price": 149.99 }]
+}

@@ -6,6 +6,8 @@ import { map, Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class BaseService {
+  currentPage = "/home"
 
+  
 
 }
