@@ -21,9 +21,9 @@ app.use(bodyParser.json())
 
 app.use(cookieParser())
 
-app.use('/user', userRouter)
+app.use('/users', userRouter)
 
-app.use('/product', productsRouter)
+app.use('/products', productsRouter)
 
 app.use('/cart', cartRouter)
 
