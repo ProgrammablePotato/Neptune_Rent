@@ -26,6 +26,8 @@ import { UserEditorComponent } from './user-editor/user-editor.component';
 import { FooterComponent } from './footer/footer.component';
 import { environment } from './environments/environments';
 import { AngularFireModule } from '@angular/fire/compat';
+import { FormsModule } from '@angular/forms';
+import { provideHttpClient } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -55,7 +57,7 @@ import { AngularFireModule } from '@angular/fire/compat';
     BrowserModule,
     AppRoutingModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
-    AngularFireAuthModule,
+    AngularFireModule,
     FormsModule,
   ],
   providers: [provideHttpClient(),AuthService],
