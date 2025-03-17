@@ -7,25 +7,54 @@ import { AuthService } from './auth.service';
 })
 export class BaseService {
   currentPage = "/home"
-  productsUrl = "http://localhost:3000/products/"
+  apiUrl = "http://localhost:3000"
   products:any = []
+  users:any = []
 
   constructor (private auth:AuthService, private http:HttpClient) {
-    // this.getProducts().subscribe((data:any)=>{
-    //   this.products = data
-    // })
-    this.products = this.renderProducts()
-    console.log(this.products)
+    this.getProducts()
+    this.getProduct(1)
+    this.getUsers()
+    this.getUser(1)
   }
+
   getProducts() {
-    return this.http.get(this.productsUrl)
+    this.http.get(`${this.apiUrl}/products`).subscribe((prods:any) => {
+      this.products = prods
+      console.log("Products: ",this.products)
+    })
   }
-  renderProducts() {
-    this.getProducts().subscribe((prods:any) => {
-      console.log(prods)
-      for () {
-        
+
+  getUsers() {
+    this.http.get(`${this.apiUrl}/users`).subscribe((users:any) => {
+      this.users = users
+      console.log("Users: ",this.users)
+    })
+  }
+
+  getProduct(id:number) {
+    this.http.get(`${this.apiUrl}/products/${id}`).subscribe((prod:any) => {
+      console.log("Product: ",prod)
+      return prod
+    })
+  }
+
+  getProductsByCategory(cat:String) {
+    let categorised:any = []
+    console.log("Catcucc: ",this.products)
+    this.products.forEach((prod:any) => {
+      if (prod.category == cat) {
+        // sql returns erroneous number values due to prices being
+        // stored in float datatype, hence the line below
+        prod.price = (Math.round(prod.price*100))/100
+        categorised.push(prod)
       }
-    }) 
+    
+    })
+    return categorised;
+  }
+
+  getUser(id:number) {
+    //ezt nemtom még mert postos
   }
 }
