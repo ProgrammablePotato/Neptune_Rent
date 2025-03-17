@@ -15,22 +15,14 @@ export class AccessoriesComponent {
   accNews: any[] = []
   currentSlideIndex: number = 0;
 
-  ngOnInit(): void {
-    // this.news.getAccessNews().subscribe((data) => {
-    //   this.accNews = data.articles.slice(0, 5)
-    //   console.log(this.accNews)
-    // }) 
-    this.getAccessories() 
-  }
-
-  constructor(private base:BaseService, private http:HttpClient, private router:Router, private news:NewsService){ 
+  constructor(private base: BaseService, private http: HttpClient, private router: Router, private news: NewsService) { 
     this.base.currentPage = this.router.url
-
+    this.getAccessories()
   }
 
-  async getAccessories(){
+  async getAccessories() {
     this.accessories = await this.base.getProductsByCategory("accessories")
-    console.log("Accessories: ",this.accessories)
+    console.log("Accessories: ", this.accessories)
   }
 
   getImages(){

@@ -39,22 +39,21 @@ export class BaseService {
     })
   }
 
-  getProductsByCategory(cat:String) {
-    let categorised:any = []
-    console.log("Catcucc: ",this.products)
-    this.products.forEach((prod:any) => {
-      if (prod.category == cat) {
-        // sql returns erroneous number values due to prices being
-        // stored in float datatype, hence the line below
-        prod.price = (Math.round(prod.price*100))/100
-        categorised.push(prod)
+  getProductsByCategory(cat: string): Promise<any[]> {
+    return new Promise((resolve) => {
+      if (this.products.length > 0) {
+        resolve(this.products.filter((prod: any) => prod.category === cat));
+      } else {
+        this.http.get(`${this.apiUrl}/products`).subscribe((prods: any) => {
+          this.products = prods;
+          resolve(this.products.filter((prod:any) => prod.category === cat));
+        });
       }
-    
-    })
-    return categorised;
+    });
   }
+  
 
   getUser(id:number) {
-    //ezt nemtom még mert postos
+    
   }
 }
