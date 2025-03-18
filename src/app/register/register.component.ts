@@ -9,11 +9,12 @@ import { Router } from '@angular/router';
   styleUrls: ['./register.component.css'],
 })
 export class RegisterComponent {
-  registerForm: FormGroup;
+  registerForm: FormGroup
+
+  user: any
 
   constructor(private fb: FormBuilder, private auth:AuthService, private router:Router) {
-    const formOptions: AbstractControlOptions = { validators: this.passwordsMatch };
-
+    const formOptions: AbstractControlOptions = { validators: this.passwordsMatch }
     this.registerForm = this.fb.group(
       {
         email: ['', [Validators.required, Validators.email]],
@@ -21,7 +22,7 @@ export class RegisterComponent {
         passwordAgain: ['', Validators.required],
       },
       formOptions
-    );
+    )
   }
 
   passwordsMatch(control: AbstractControl): { [key: string]: boolean } | null {

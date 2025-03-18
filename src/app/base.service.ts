@@ -42,23 +42,22 @@ export class BaseService {
   getProductsByCategory(cat: string): Promise<any[]> {
     return new Promise((resolve) => {
       if (this.products.length > 0) {
-        resolve(this.products.filter((prod: any) => prod.category === cat));
+        resolve(this.products.filter((prod: any) => prod.category === cat))
       } else {
         this.http.get(`${this.apiUrl}/products`).subscribe((prods: any) => {
-          this.products = prods;
-          resolve(this.products.filter((prod:any) => prod.category === cat));
-          this.roundPrices()
-        });
+          this.products = prods
+          resolve(this.products.filter((prod:any) => prod.category === cat))
+        })
       }
-    });
+    })
   }
 
   getProductByCategoryAndId(cat: string, id: number) {
-    return this.getProductsByCategory(cat).then((prods) => prods.find((prod) => prod.id === id));
+    return this.getProductsByCategory(cat).then((prods) => prods.find((prod) => prod.id === id))
   }
 
   generateRandomId(){
-    return Math.random().toString(36).substring(2, 10) + Math.random().toString(36).substring(2, 10);
+    return Math.random().toString(36).substring(2, 10) + Math.random().toString(36).substring(2, 10)
   }
 
   getUser(id:number) {
