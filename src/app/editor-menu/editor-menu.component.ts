@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { BaseService } from '../base.service';
 
 @Component({
   selector: 'app-editor-menu',
@@ -6,5 +7,5 @@ import { Component } from '@angular/core';
   styleUrl: './editor-menu.component.css'
 })
 export class EditorMenuComponent {
-
+  
 }

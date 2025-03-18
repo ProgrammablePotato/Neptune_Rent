@@ -69,4 +69,8 @@ export class BaseService {
       this.products[x].price = (Math.round(this.products[x].price*100))/100
     }
   }
+  generateCartToken(){
+    const token = crypto.randomUUID()
+    return console.log(token)
+  }
 }
