@@ -1,1 +1,31 @@
-<p>login works!</p>
+<main class="w-full max-w-[100vw] flex mt-36 flex-col gap-10 justify-center items-center py-12">
+    <div class="flex flex-col gap-6">
+        <img class="mx-auto h-10 w-auto" src="logo.png" alt="NeptuneLogo">
+
+        <h2 class="logintext text-center text-3xl font-bold tracking-tight">Login to Neptune Rent!</h2>
+        
+        <h3 class="logintext text-center text-lg font-normal tracking-tight">Don't have account? 
+          <a class="group transition-all duration-300 ease-in-out" routerLink="/register">
+            <span class="bg-left-bottom bg-gradient-to-r from-blue-900 to-gray-950 bg-[length:0%_2px] bg-no-repeat group-hover:bg-[length:100%_2px] transition-all duration-500 ease-out font-bold">
+                Register here!
+            </span>
+          </a>
+        </h3>
+    </div>
+
+    <form class="sm:mx-auto sm:w-full sm:max-w-sm flex flex-col gap-3">
+        <div>
+            <input for="email" placeholder="Email address" [(ngModel)]="email" [ngModelOptions]="{standalone: true}" id="email" name="email" type="email" autocomplete="email" required class="input-filed w-full py-1.5 peer outline-none ring px-4 h-12 ring-blue-500 duration-500 focus:ring-2 relative placeholder:duration-300 placeholder:absolute focus:placeholder:pt-10 text-xs shadow-xl shadow-gray-400/20 focus:shadow-none focus:rounded-md focus:ring-blue-500 placeholder:text-gray-400">
+            <span class="duration-500 opacity-0 mb-2 peer-focus:opacity-100 text-gray-500 text-xs -translate-y-12 peer-focus:translate-y-0">Email Address</span>
+        </div>
+        <div>
+            <input for="password" [(ngModel)]="password" [ngModelOptions]="{standalone: true}" placeholder="Password" id="password" name="password" type="password" autocomplete="password" required class="w-full py-1.5 peer outline-none ring px-4 h-12 border-0 ring-blue-500 duration-500 focus:ring-2 relative placeholder:duration-300 placeholder:absolute focus:placeholder:pt-10 text-xs shadow-xl shadow-gray-400/20 focus:shadow-none focus:rounded-md focus:ring-blue-500 placeholder:text-gray-400">
+            <span class="duration-500 opacity-0 mb-2 peer-focus:opacity-100 text-gray-500 text-xs -translate-y-12 peer-focus:translate-y-0">Password</span>
+        </div>
+        <button [disabled]="auth.getLoadingStatus()" type="submit" (click)="login()" class="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 relative" role="status">
+            <span *ngIf="auth.getLoadingStatus()" class="spinner"></span>
+            <span *ngIf="!auth.getLoadingStatus()">Log in</span>
+        </button>
+        <button type="button" (click)="forgotPassword()" class="rounded-md">Forgot password</button>
+    </form>
+</main>

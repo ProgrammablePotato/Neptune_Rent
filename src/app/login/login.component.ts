@@ -1,4 +1,8 @@
 import { Component } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AuthService } from '../auth.service';
+import { Router } from '@angular/router';
+import { BaseService } from '../base.service';
 
 @Component({
   selector: 'app-login',
@@ -6,5 +10,35 @@ import { Component } from '@angular/core';
   styleUrl: './login.component.css'
 })
 export class LoginComponent {
+
+  email!:string
+  password!:string
+
+  user: any
+
+  constructor(public auth:AuthService, private router:Router, private base:BaseService) {
+    this.base.currentPage = this.router.url
+  }
+
+  login() {
+    if (!this.email || !this.password) {
+      console.error("Nincs megadva e-mail vagy jelszó!")
+      return;
+    }
+    this.auth.loginUser(this.email, this.password)
+      .then(res => console.log("Sikeres bejelentkezés!", res))
+      .finally(() => this.router.navigate(['/home']))
+      .catch(err => console.error("Hiba történt!", err.message))
+  }
+  loginWithGoogle() {
+    this.auth.loginWithGoogle()
+      .then(res => console.log("Sikeres Google bejelentkezés!", res))
+      .finally(() => this.router.navigate(['/home']))
+      .catch(err => console.error("Hiba történt!", err.message))
+  }
+
+  forgotPassword(){
+    this.auth.forgotPassword(this.email)
+  }
 
 }

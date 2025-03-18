@@ -47,6 +47,7 @@ export class BaseService {
         this.http.get(`${this.apiUrl}/products`).subscribe((prods: any) => {
           this.products = prods;
           resolve(this.products.filter((prod:any) => prod.category === cat));
+          this.roundPrices()
         });
       }
     });
@@ -61,6 +62,12 @@ export class BaseService {
   }
 
   getUser(id:number) {
-    
+
+  }
+
+  roundPrices() {
+    for (let x = 0; x < this.products.length; x++) {
+      this.products[x].price = (Math.round(this.products[x].price*100))/100
+    }
   }
 }
