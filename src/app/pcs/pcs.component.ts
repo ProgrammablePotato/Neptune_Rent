@@ -15,24 +15,25 @@ export class PcsComponent {
   pcNews: any[] = []
   currentSlideIndex: number = 0;
 
-  constructor(private base: BaseService, private http: HttpClient, private router: Router, private news: NewsService) { 
+  constructor(private base: BaseService, private http: HttpClient, private router: Router, private news: NewsService) {
       this.base.currentPage = this.router.url
-      this.getLaptops()
+      this.getPCs()
     }
-  
-    async getLaptops() {
+
+    async getPCs() {
       this.pcs = await this.base.getProductsByCategory("pcs")
       console.log("pcs: ", this.pcs)
+      this.base.roundPrices()
     }
-  
+
     getImages(){
       this.pcs.forEach((laptop:any) => {
         if(!laptop.image){
-          
+
         }
       })
     }
-  
+
     prevSlide() {
       if (this.currentSlideIndex > 0) {
         this.currentSlideIndex--
@@ -42,7 +43,7 @@ export class PcsComponent {
         console.log(this.currentSlideIndex)
       }
     }
-  
+
     nextSlide() {
       if (this.currentSlideIndex < this.pcNews.length - 1) {
         this.currentSlideIndex++

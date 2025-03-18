@@ -15,7 +15,7 @@ export class ServersComponent {
   serverNews: any[] = []
   currentSlideIndex: number = 0;
 
-  constructor(private base: BaseService, private http: HttpClient, private router: Router, private news: NewsService) { 
+  constructor(private base: BaseService, private http: HttpClient, private router: Router, private news: NewsService) {
     this.base.currentPage = this.router.url
     this.getServers()
   }
@@ -23,12 +23,13 @@ export class ServersComponent {
   async getServers() {
     this.servers = await this.base.getProductsByCategory("servers")
     console.log("Servers: ", this.servers)
+    this.base.roundPrices()
   }
 
   getImages(){
     this.servers.forEach((server:any) => {
       if(!server.image){
-        
+
       }
     })
   }
