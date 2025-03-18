@@ -47,7 +47,6 @@ export class BaseService {
         this.http.get(`${this.apiUrl}/products`).subscribe((prods: any) => {
           this.products = prods;
           resolve(this.products.filter((prod:any) => prod.category === cat));
-          this.roundPrices()
         });
       }
     });

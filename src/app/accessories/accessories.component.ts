@@ -15,7 +15,7 @@ export class AccessoriesComponent {
   accNews: any[] = []
   currentSlideIndex: number = 0;
 
-  constructor(private base: BaseService, private http: HttpClient, private router: Router, private news: NewsService) { 
+  constructor(private base: BaseService, private http: HttpClient, private router: Router, private news: NewsService) {
     this.base.currentPage = this.router.url
     this.getAccessories()
   }
@@ -23,12 +23,13 @@ export class AccessoriesComponent {
   async getAccessories() {
     this.accessories = await this.base.getProductsByCategory("accessories")
     console.log("Accessories: ", this.accessories)
+    this.base.roundPrices()
   }
 
   getImages(){
     this.accessories.forEach((laptop:any) => {
       if(!laptop.image){
-        
+
       }
     })
   }
