@@ -18,6 +18,7 @@ export class ServersComponent {
   constructor(private base: BaseService, private http: HttpClient, private router: Router, private news: NewsService) {
     this.base.currentPage = this.router.url
     this.getServers()
+    this.getNews()
   }
 
   async getServers() {
@@ -26,11 +27,10 @@ export class ServersComponent {
     this.base.roundPrices()
   }
 
-  getImages(){
-    this.servers.forEach((server:any) => {
-      if(!server.image){
-
-      }
+  async getNews() {
+    this.news.getServerNews().subscribe((data) => {
+      this.serverNews = data.articles.slice(0, 5)
+      console.log(this.serverNews)
     })
   }
 

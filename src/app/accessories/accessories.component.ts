@@ -18,6 +18,14 @@ export class AccessoriesComponent {
   constructor(private base: BaseService, private http: HttpClient, private router: Router, private news: NewsService) {
     this.base.currentPage = this.router.url
     this.getAccessories()
+    this.getNews()
+  }
+
+  async getNews(){
+    this.news.getAccessNews().subscribe((data) => {
+      this.accNews = data.articles.slice(0, 5)
+      console.log(this.accNews)
+    })
   }
 
   async getAccessories() {
@@ -25,16 +33,6 @@ export class AccessoriesComponent {
     console.log("Accessories: ", this.accessories)
     this.base.roundPrices()
   }
-
-  getImages(){
-    this.accessories.forEach((laptop:any) => {
-      if(!laptop.image){
-
-      }
-    })
-  }
-
-
 
   prevSlide() {
     if (this.currentSlideIndex > 0) {
