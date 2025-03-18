@@ -1,0 +1,12 @@
+.logintext{
+    background-image: linear-gradient(to right, #008CFF, #000F1B);
+    background-clip: border-box;
+    background-size: 100%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    line-height: normal;
+}
+
+button{
+    box-shadow: -5px 5px 10px rgba(0, 0, 0, 0.2);
+}
