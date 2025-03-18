@@ -1,4 +1,17 @@
 const db = require("./db")
+const nodemailer = require("nodemailer")
+const dotenv = require("dotenv")
+const cron = require("node-cron")
+
+const transporter = nodemailer.createTransport({
+    host: "mail.tokyohost.eu",
+    port: 465,
+    secure: true,
+    auth: {
+      user: process.env.MAIL_USER, 
+      pass: process.env.MAIL_PASS,
+    }
+})
 
 async function addRent(rent) {
     const checkProductQuery = `SELECT * FROM products WHERE id = ?`
@@ -111,9 +124,46 @@ async function getAllRent(){
     }
 }
 
-async function notifyUser(id){
-    
+async function notifyUser() {
+    try {
+        const query = `
+            SELECT r.id, r.user_id, r.product_id, r.expires, u.email 
+            FROM rent r
+            JOIN users u ON r.user_id = u.id
+            WHERE DATEDIFF(r.expires, CURDATE()) IN (7, 3, 2, 1);
+        `;
+        const rentals = await db.query(query);
+
+        if (!rentals.length) {
+            console.log("Nincs értesítésre váró bérlés.")
+            return
+        }
+        for (const rental of rentals) {
+            const { user_id, email, product_id, expires } = rental
+            const daysLeft = Math.ceil((new Date(expires) - new Date()) / (1000 * 60 * 60 * 24))
+            const subject = `Reminder: Your rental will expire in ${daysLeft} days!`
+            const text = `Dear User,<br><br>
+                Your rental for product ${product_id} will expire in ${daysLeft} days (${expires}).<br>
+                Please return you product to a Neptune Rent pickup point or extend your rent period (comes with additional costs) before the rent period is over.<br>
+                Best regards,<br>
+                The Neptune Rent Team`
+            await transporter.sendMail({
+                from: '"Neptune Rent" <noreply@neptunerent.eu>',
+                to: email,
+                subject: subject,
+                html: text
+            })
+            console.log(`E-mail snet to ${email}. (${daysLeft} remains).`)
+        }
+    } catch (error) {
+        console.error("Error:", error)
+    }
 }
+
+cron.schedule("0 9 * * *", () => {
+    console.log("Checking dayz...")
+    notifyUser()
+})
 
 module.exports = {
     addRent,
@@ -121,5 +171,6 @@ module.exports = {
     getRentByUserId,
     deleteRent,
     updateRent,
-    getAllRent
+    getAllRent,
+    notifyUser
 }
