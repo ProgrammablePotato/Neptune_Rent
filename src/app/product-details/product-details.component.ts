@@ -35,8 +35,20 @@ export class ProductDetailsComponent implements OnInit {
           }
         })
     } else {
-      this.error = 'Invalid product datas!'
+      this.error = 'Invalid product data!'
       this.loading = false
+    }
+  }
+  addToCart() {
+    console.log("add to cart")
+    let cartAmount = parseInt((<HTMLInputElement>document.getElementById("cartAmount")).value)
+    let popup = (<HTMLElement>document.getElementById("myPopup"));
+    if (cartAmount < 1 || cartAmount > 99) {
+      popup.style.visibility = "visible"
+    }
+    else {
+      //add to cart code goes here 
+      popup.style.visibility = "hidden"
     }
   }
 }
