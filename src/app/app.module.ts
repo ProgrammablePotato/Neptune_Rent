@@ -26,7 +26,7 @@ import { UserEditorComponent } from './user-editor/user-editor.component';
 import { FooterComponent } from './footer/footer.component';
 import { environment } from './environments/environments';
 import { AngularFireModule } from '@angular/fire/compat';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { provideHttpClient } from '@angular/common/http';
 import { CookieService } from 'ngx-cookie-service';
 
@@ -60,6 +60,7 @@ import { CookieService } from 'ngx-cookie-service';
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireModule,
     FormsModule,
+    ReactiveFormsModule
   ],
   providers: [provideHttpClient(),AuthService, CookieService],
   bootstrap: [AppComponent]
