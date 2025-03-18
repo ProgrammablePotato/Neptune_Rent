@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../auth.service';
 import { Router } from '@angular/router';
@@ -9,7 +9,7 @@ import { BaseService } from '../base.service';
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
-export class LoginComponent {
+export class LoginComponent{
 
   email!:string
   password!:string
@@ -18,6 +18,12 @@ export class LoginComponent {
 
   constructor(public auth:AuthService, private router:Router, private base:BaseService) {
     this.base.currentPage = this.router.url
+    this.auth.getLoggedUser().subscribe(user => {
+      this.user = user
+      if (user) {
+        this.router.navigate(['/home'])
+      }
+    })
   }
 
   login() {
