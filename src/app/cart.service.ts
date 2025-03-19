@@ -11,15 +11,7 @@ export class CartService {
 
   constructor(private http:HttpClient, private auth:AuthService) { }
 
-  private cartApi = 'http://localhost:3000/cart';
+  private cartApi = 'http://localhost:3000/cart'
 
-  getCart(): Observable<any> {
-    const userId = this.auth.getLoggedUser()
-    return this.http.get(`${this.cartApi}/byId/${userId}`)
-  }
-
-  removeFromCart(cartId: number): Observable<any> {
-    return this.http.delete(`${this.cartApi}/delCart/${cartId}`)
-  }
-
+  
 }

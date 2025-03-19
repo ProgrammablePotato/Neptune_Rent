@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { GoogleAuthProvider } from '@angular/fire/auth';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Router } from '@angular/router';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -151,14 +151,18 @@ export class AuthService {
       return null
   }
 
-  addNewUser(firebase_uid:string, name:string, zipcode:string, city:string, addr1:string, addr2:string, country:string, email:string){
+  addNewUser(firebase_uid:string, name:string, zipcode:string, city:string, addr1:string, addr2:string, country:string, email:string, phone:string){
     if (this.loggedUser.accessToken)
       {
         firebase_uid=this.loggedUser.uid
-        let body={firebase_uid, name, zipcode, city, addr1, addr2, country, email}
+        let body={firebase_uid, name, zipcode, city, addr1, addr2, country, email, phone}
         const headers = new HttpHeaders().set('Authorization', this.loggedUser.accessToken)
         return this.http.post(this.expressApi, body, { headers })
       }
       return null
+  }
+
+  getUserId(firebaseUid: string): Observable<{ id: number }> {
+    return this.http.post<{ id: number }>(`${this.expressApi}`, { details: 'id', firebase_uid: firebaseUid });
   }
 }
