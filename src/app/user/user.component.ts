@@ -10,6 +10,12 @@ import { AuthService } from '../auth.service';
 export class UserComponent {
   isUserAdmin: boolean = false
   passwordVisibility = "password"
+  zip: string = ''
+  city: string = ''
+  addr1: string = ''
+  addr2: string = ''
+  country: string = ''
+  name: string = ''
 
   ngOnInit(): void{
     this.auth.getIsAdmin().subscribe((isAdmin) => {
@@ -23,6 +29,15 @@ export class UserComponent {
     this.auth.getLoggedUser().subscribe((user) => {
       this.loggedUser = user
     })
+  }
+
+  bruh(){
+    console.log(this.city, this.name, this.addr1, this.addr2, this.zip, this.country, this.loggedUser.email)
+    this.auth.addNewUser(this.loggedUser.uid, this.name, this.zip, this.city, this.addr1, this.addr2, this.country, this.loggedUser.email)?.subscribe(
+      (res) => {
+        console.log("https://tenor.com/hu/view/finnish-hospital-kys-gif-27573537", res)
+      }
+    )
   }
 
   saveChanges(){
