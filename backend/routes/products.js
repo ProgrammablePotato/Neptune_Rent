@@ -1,11 +1,11 @@
 const express = require('express')
 const router = express.Router()
-const products = require('../services/products')
+const productService = require('../services/products')
 require('dotenv').config()
 
 router.get('/', async (req, res) => {
     try {
-        const productList = await products.getAllProducts()
+        const productList = await productService.getAllProducts()
         res.json(productList)
     } catch (error) {
         console.error(error)
@@ -15,7 +15,7 @@ router.get('/', async (req, res) => {
 
 router.get('/:id', async (req, res) => {
     try {
-        const product = await products.getProduct(req.params.id)
+        const product = await productService.getProduct(req.params.id)
         res.json(product)
     } catch (error) {
         res.status(500).json({ message: error.message })
@@ -24,7 +24,7 @@ router.get('/:id', async (req, res) => {
 
 router.post('/addProduct', async (req, res) => {
     try {
-        const product = await products.addProduct(req.body)
+        const product = await productService.addProduct(req.body)
         res.json(product)
     } catch (error) {
         res.status(500).json({ message: error.message })
@@ -33,7 +33,7 @@ router.post('/addProduct', async (req, res) => {
 
 router.patch('/editProduct/:id', async (req, res) => {
     try {
-        const product = await products.editProduct(req.params.id, req.body)
+        const product = await productService.editProduct(req.params.id, req.body)
         res.json(product)
     } catch (error) {
         res.status(500).json({ message: error.message })
@@ -42,7 +42,7 @@ router.patch('/editProduct/:id', async (req, res) => {
 
 router.delete('/deleteProduct/:id', async (req, res) => {
     try {
-        const product = await products.deleteProduct(req.params.id)
+        const product = await productService.deleteProduct(req.params.id)
         res.json(product)
     } catch (error) {
         res.status(500).json({ message: error.message })

@@ -1,11 +1,11 @@
 const express = require('express')
 const router = express.Router()
-const { getUserDetails } = require('../services/user')
-const users = require('../services/user')
+
+const userService = require('../services/user')
 
 router.post('getUser/:id', async (req, res) => {
     try {
-        const user = await getUserDetails(req.params.id, req.body.details)
+        const user = await userService.getUserDetails(req.params.id, req.body.details)
         res.json(user)
     }
     catch (error) {
@@ -15,7 +15,7 @@ router.post('getUser/:id', async (req, res) => {
 
 router.get('/', async (req, res) => {
     try {
-        const user = await users.getAllUser()
+        const user = await userService.getAllUser()
         res.json(user)
     } catch (error) {
         res.status(500).json({ message: error.message })
@@ -24,7 +24,7 @@ router.get('/', async (req, res) => {
 
 router.post('/addUser', async (req, res) => {
     try {
-        const user = await users.addUser(req.body)
+        const user = await userService.addUser(req.body)
         res.json(user)
     } catch (error) {
         res.status(500).json({ message: error.message })
@@ -33,7 +33,7 @@ router.post('/addUser', async (req, res) => {
 
 router.patch('/editUser/:id', async (req, res) => {
     try {
-        const user = await users.editUser(req.params.id, req.body)
+        const user = await userService.editUser(req.params.id, req.body)
         res.json(user)
     } catch (error) {
         res.status(500).json({ message: error.message })
@@ -42,7 +42,7 @@ router.patch('/editUser/:id', async (req, res) => {
 
 router.delete('/deleteUser/:id', async (req, res) => {
     try {
-        const user = await users.deleteUser(req.params.id)
+        const user = await userService.deleteUser(req.params.id)
         res.json(user)
     } catch (error) {
         res.status(500).json({ message: error.message })

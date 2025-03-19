@@ -1,10 +1,10 @@
 const express = require('express')
 const router = express.Router()
-const berles = require('../services/rent')
+const rentService = require('../services/rent')
 
 router.post('/addRent', async (req, res) => {
     try {
-        const rent = await berles.addRent(req.body)
+        const rent = await rentService.addRent(req.body)
         res.json(rent)
     } catch (error) {
         res.status(500).json({ message: error.message })
@@ -13,7 +13,7 @@ router.post('/addRent', async (req, res) => {
 
 router.get('/', async (req, res) => {
     try {
-        const rent = await berles.getAllRent()
+        const rent = await rentService.getAllRent()
         res.json(rent)
     } catch (error) {
         res.status(500).json({ message: error.message })
@@ -22,7 +22,7 @@ router.get('/', async (req, res) => {
 
 router.patch('/editRent/:id', async (req, res) => {
     try {
-        const rent = await berles.editRent(req.params.id, req.body)
+        const rent = await rentService.editRent(req.params.id, req.body)
         res.json(rent)
     } catch (error) {
         res.status(500).json({ message: error.message })
@@ -31,7 +31,7 @@ router.patch('/editRent/:id', async (req, res) => {
 
 router.delete('/deleteRent/:id', async (req, res) => {
     try {
-        const rent = await berles.deleteRent(req.params.id)
+        const rent = await rentService.deleteRent(req.params.id)
         res.json(rent)
     } catch (error) {
         res.status(500).json({ message: error.message })
@@ -40,7 +40,7 @@ router.delete('/deleteRent/:id', async (req, res) => {
 
 router.get('/byId/:id', async (req, res) => {
     try {
-        const rent = await berles.getRentById(req.params.id)
+        const rent = await rentService.getRentById(req.params.id)
         if (rent.length === 0) {
             return res.json({ message: 'Nincs bérlés' })
         }
