@@ -2,7 +2,7 @@ const express = require('express')
 const router = express.Router()
 const buyService = require('../services/buy')
 
-router.post("/buy", async (req, res) => {
+router.post("/", async (req, res) => {
     try {
         const { user_id, details } = req.body;
         if (!user_id || !Array.isArray(details)) {
@@ -25,7 +25,7 @@ router.get('/', async (req, res) => {
     }
 })
 
-router.patch('/buy/:id', async (req, res) => {
+router.patch('/:id', async (req, res) => {
     try {
         const result = await buyService.editBuy(req.params.id, req.body)
         res.json(result)
@@ -35,7 +35,7 @@ router.patch('/buy/:id', async (req, res) => {
     }
 })
 
-router.get('/buy/:id', async (req, res) => {
+router.get('/:id', async (req, res) => {
     try {
         const result = await buyService.getBuyDetails(req.params.id)
         res.json(result)
@@ -45,7 +45,7 @@ router.get('/buy/:id', async (req, res) => {
     }
 })
 
-router.delete("/buy/:id", async (req, res) => {
+router.delete("/:id", async (req, res) => {
     try {
         const { id } = req.params
         const response = await buyService.deleteBuy(id)

@@ -22,7 +22,7 @@ router.get('/:id', async (req, res) => {
     }
 })
 
-router.post('/addProduct', async (req, res) => {
+router.post('/', async (req, res) => {
     try {
         const product = await productService.addProduct(req.body)
         res.json(product)
@@ -31,7 +31,7 @@ router.post('/addProduct', async (req, res) => {
     }
 })
 
-router.patch('/editProduct/:id', async (req, res) => {
+router.patch('/:id', async (req, res) => {
     try {
         const product = await productService.editProduct(req.params.id, req.body)
         res.json(product)
@@ -40,7 +40,7 @@ router.patch('/editProduct/:id', async (req, res) => {
     }
 })
 
-router.delete('/deleteProduct/:id', async (req, res) => {
+router.delete('/:id', async (req, res) => {
     try {
         const product = await productService.deleteProduct(req.params.id)
         res.json(product)

@@ -22,7 +22,7 @@ router.get('/', async (req, res) => {
     }
 })
 
-router.post('/addUser', async (req, res) => {
+router.post('/', async (req, res) => {
     try {
         const user = await userService.addUser(req.body)
         res.json(user)
@@ -31,7 +31,7 @@ router.post('/addUser', async (req, res) => {
     }
 })
 
-router.patch('/editUser/:id', async (req, res) => {
+router.patch('/:id', async (req, res) => {
     try {
         const user = await userService.editUser(req.params.id, req.body)
         res.json(user)
@@ -40,7 +40,7 @@ router.patch('/editUser/:id', async (req, res) => {
     }
 })
 
-router.delete('/deleteUser/:id', async (req, res) => {
+router.delete('delUser/:id', async (req, res) => {
     try {
         const user = await userService.deleteUser(req.params.id)
         res.json(user)

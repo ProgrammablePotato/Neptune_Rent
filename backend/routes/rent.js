@@ -2,7 +2,7 @@ const express = require('express')
 const router = express.Router()
 const rentService = require('../services/rent')
 
-router.post('/addRent', async (req, res) => {
+router.post('/', async (req, res) => {
     try {
         const rent = await rentService.addRent(req.body)
         res.json(rent)
@@ -20,7 +20,7 @@ router.get('/', async (req, res) => {
     }
 })
 
-router.patch('/editRent/:id', async (req, res) => {
+router.patch('/:id', async (req, res) => {
     try {
         const rent = await rentService.editRent(req.params.id, req.body)
         res.json(rent)
@@ -29,7 +29,7 @@ router.patch('/editRent/:id', async (req, res) => {
     }
 })
 
-router.delete('/deleteRent/:id', async (req, res) => {
+router.delete('/:id', async (req, res) => {
     try {
         const rent = await rentService.deleteRent(req.params.id)
         res.json(rent)

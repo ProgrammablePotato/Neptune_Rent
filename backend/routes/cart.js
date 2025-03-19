@@ -2,7 +2,7 @@ const express = require('express')
 const router = express.Router()
 const cartService = require('../services/cart')
 
-router.get('/byName/:name', async (req, res) => {
+router.get('/:name', async (req, res) => {
     try {
         const cart = await cartService.getUserCartByName(req.params.name)
         if (cart.length === 0) {
@@ -37,7 +37,7 @@ router.get('/byId/:id', async (req, res) => {
     }
 })
 
-router.post('/addToCart/:id', async (req, res) => {
+router.post('/:id', async (req, res) => {
     try {
         const cart = await cartService.addToUserCart(req.params.id, req.body.contents)
         res.json(cart)
@@ -46,7 +46,7 @@ router.post('/addToCart/:id', async (req, res) => {
     }
 })
 
-router.patch('/updateCart/:id', async (req, res) => {
+router.patch('/:id', async (req, res) => {
     try {
         const cart = await cartService.updateUserCart(req.params.id, req.body.contents)
         res.json(cart)

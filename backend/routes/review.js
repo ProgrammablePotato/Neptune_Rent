@@ -2,7 +2,7 @@ const express = require('express')
 const router = express.Router()
 const reviewService = require('../services/review')
 
-router.post('/addReview/:id', async (req, res) => {
+router.post('/:id', async (req, res) => {
     try {
         const review = await reviewService.addReview({product_id: req.body.product_id, user_id: req.params.id, rating: req.body.rating, reviewText: req.body.reviewText})
         res.json(review)
@@ -20,7 +20,7 @@ router.get('/', async (req, res) => {
     }
 })
 
-router.patch('/editReview/:id', async (req, res) => {
+router.patch('/:id', async (req, res) => {
     try {
         const review = await reviewService.editReview(req.params.id, req.body)
         res.json(review)
@@ -29,7 +29,7 @@ router.patch('/editReview/:id', async (req, res) => {
     }
 })
 
-router.delete('/deleteReview/:id', async (req, res) => {
+router.delete('/:id', async (req, res) => {
     try {
         const review = await reviewService.deleteReview(req.params.id)
         res.json(review)

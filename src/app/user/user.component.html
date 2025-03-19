@@ -1,1 +1,31 @@
-<p>user works!</p>
+<div *ngFor="let user of users" class="dark:bg-gray-800 flex mt-10 mr-10 ml-10 rounded-xl 2xl:w-2/3 2xl:ml-auto 2xl:mr-auto">
+    <div class="w-1/4 block p-5">
+        <img src="https://img.freepik.com/premium-vector/avatar-profile-icon-flat-style-female-user-profile-vector-illustration-isolated-background-women-profile-sign-business-concept_157943-38866.jpg" class="my-image rounded-xl" alt="...">
+    </div>
+    <div class="p-5 w-3/4">
+        <div class="text-white text-4xl mb-3">
+            {{user.displayName}}
+        </div>
+        <hr>
+        <div class="mt-2 text-white text-lg">
+            {{user.email}}
+        </div>
+        <div class="row">
+            <div class="col p-2">
+                <div class="form-check form-switch">
+                    <input (change)="change(user.uid)" [(ngModel)]="user.claims.moderator" class="w-5 h-5 text-blue-600 rounded-sm ring-offset-gray-800 focus:ring-2 bg-gray-700 dark:border-gray-600" type="checkbox">
+                    <label class="form-check-label p-2 text-white" for="moderator">Moderator</label>
+                </div>
+            </div>
+            <div class="col p-2">
+                <div class="form-check form-switch">
+                    <input (change)="change(user.uid)" [(ngModel)]="user.claims.admin" class="w-5 h-5 text-blue-600 rounded-sm ring-offset-gray-800 focus:ring-2 bg-gray-700 dark:border-gray-600" type="checkbox">
+                    <label class="form-check-label p-2 text-white" for="admin">Admin</label>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <button (click)="setCustomClaims(user.uid,{admin:true})" type="button" class="rounded-lg p-3 text-black bg-blue-400">Add Admin</button>
+        </div>
+    </div>
+</div>
