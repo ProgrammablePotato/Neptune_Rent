@@ -73,4 +73,9 @@ export class BaseService {
     const token = crypto.randomUUID()
     return console.log(token)
   }
+  editProduct(id:any,data:any) {
+    const url = `${this.apiUrl}/products/${id}.json`
+    console.log(url)
+    return this.http.patch(url,data)
+  }
 }
