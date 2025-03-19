@@ -55,4 +55,13 @@ router.patch('/:id', async (req, res) => {
     }
 })
 
+router.delete('delCart/:id', async (req, res) => {
+    try {
+        const cart = await cartService.deleteUserCart(req.params.id)
+        res.json(cart)
+    } catch (error) {
+        res.status(500).json({ message: error.message })
+    }
+})
+
 module.exports = router

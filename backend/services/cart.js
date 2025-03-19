@@ -66,10 +66,24 @@ async function getAllCart() {
     }
 }
 
+async function deleteCart(id){
+    const query = `DELETE FROM cart WHERE id = ?`
+    const params = [id]
+    try {
+        const result = await db.query(query, params)
+        if (!result.affectedRows) throw new Error("A kosár törlése sikertelen!")
+        return { success: true }
+    } catch (error) {
+        console.error(error)
+        throw error
+    }
+}
+
 module.exports = {
     getUserCartById,
     getUserCartByName,
     addToUserCart,
     updateUserCart,
-    getAllCart
+    getAllCart,
+    deleteCart
 }

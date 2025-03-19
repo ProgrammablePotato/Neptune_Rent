@@ -29,7 +29,7 @@ router.patch('/:id', async (req, res) => {
     }
 })
 
-router.delete('/:id', async (req, res) => {
+router.delete('delRent/:id', async (req, res) => {
     try {
         const rent = await rentService.deleteRent(req.params.id)
         res.json(rent)
