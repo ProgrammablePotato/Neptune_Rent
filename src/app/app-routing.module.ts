@@ -17,6 +17,7 @@ import { AboutUsComponent } from './about-us/about-us.component';
 import { ServicesComponent } from './services/services.component';
 import { ProductDetailsComponent } from './product-details/product-details.component';
 import { ErrorComponent } from './error/error.component';
+import { UserEditorComponent } from './user-editor/user-editor.component';
 
 const routes: Routes = [
   {path: 'home', component: HomeComponent},
@@ -26,7 +27,7 @@ const routes: Routes = [
   {path: 'user', component: UserComponent, canActivate:[loggedUserGuard]},
   {path: 'cart/:id', component: CartComponent, canActivate:[loggedUserGuard]},
   {path: 'admin', component: AdminComponent, canActivate:[adminGuard], children:[{path: 'prodeditor', component: ProductEditorComponent, canActivate:[adminGuard]},
-    {path: 'uview', component: UserComponent, canActivate:[adminGuard]},
+    {path: 'uview', component: UserEditorComponent, canActivate:[adminGuard]},
     {path: 'prodeditorr/:category/:id', component: ProductEditorComponent, canActivate:[adminGuard]}]},
   {path: 'pcs', component: PcsComponent},
   {path: 'laptops', component: LaptopsComponent},
