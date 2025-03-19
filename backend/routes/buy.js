@@ -2,13 +2,16 @@ const express = require('express')
 const router = express.Router()
 const buyService = require('../services/buy')
 
-router.post('/buy', async (req, res) => {
+router.post("/buy", async (req, res) => {
     try {
-        const result = await buyService.buyProduct(req.body)
-        res.json(result)
+        const { user_id, details } = req.body;
+        if (!user_id || !Array.isArray(details)) {
+            return res.status(400).json({ error: "Hiányzó vagy hibás adatok!" })
+        }
+        const response = await buyService.buyProduct(details, user_id)
+        res.json(response)
     } catch (error) {
-        console.error(error)
-        res.status(500).json({ success: false, message: error.message })
+        res.status(500).json({ error: error.message })
     }
 })
 
@@ -42,15 +45,14 @@ router.get('/buy/:id', async (req, res) => {
     }
 })
 
-router.delete('/buy/:id', async (req, res) => {
+router.delete("/buy/:id", async (req, res) => {
     try {
-        const result = await buyService.deleteBuy(req.params.id)
-        res.json(result)
+        const { id } = req.params
+        const response = await buyService.deleteBuy(id)
+        res.json(response)
     } catch (error) {
-        console.error(error)
-        res.status(500).json({ success: false, message: error.message })
+        res.status(500).json({ error: error.message })
     }
 })
-
 
 module.exports = router

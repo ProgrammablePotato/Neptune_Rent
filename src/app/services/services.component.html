@@ -34,9 +34,9 @@
 <div class="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 rounded-lg xl:max-w-[90vw] xl:ml-auto xl:mr-auto 2xl:max-w-[80vw]">
         
     <div class="p-5 m-3 rounded-lg dark:bg-gray-800 dark:border-gray-700 " *ngFor="let service of services">
-        <div *ngIf="!service.image" class="h-40 w-full inline-block neptune-product-image" [style]="{'background-image':'url(cat.jfif)'}">
+        <div *ngIf="!service.image" class="xl:h-60 h-40 w-full inline-block neptune-product-image" [style]="{'background-image':'url(cat.jfif)'}">
         </div>
-        <div *ngIf="service.image" class="h-40 w-full inline-block neptune-product-image" [style]="{'background-image':'url('+service.image+')'}">
+        <div *ngIf="service.image" class="xl:h-60 h-40 w-full inline-block neptune-product-image" [style]="{'background-image':'url('+service.image+')'}">
         </div>
             <h5 class="mb-2 text-1xl font-bold tracking-tight text-gray-900 dark:text-white">{{service.name}}</h5>
         <div>

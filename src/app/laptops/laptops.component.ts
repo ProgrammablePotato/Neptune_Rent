@@ -18,6 +18,7 @@ export class LaptopsComponent {
   constructor(private base: BaseService, private http: HttpClient, private router: Router, private news: NewsService) {
     this.base.currentPage = this.router.url
     this.getLaptops()
+    this.getNews()
   }
 
   async getLaptops() {
@@ -26,11 +27,10 @@ export class LaptopsComponent {
     this.base.roundPrices()
   }
 
-  getImages(){
-    this.laptops.forEach((laptop:any) => {
-      if(!laptop.image){
-
-      }
+  async getNews(){
+    this.news.getLaptopNews().subscribe((data) => {
+      this.laptopNews = data.articles.slice(0, 5)
+      console.log(this.laptopNews)
     })
   }
 

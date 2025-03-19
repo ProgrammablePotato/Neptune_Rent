@@ -64,4 +64,13 @@ router.get('/byUserId/:id', async (req, res) => {
     }
 })
 
+router.get("/notify", async (req, res) => {
+    try {
+        await berles.notifyUser();
+        res.json({ success: true, message: "Értesítések elküldve." });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
 module.exports = router

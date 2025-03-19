@@ -18,6 +18,7 @@ export class ServicesComponent {
   constructor(private base: BaseService, private http: HttpClient, private router: Router, private news: NewsService) {
     this.base.currentPage = this.router.url
     this.getServices()
+    this.getNews()
   }
 
   async getServices() {
@@ -26,11 +27,10 @@ export class ServicesComponent {
     this.base.roundPrices()
   }
 
-  getImages(){
-    this.services.forEach((service:any) => {
-      if(!service.image){
-
-      }
+  async getNews() {
+    this.news.getServiceNews().subscribe((data) => {
+      this.serviceNews = data.articles.slice(0, 5)
+      console.log(this.serviceNews)
     })
   }
 

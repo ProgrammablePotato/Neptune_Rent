@@ -18,6 +18,7 @@ export class PcsComponent {
   constructor(private base: BaseService, private http: HttpClient, private router: Router, private news: NewsService) {
       this.base.currentPage = this.router.url
       this.getPCs()
+      this.getNews()
     }
 
     async getPCs() {
@@ -26,11 +27,10 @@ export class PcsComponent {
       this.base.roundPrices()
     }
 
-    getImages(){
-      this.pcs.forEach((laptop:any) => {
-        if(!laptop.image){
-
-        }
+    async getNews(){
+      this.news.getPcNews().subscribe((data) => {
+        this.pcNews = data.articles.slice(0, 5)
+        console.log(this.pcNews)
       })
     }
 
