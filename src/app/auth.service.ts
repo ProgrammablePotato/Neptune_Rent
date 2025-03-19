@@ -18,6 +18,7 @@ export class AuthService {
   private loggedUserSub= new BehaviorSubject<boolean>(false)
 
   apiUrl = 'http://127.0.0.1:5001/neptune-rent/us-central1/api/'
+  expressApi = 'http://localhost:3000/users/'
 
   constructor(private auth:AngularFireAuth, private router:Router, private http:HttpClient) {
     this.auth.authState.subscribe(
@@ -146,6 +147,17 @@ export class AuthService {
         let body={displayName, phoneNumber, email, password}
         const headers= new HttpHeaders().set('Authorization',this.loggedUser.accessToken)
         return this.http.patch(this.apiUrl+"updateUser/",body, {headers})
+      }
+      return null
+  }
+
+  addNewUser(firebase_uid:string, name:string, zipcode:string, city:string, addr1:string, addr2:string, country:string, email:string){
+    if (this.loggedUser.accessToken)
+      {
+        firebase_uid=this.loggedUser.uid
+        let body={firebase_uid, name, zipcode, city, addr1, addr2, country, email}
+        const headers = new HttpHeaders().set('Authorization', this.loggedUser.accessToken)
+        return this.http.post(this.expressApi, body, { headers })
       }
       return null
   }

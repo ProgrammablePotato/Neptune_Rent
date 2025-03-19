@@ -1,14 +1,21 @@
 const db = require("./db")
 
 async function addUser(detail) {
-    const { name, addr1, addr2, country, zipcode, city } = detail
-    const query = `INSERT INTO users (name, addr1, addr2, country, zipcode, city) VALUES (?, ?, ?, ?, ?, ?);`
-    const params = [name, addr1, addr2, country, zipcode, city]
-    console.log(query, params)
+    const { firebase_uid, name, addr1, addr2, country, zipcode, city, email } = detail
+    const checkQuery = `SELECT * FROM users WHERE firebase_uid = ?`
     try {
-        const result = await db.query(query, params)
-        if (!result.affectedRows) throw new Error("A felhasználó hozzáadása sikertelen!")
-        return { success: true, insertedId: result.insertId }
+        const existingUser = await db.query(checkQuery, [firebase_uid])
+        if (existingUser.length > 0) {
+            const userId = existingUser[0].id
+            return await editUser(userId, detail)
+        } else {
+            const insertQuery = `INSERT INTO users (firebase_uid, name, addr1, addr2, country, zipcode, city, email) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`
+            const params = [firebase_uid, name, addr1, addr2, country, zipcode, city, email]
+            console.log(insertQuery, params)
+            const result = await db.query(insertQuery, params)
+            if (!result.affectedRows) throw new Error("A felhasználó hozzáadása sikertelen!")
+            return { success: true, insertedId: result.insertId }
+        }
     } catch (error) {
         console.error(error)
         throw error
