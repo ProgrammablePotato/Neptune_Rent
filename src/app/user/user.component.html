@@ -1,39 +1,3 @@
-<!-- <div *ngIf="loggedUser" class="card" >
-    <div class="card-body">
-        <h5 class="card-title">Profile</h5>
-            <div class="row">
-                <div class="col">
-                    <img *ngIf="loggedUser.photoURL" [src]="loggedUser.photoURL" class="img-thumbnail">
-                    {{loggedUser.displayName}}
-                </div>
-                <div class="col">{{loggedUser.email}}</div>
-            </div>
-            <div class="form-floating mb-3">
-                <input [(ngModel)]="loggedUser.displayName" type="text" class="form-control" id="floatingInput">
-                <label for="floatingInput">Display name</label>
-            </div>
-            <div class="form-floating mb-3">
-                <input [(ngModel)]="loggedUser.phoneNumber" type="text" class="form-control" id="phoneInput">
-                <label for="phoneInput">Phone number</label>
-            </div>
-            <div class="form-floating mb-3">
-                <input [(ngModel)]="loggedUser.password" type="password" class="form-control" id="passwordInput">
-                <label for="phoneInput">New password</label>
-            </div>
-            <div class="form-floating mb-3">
-                <input autocomplete="off" [(ngModel)]="loggedUser.email" type="email" class="form-control" id="email">
-                <label for="email">E-Mail</label>
-            </div>
-            <div class="form-floating my-3">
-
-            <span class="ms-3">
-            </span>
-        </div>
-    </div>
-</div> -->
-
-<!-- <button routerLink="/cart/{{loggedUser?.uid}}">cart</button> -->
-
 <div *ngIf="loggedUser" class="xl:w-3/4 xl:ml-auto xl:mr-auto bg-gray-800 flex rounded-lg mt-5">
     <div class="flex-3 p-3">
         <img *ngIf="loggedUser.photoURL" [src]="loggedUser.photoURL" class="rounded-lg">
