@@ -30,6 +30,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { provideHttpClient } from '@angular/common/http';
 import { CookieService } from 'ngx-cookie-service';
 import { VerifymailComponent } from './verifymail/verifymail.component';
+import { SearchPipe } from './search.pipe';
 
 @NgModule({
   declarations: [
@@ -54,7 +55,8 @@ import { VerifymailComponent } from './verifymail/verifymail.component';
     UserComponent,
     UserEditorComponent,
     FooterComponent,
-    VerifymailComponent
+    VerifymailComponent,
+    SearchPipe
   ],
   imports: [
     BrowserModule,

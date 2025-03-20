@@ -13,6 +13,8 @@ export class HomeComponent {
   allNews:any = []
   currentSlideIndex: number = 0
   products:any = []
+  filteredProducts:any = []
+  searchTerm: string = '' 
 
   constructor(private news:NewsService, private base:BaseService, private router:Router){
     this.base.currentPage = this.router.url
@@ -49,7 +51,13 @@ export class HomeComponent {
 
   async getProducts() {
     this.products = await this.base.getProducts()
-    // console.log("Products: ", this.products)
+    console.log("Products: ", this.products)
+    this.base.roundPrices()
+  }
+
+  async getProductsByCategory(cat: string) {
+    this.products = await this.base.getProductsByCategory(cat)
+    console.log("Products: ", this.products)
     this.base.roundPrices()
   }
 }

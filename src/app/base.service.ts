@@ -17,10 +17,18 @@ export class BaseService {
     this.getUsers()
   }
 
-  getProducts() {
-    this.http.get(`${this.apiUrl}/products`).subscribe((prods:any) => {
-      this.products = prods
-      console.log("Products: ",this.products)
+  getProducts(): Promise<any[]> {
+    return new Promise((resolve) => 
+    {
+      if (this.products.length > 0) {
+        resolve(this.products)
+      } else {
+        this.http.get(`${this.apiUrl}/products`).subscribe((prods:any) => {
+          this.products = prods
+          this.roundPrices()
+          resolve(this.products)
+        })
+      }
     })
   }
 
