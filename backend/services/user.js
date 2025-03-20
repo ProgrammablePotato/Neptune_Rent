@@ -1,7 +1,7 @@
 const db = require("./db")
 
 async function addUser(detail) {
-    const { firebase_uid, name, addr1, addr2, country, zipcode, city, email, phone } = detail
+    const { firebase_uid, name, addr1, addr2, country, zipcode, city, email, phone, nick } = detail
     const checkQuery = `SELECT * FROM users WHERE firebase_uid = ?`
     try {
         const existingUser = await db.query(checkQuery, [firebase_uid])
@@ -9,8 +9,8 @@ async function addUser(detail) {
             const userId = existingUser[0].id
             return await editUser(userId, detail)
         } else {
-            const insertQuery = `INSERT INTO users (firebase_uid, name, addr1, addr2, country, zipcode, city, email, phone) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`
-            const params = [firebase_uid, name, addr1, addr2, country, zipcode, city, email]
+            const insertQuery = `INSERT INTO users (firebase_uid, name, addr1, addr2, country, zipcode, city, email, phone, nick) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
+            const params = [firebase_uid, name, addr1, addr2, country, zipcode, city, email, phone, nick]
             console.log(insertQuery, params)
             const result = await db.query(insertQuery, params)
             if (!result.affectedRows) throw new Error("A felhasználó hozzáadása sikertelen!")

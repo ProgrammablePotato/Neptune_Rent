@@ -151,11 +151,11 @@ export class AuthService {
       return null
   }
 
-  addNewUser(firebase_uid:string, name:string, zipcode:string, city:string, addr1:string, addr2:string, country:string, email:string, phone:string){
+  addNewUser(firebase_uid:string, name:string, zipcode:string, city:string, addr1:string, addr2:string, country:string, email:string, phone:string, nick:string){
     if (this.loggedUser.accessToken)
       {
         firebase_uid=this.loggedUser.uid
-        let body={firebase_uid, name, zipcode, city, addr1, addr2, country, email, phone}
+        let body={firebase_uid, name, zipcode, city, addr1, addr2, country, email, phone, nick}
         const headers = new HttpHeaders().set('Authorization', this.loggedUser.accessToken)
         return this.http.post(this.expressApi, body, { headers })
       }
