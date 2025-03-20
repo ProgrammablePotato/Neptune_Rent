@@ -34,8 +34,9 @@ export class LoginComponent{
     this.auth.loginUser(this.email, this.password)
       .then(res => console.log("Sikeres bejelentkezés!", res))
       .finally(() => this.router.navigate(['/home']))
-      .catch(err => console.error("Hiba történt!", err.message))
+      .catch(err => console.error("Hiba történt!", err.message, this.router.navigate(['/login']), alert('Helytelen felhasználónév vagy jelszó')))
   }
+
   loginWithGoogle() {
     this.auth.loginWithGoogle()
       .then(res => console.log("Sikeres Google bejelentkezés!", res))
