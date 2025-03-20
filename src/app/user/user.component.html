@@ -60,13 +60,39 @@
     </div>
 </div>
 
-Vásárláshoz töltsd ki a szükséges adatokat:
-<div class="flex">
-    <button (click)="bruh()">Gonb úgymond</button>
-    <input type="text" [(ngModel)]="zip" placeholder="zip">
-    <input type="text" [(ngModel)]="name" placeholder="name">
-    <input type="text" [(ngModel)]="city" placeholder="city">
-    <input type="text" [(ngModel)]="addr1" placeholder="address">
-    <input type="text" [(ngModel)]="addr2" placeholder="address2">
-    <input type="text" [(ngModel)]="country" placeholder="country">
+<div class="xl:w-3/4 xl:ml-auto xl:mr-auto bg-gray-800 rounded-lg mt-5 text-lg text-white">
+  <div class="m-4"><span>Vásárláshoz töltsd ki a szükséges adatokat:</span></div>
+  <div class="flex">
+    <div class="flex-1">
+      <ul class="">
+        <li class="flex m-2">
+          <label for="zipInput" class="flex-1 text-right p-2">Zip code: </label>
+          <input id="zipInput" type="text" [(ngModel)]="zip" placeholder="zip" class="flex-1 p-2 rounded-md bg-gray-500">
+        </li>
+        <li class="flex m-2">
+          <label for="nameInput" class="flex-1 text-right p-2">Name: </label>
+          <input id="nameInput" type="text" [(ngModel)]="name" placeholder="name" class="flex-1 p-2 rounded-md bg-gray-500">
+        </li>
+        <li class="flex m-2">
+          <label for="cityInput" class="flex-1 text-right p-2">City: </label>
+          <input id="cityInput" type="text" [(ngModel)]="city" placeholder="city" class="flex-1 p-2 rounded-md bg-gray-500">
+        </li>
+        <li class="flex m-2">
+          <label for="addr1Input" class="flex-1 text-right p-2">Address line 1: </label>
+          <input id="addr1Input" type="text" [(ngModel)]="addr1" placeholder="address line 1" class="flex-1 p-2 rounded-md bg-gray-500">
+        </li>
+        <li class="flex m-2">
+          <label for="addr2Input" class="flex-1 text-right p-2">Address line 2: </label>
+          <input id="addr2Input" type="text" [(ngModel)]="addr2" placeholder="address line 2" class="flex-1 p-2 rounded-md bg-gray-500">
+        </li>
+        <li class="flex m-2">
+          <label for="countryInput" class="flex-1 text-right p-2">Zip code: </label>
+          <input id="countryInput" type="text" [(ngModel)]="country" placeholder="country" class="flex-1 p-2 rounded-md bg-gray-500">
+        </li>
+      </ul>
+    </div>
+    <div class="flex-1">
+      <button (click)="bruh()" class="mr-auto ml-auto flex h-10 bg-green-700 p-2 rounded-lg text-md">Save changes</button>
+    </div>
+  </div>
 </div>
