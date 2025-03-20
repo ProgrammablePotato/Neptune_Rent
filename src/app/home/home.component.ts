@@ -49,7 +49,7 @@ export class HomeComponent {
 
   async getProducts() {
     this.products = await this.base.getProducts()
+    // console.log("Products: ", this.products)
     this.base.roundPrices()
   }
-
 }

@@ -16,6 +16,7 @@ export class UserComponent {
   addr2: string = ''
   country: string = ''
   name: string = ''
+  nick: string = ''
 
   ngOnInit(): void{
     this.auth.getIsAdmin().subscribe((isAdmin) => {
@@ -32,8 +33,8 @@ export class UserComponent {
   }
 
   bruh(){
-    console.log(this.city, this.name, this.addr1, this.addr2, this.zip, this.country, this.loggedUser.email, this.loggedUser.phoneNumber)
-    this.auth.addNewUser(this.loggedUser.uid, this.name, this.zip, this.city, this.addr1, this.addr2, this.country, this.loggedUser.email, this.loggedUser.phoneNumber)?.subscribe(
+    console.log(this.city, this.name, this.addr1, this.addr2, this.zip, this.country, this.loggedUser.email, this.loggedUser.phoneNumber, this.nick)
+    this.auth.addNewUser(this.loggedUser.uid, this.name, this.zip, this.city, this.addr1, this.addr2, this.country, this.loggedUser.email, this.loggedUser.phoneNumber, this.nick)?.subscribe(
       (res) => {
         console.log("https://tenor.com/hu/view/finnish-hospital-kys-gif-27573537", res)
       }
