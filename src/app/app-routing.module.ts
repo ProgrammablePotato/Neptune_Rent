@@ -19,6 +19,7 @@ import { ProductDetailsComponent } from './product-details/product-details.compo
 import { ErrorComponent } from './error/error.component';
 import { UserEditorComponent } from './user-editor/user-editor.component';
 import { EditorMenuComponent } from './editor-menu/editor-menu.component';
+import { VerifymailComponent } from './verifymail/verifymail.component';
 
 const routes: Routes = [
   {path: 'home', component: HomeComponent},
@@ -37,6 +38,7 @@ const routes: Routes = [
   {path: 'aboutus', component: AboutUsComponent},
   {path: 'services', component: ServicesComponent},
   {path: 'details/:category/:id', component: ProductDetailsComponent},
+  {path: 'verifymail', component:VerifymailComponent},
   {path: '**', component: ErrorComponent}
 ];
 

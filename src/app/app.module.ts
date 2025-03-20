@@ -29,6 +29,7 @@ import { AngularFireModule } from '@angular/fire/compat';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { provideHttpClient } from '@angular/common/http';
 import { CookieService } from 'ngx-cookie-service';
+import { VerifymailComponent } from './verifymail/verifymail.component';
 
 @NgModule({
   declarations: [
@@ -52,7 +53,8 @@ import { CookieService } from 'ngx-cookie-service';
     ServicesComponent,
     UserComponent,
     UserEditorComponent,
-    FooterComponent
+    FooterComponent,
+    VerifymailComponent
   ],
   imports: [
     BrowserModule,

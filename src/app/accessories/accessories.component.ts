@@ -10,7 +10,6 @@ import { NewsService } from '../news.service';
   styleUrl: './accessories.component.css'
 })
 export class AccessoriesComponent {
-  products: any = []
   accessories: any = []
   accNews: any[] = []
   currentSlideIndex: number = 0;

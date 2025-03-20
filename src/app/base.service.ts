@@ -15,7 +15,6 @@ export class BaseService {
     this.getProducts()
     this.getProduct(1)
     this.getUsers()
-    this.getUser(1)
   }
 
   getProducts() {
@@ -60,19 +59,12 @@ export class BaseService {
     return Math.random().toString(36).substring(2, 10) + Math.random().toString(36).substring(2, 10)
   }
 
-  getUser(id:number) {
-
-  }
-
   roundPrices() {
     for (let x = 0; x < this.products.length; x++) {
       this.products[x].price = (Math.round(this.products[x].price*100))/100
     }
   }
-  generateCartToken(){
-    const token = crypto.randomUUID()
-    return console.log(token)
-  }
+
   editProduct(id:any,data:any) {
     const url = `${this.apiUrl}/products/${id}.json`
     console.log(url)
