@@ -27,6 +27,7 @@ export class ProductDetailsComponent implements OnInit {
         next: (data) => {
           this.product = data
           this.loading = false
+          this.base.roundPrices()
         },
         error: (error) => {
           this.error = 'Hiba történt a termék betöltésekor!'

@@ -1,24 +1,14 @@
-<div *ngIf="loading" class="inline-block ml-auto mr-auto bg-orange-700">Betöltés...</div>
+<div *ngIf="loading" class="inline-block ml-auto mr-auto bg-orange-700">Loading...</div>
 
 <div *ngIf="error" class="error-message">{{ error }}</div>
 
-<!-- <div *ngIf="!loading && product">
-    <h2>{{ product.name }}</h2>
-    <p><strong>Price:</strong> ${{ product.price }}</p>
-    <p><strong>Description:</strong> {{ product.description }}</p>
 
-    <div *ngIf="product.imageUrl">
-        <img [src]="product.imageUrl" alt="{{ product.name }}" />
-    </div>
-</div> -->
-
-
-<div *ngIf="!loading && product" class="dark:bg-gray-800 flex mt-10 mr-10 ml-10 rounded-xl">
+<div *ngIf="!loading && product" class="dark:bg-gray-800 lg:max-w-[80vw] md:flex md:flex-row flex-col mt-10 mr-10 ml-10 rounded-xl min-h-fit lg:mr-auto lg:ml-auto">
     <div class="flex-1 m-2 relative">
-        <h1 class="text-white m-2 text-5xl mb-5">{{ product.name }}</h1>
+        <h1 class="text-white m-2 lg:text-5xl text-2xl mb-5">{{ product.name }}</h1>
         <hr>
         <p class="text-white text-xl m-2"><span class="font-bold">Price: </span>${{ product.price }}</p>
-        <p class="text-white m-2 text-xl dark:bg-slate-700 rounded-lg p-5">{{ product.description }}</p>
+        <p class="text-white m-2 text-xl dark:bg-slate-700 rounded-lg p-5">{{ product.description }} Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nam aut dolorem eveniet voluptate, pariatur ipsam dicta deserunt aliquam et modi, earum sapiente animi enim, excepturi eius corrupti assumenda maxime id. Debitis necessitatibus ipsa aspernatur. Quae aut suscipit, ex mollitia eos iusto vero atque nesciunt assumenda autem itaque voluptas? Dolor, totam.</p>
         <div class="absolute bottom-0 w-full flex">
             <button (click)="addToCart()"class="text-xl text-white dark:bg-green-800 p-5 rounded-lg m-2 w-fit popup"><p class="block float-left">Add to cart</p>
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 block float-right ml-2">

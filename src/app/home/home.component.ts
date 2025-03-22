@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NewsService } from '../news.service';
 import { BaseService } from '../base.service';
 import { Router } from '@angular/router';
+import { SearchService } from '../search.service';
 
 @Component({
   selector: 'app-home',
@@ -16,7 +17,7 @@ export class HomeComponent {
   filteredProducts:any = []
   searchTerm: string = '' 
 
-  constructor(private news:NewsService, private base:BaseService, private router:Router){
+  constructor(private news:NewsService, private base:BaseService, private router:Router, private search:SearchService){
     this.base.currentPage = this.router.url
     this.getNews()
     this.getProducts()
@@ -59,5 +60,8 @@ export class HomeComponent {
     this.products = await this.base.getProductsByCategory(cat)
     console.log("Products: ", this.products)
     this.base.roundPrices()
+  }
+  searchProducts() {
+
   }
 }
