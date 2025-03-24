@@ -41,11 +41,10 @@
 
 <div class="search-box">
     <input type="text" placeholder="Search products..." [(ngModel)]="searchTerm">
-    <button (click)="searchProducts()">Search</button>
 </div>
 
 <div class="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 rounded-lg xl:max-w-[90vw] xl:ml-auto xl:mr-auto 2xl:max-w-[80vw]">
-    <div class="p-5 m-3 rounded-lg dark:bg-gray-800 dark:border-gray-700 " *ngFor="let product of products">
+    <div class="p-5 m-3 rounded-lg dark:bg-gray-800 dark:border-gray-700 " *ngFor="let product of (products | search:searchTerm)">
         <div *ngIf="!product.image" class="xl:h-60 h-40 w-full inline-block neptune-product-image" [style]="{'background-image':'url(cat.jfif)'}">
         </div>
         <div *ngIf="product.image" class="xl:h-60 h-40 w-full inline-block neptune-product-image" [style]="{'background-image':'url('+product.image+')'}">

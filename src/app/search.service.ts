@@ -6,9 +6,13 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class SearchService {
 
-  kereso = new BehaviorSubject<string>('')
+  searcher = new BehaviorSubject("")
+  constructor() { }
 
-  getSearchWord() {
-    return this.kereso;
+  getSearchWord(){
+    return this.searcher
+  }
+  public setSearchWord(word:string){
+    this.searcher.next(word)
   }
 }

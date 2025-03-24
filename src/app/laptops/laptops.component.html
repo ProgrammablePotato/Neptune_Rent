@@ -30,6 +30,9 @@
     </button>
 </div>
 
+<div class="search-box">
+    <input type="text" placeholder="Search products..." [(ngModel)]="searchTerm">
+</div>
 
 <div class="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 rounded-lg xl:max-w-[80vw] xl:ml-auto xl:mr-auto 2xl:max-w-[80vw]">
     <div class="p-3 m-1 rounded-lg dark:bg-gray-800 dark:border-gray-700 flex md:block" *ngFor="let laptop of laptops">

@@ -30,6 +30,12 @@ export class HomeComponent {
     })
   }
 
+  searchProducts() {
+    this.search.getSearchWord().subscribe((res) => {
+      this.searchTerm = res
+    })
+  }
+
   prevSlide() {
     if (this.currentSlideIndex > 0) {
       this.currentSlideIndex--
@@ -60,8 +66,5 @@ export class HomeComponent {
     this.products = await this.base.getProductsByCategory(cat)
     console.log("Products: ", this.products)
     this.base.roundPrices()
-  }
-  searchProducts() {
-
   }
 }
