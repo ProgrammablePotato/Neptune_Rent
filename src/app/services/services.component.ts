@@ -1,8 +1,8 @@
-import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { BaseService } from '../base.service';
 import { NewsService } from '../news.service';
+import { SearchService } from '../search.service';
 
 @Component({
   selector: 'app-services',
@@ -13,9 +13,10 @@ export class ServicesComponent {
   products: any = []
   services: any = []
   serviceNews: any[] = []
-  currentSlideIndex: number = 0;
+  currentSlideIndex: number = 0
+  searchTerm: string = ''
 
-  constructor(private base: BaseService, private http: HttpClient, private router: Router, private news: NewsService) {
+  constructor(private base: BaseService, private search: SearchService, private router: Router, private news: NewsService) {
     this.base.currentPage = this.router.url
     this.getServices()
     this.getNews()
@@ -31,6 +32,12 @@ export class ServicesComponent {
     this.news.getServiceNews().subscribe((data) => {
       this.serviceNews = data.articles.slice(0, 5)
       console.log(this.serviceNews)
+    })
+  }
+
+  searchProducts() {
+    this.search.getSearchWord().subscribe((res) => {
+      this.searchTerm = res
     })
   }
 
