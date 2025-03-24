@@ -84,11 +84,23 @@ async function addProduct(detail){
     }
 }
 
+async function getBrand(){
+    const query = `select distinct brand from products`
+    try{
+        const rows = await db.query(query)
+        return rows
+    }
+    catch(error){
+        console.error(error)
+    }
+}
+
 module.exports = {
     createProduct,
     getAllProducts,
     getProduct,
     deleteProduct,
     editProduct,
-    addProduct
+    addProduct,
+    getBrand
 }
