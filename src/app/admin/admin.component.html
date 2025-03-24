@@ -1,21 +1,21 @@
-<button routerLink="prodeditor" class="p-2">1</button>
-<button routerLink="uview">2</button>
+<!-- <button routerLink="prodeditor" class="p-2">1</button>
+<button routerLink="uview">2</button> -->
 
 
-<div class="flex xl:w-2/3 w-full mr-auto ml-auto">
-    <div class="bg-gray-800 rounded-lg p-2 m-2 flex-1 flex">
-        <img src="cat.jfif" alt="" class="rounded-md flex-1">
-        <div class="m-2 w-full relative flex-1">
-            <p class="text-white text-lg">Edit or delete products here.</p>
-            <button routerLink="prodeditor" class="font-bold rounded-lg text-center w-full bg-green-600 h-1/5 absolute bottom-0">Products</button>
+<div class="md:flex xl:w-2/3 w-full mr-auto ml-auto">
+    <div class="bg-gray-800 rounded-lg p-2 m-2 flex-1 md:flex">
+        <img src="cat.jfif" alt="" class="rounded-md flex-1 max-h-fit w-1/2">
+        <div class="md:m-2 w-full relative flex-1">
+            <p class="text-white text-lg md:m-0 mb-5 mt-5">Edit or delete products here.</p>
+            <button routerLink="prodeditor" class="p-2 font-bold rounded-lg text-center w-full bg-green-600 md:h-1/5 min-h-fit md:absolute bottom-0">Products</button>
         </div>
     </div>
-    <div class="bg-gray-800 rounded-lg p-2 m-2 flex-1 flex">
-        <div class="m-2 w-full relative flex-1">
-            <p class="text-white text-lg">Modify user permissions or delete users here.</p>
-            <button routerLink="uview" class="font-bold rounded-lg text-center w-full bg-green-600 h-1/5 absolute bottom-0">Users</button>
+    <div class="bg-gray-800 rounded-lg p-2 m-2 flex-1 md:flex">
+        <img src="cat.jfif" alt="" class="rounded-md flex-1 max-h-fit w-1/2">
+        <div class="md:m-2 w-full relative flex-1">
+            <p class="text-white text-lg md:m-0 mb-5 mt-5">Modify user permissions or delete users here.</p>
+            <button routerLink="uview" class="p-2 font-bold rounded-lg text-center w-full bg-green-600 md:h-1/5 min-h-fit md:absolute bottom-0">Users</button>
         </div>
-        <img src="cat.jfif" alt="" class="rounded-md flex-1">
     </div>
 </div>
 <router-outlet></router-outlet>
