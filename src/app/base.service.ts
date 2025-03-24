@@ -13,7 +13,6 @@ export class BaseService {
 
   constructor (private auth:AuthService, private http:HttpClient) {
     this.getProducts()
-    this.getProduct(1)
     this.getUsers()
   }
 
@@ -39,13 +38,6 @@ export class BaseService {
     })
   }
 
-  getProduct(id:number) {
-    this.http.get(`${this.apiUrl}/products/${id}`).subscribe((prod:any) => {
-      console.log("Product: ",prod)
-      return prod
-    })
-  }
-
   getProductsByCategory(cat: string): Promise<any[]> {
     return new Promise((resolve) => {
       if (this.products.length > 0) {
@@ -57,6 +49,23 @@ export class BaseService {
         })
       }
     })
+  }
+
+  getProductsByBrand(): Promise<any[]> {
+    return new Promise((resolve) => {
+      if (this.products.length > 0) {
+        resolve(this.products)
+      } else {
+        this.http.get(`${this.apiUrl}/products/getBrand`).subscribe((prods: any) => {
+          this.products = prods
+          resolve(this.products)
+        })
+      }
+    })
+  }
+
+  getProdByBrand(){
+    return this.http.get(`${this.apiUrl}/products/getBrand`)
   }
 
   getProductByCategoryAndId(cat: string, id: number) {

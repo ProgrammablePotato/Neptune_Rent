@@ -31,12 +31,10 @@
 </div>
 
 <div class="category-filter">
-    <button class="category-btn" (click)="getProducts()">All Products</button><br>
-    <button class="category-btn" (click)="getProductsByCategory('laptops')">Laptops</button><br>
-    <button class="category-btn" (click)="getProductsByCategory('pcs')">pcs</button><br>
-    <button class="category-btn" (click)="getProductsByCategory('servers')">servers</button><br>
-    <button class="category-btn" (click)="getProductsByCategory('accessories')">accessories</button><br>
-    <button class="category-btn" (click)="getProductsByCategory('services')">services</button>
+    <button class="category-btn" (click)="getProducts()">All brands</button>
+    <div *ngFor="let brand of brand">
+        <button class="category-btn" (click)="getProducts()">{{brand.brand}}</button>
+    </div>
 </div>
 
 <div class="search-box">

@@ -16,11 +16,13 @@ export class HomeComponent {
   products:any = []
   filteredProducts:any = []
   searchTerm: string = '' 
+  brand:any[] = []
 
   constructor(private news:NewsService, private base:BaseService, private router:Router, private search:SearchService){
     this.base.currentPage = this.router.url
     this.getNews()
     this.getProducts()
+    this.getProductsByBrand()
   }
 
   async getNews(){
@@ -62,9 +64,10 @@ export class HomeComponent {
     this.base.roundPrices()
   }
 
-  async getProductsByCategory(cat: string) {
-    this.products = await this.base.getProductsByCategory(cat)
-    console.log("Products: ", this.products)
-    this.base.roundPrices()
+  getProductsByBrand() {
+    this.base.getProdByBrand().subscribe((data) => {
+      this.brand = data as any[]
+      console.log("Brand: ", this.brand)
+    })
   }
 }

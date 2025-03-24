@@ -14,11 +14,20 @@ export class AccessoriesComponent {
   accNews: any[] = []
   currentSlideIndex: number = 0
   searchTerm: string = ''
+  brand: any[] = []
 
   constructor(private base: BaseService, private router: Router, private news: NewsService, private search:SearchService) {
     this.base.currentPage = this.router.url
     this.getAccessories()
     this.getNews()
+    this.getProductsByBrand()
+  }
+
+  getProductsByBrand() {
+    this.base.getProdByBrand().subscribe((data) => {
+      this.brand = data as any[]
+      console.log("Brand: ", this.brand)
+    })
   }
 
   async getNews(){
