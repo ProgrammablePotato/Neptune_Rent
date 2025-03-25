@@ -11,10 +11,11 @@ import { SearchService } from '../search.service';
 })
 export class AccessoriesComponent {
   accessories: any = []
+  filteredAccessories: any[] = []
   accNews: any[] = []
   currentSlideIndex: number = 0
   searchTerm: string = ''
-  brand: any[] = []
+  brands: any[] = []
 
   constructor(private base: BaseService, private router: Router, private news: NewsService, private search:SearchService) {
     this.base.currentPage = this.router.url
@@ -25,8 +26,8 @@ export class AccessoriesComponent {
 
   getProductsByBrand() {
     this.base.getProdByBrand().subscribe((data) => {
-      this.brand = data as any[]
-      console.log("Brand: ", this.brand)
+      this.brands = data as any[]
+      console.log("Brand: ", this.brands)
     })
   }
 
@@ -45,6 +46,7 @@ export class AccessoriesComponent {
 
   async getAccessories() {
     this.accessories = await this.base.getProductsByCategory("accessories")
+    this.filteredAccessories = this.accessories
     console.log("Accessories: ", this.accessories)
     this.base.roundPrices()
   }
@@ -67,5 +69,16 @@ export class AccessoriesComponent {
       this.currentSlideIndex = 0
       console.log(this.currentSlideIndex)
     }
+  }
+
+  filterBrand(brand:String) {
+    for (let i = 0; i < this.accessories.length; i++) {
+      if (this.accessories[i].brand === brand) {
+        this.filteredAccessories.push(this.accessories[i])
+      }
+    }
+  }
+  resetFilter() {
+    this.filteredAccessories = this.accessories
   }
 }

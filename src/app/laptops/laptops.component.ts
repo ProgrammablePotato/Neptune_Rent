@@ -15,6 +15,7 @@ export class LaptopsComponent {
   laptopNews: any[] = []
   currentSlideIndex: number = 0
   searchTerm: string = ''
+  brands: any[] = []
 
   constructor(private base: BaseService, private search: SearchService, private router: Router, private news: NewsService) {
     this.base.currentPage = this.router.url
@@ -59,5 +60,8 @@ export class LaptopsComponent {
       this.currentSlideIndex = 0
       console.log(this.currentSlideIndex)
     }
+  }
+  filterBrand(brand:String) {
+
   }
 }

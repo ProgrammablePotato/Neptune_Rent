@@ -15,7 +15,7 @@ export class PcsComponent {
   pcNews: any[] = []
   currentSlideIndex: number = 0
   searchTerm: string = ''
-  brand: any[] = []
+  brands: any[] = []
 
   constructor(private base: BaseService, private search: SearchService, private router: Router, private news: NewsService) {
     this.base.currentPage = this.router.url
@@ -45,8 +45,8 @@ export class PcsComponent {
 
   getProductsByBrand() {
     this.base.getProdByBrand().subscribe((data) => {
-      this.brand = data as any[]
-      console.log("Brand: ", this.brand)
+      this.brands = data as any[]
+      console.log("Brand: ", this.brands)
     })
   }
 
