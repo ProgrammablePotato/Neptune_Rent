@@ -63,13 +63,13 @@ export class AccessoriesComponent {
   }
 
   filterBrand(brand:String) {
-    this.hideDropdown()
     this.filteredAccessories = []
     this.accessories.forEach((element:any) => {
       if (element.brand == brand) {
         this.filteredAccessories.push(element)
       }
-    });
+    })
+    this.hideDropdown()
     console.log(this.filteredAccessories)
   }
   resetFilter() {
@@ -77,8 +77,6 @@ export class AccessoriesComponent {
     this.filteredAccessories = this.accessories
   }
   hideDropdown() {
-    let dropdown = document.getElementById("dropdown")
-    console.log(dropdown?.getAttribute("aria-hidden"))
-    dropdown?.setAttribute("aria-hidden","false")
+    document.getElementById('dropdown')?.classList.toggle('hidden')
   }
 }
