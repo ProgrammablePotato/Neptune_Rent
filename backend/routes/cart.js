@@ -64,17 +64,16 @@ router.delete('delCart/:id', async (req, res) => {
     }
 })
 
-
-//csak tesztelésre
-router.get('testcart/:id', async (req, res) => {
+router.get('/test/:id', async (req, res) => {
     try {
         const cart = await cartService.getTestCart(req.params.id)
         if (cart.length === 0) {
             return res.json({ message: 'Nincs termék a felhasználó kosarában' })
         }
         res.json(cart)
-    } catch (error) {
-        res.status(500).json({message:error.message})
+    }
+    catch (error) {
+        res.status(500).json({ message: error.message })
     }
 })
 

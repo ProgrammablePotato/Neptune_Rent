@@ -79,9 +79,10 @@ async function deleteCart(id){
     }
 }
 
-async function getTestCart(id) {
+async function getTestCart(user_id) {
     const query = `select contents from cart_test where user_id = ?`
-    const params = [id]
+    const params = [user_id]
+    console.log(query, params)
     try {
         const row = await db.query(query, params)
         if (!row) throw new Error("A keresett kosár nem található!")
