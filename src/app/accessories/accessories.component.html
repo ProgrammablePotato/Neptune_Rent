@@ -29,8 +29,8 @@
   </button>
 </div>
 
-<div class="m-5 bg-gray-800 p-5 rounded-lg flex justify-end">
-  <div class="lg:w-1/2 w-full flex float-right">
+<div class="m-5 bg-gray-800 p-5 rounded-lg flex">
+  <div class="lg:w-1 w-full flex float-right">
     <div class="flex-1">
       <p class="text-white text-xl mb-1">Search:</p><br>
       <input type="text" placeholder="Search products..." [(ngModel)]="searchTerm" class="bg-gray-600 p-2 rounded-lg text-white">
@@ -53,12 +53,6 @@
             </li>
           </ul>
       </div>
-    </div>
-    <div class="relative">
-      <label for="price-range-input" class="text-white">Select max price:</label>
-      <input  id="price-range-input" type="range" value="50" min="1" max="100" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700" (mousemove)="priceFilter()">
-      <span class="text-sm text-gray-500 dark:text-gray-400 absolute start-0 bottom-3">Min (${{priceRanges[0]}})</span>
-      <span class="text-sm text-gray-500 dark:text-gray-400 absolute end-0 bottom-3">Max (${{priceRanges[1]}})</span>
     </div>
   </div>
 </div>

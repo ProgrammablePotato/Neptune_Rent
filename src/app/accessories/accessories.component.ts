@@ -27,12 +27,12 @@ export class AccessoriesComponent {
     this.getNews()
   }
 
-  // getProductsByBrand() {
-  //   this.base.getProdByBrand().subscribe((data) => {
-  //     this.brands = data as any[]
-  //     console.log("Brand: ", this.brands)
-  //   })
-  // }
+  getProductsByBrand() {
+    this.base.getProdByBrand().subscribe((data) => {
+      this.brands = data as any[]
+      console.log("Brand: ", this.brands)
+    })
+  }
 
   getBrandNames() {
     for (let i = 0; i < this.accessories.length; i++) {
@@ -62,7 +62,6 @@ export class AccessoriesComponent {
     this.base.roundPrices()
     this.filteredAccessories = this.accessories
     this.getBrandNames()
-    this.getPrices()
   }
 
   filterBrand(brand:String) {
@@ -83,28 +82,5 @@ export class AccessoriesComponent {
     let dropdown = document.getElementById("dropdown")
     console.log(dropdown?.getAttribute("aria-hidden"))
     dropdown?.setAttribute("aria-hidden","false")
-  }
-  getPrices() {
-    var prices:number[] = []
-    this.filteredAccessories.forEach((element:any) => {
-      prices.push(element.price)
-    });
-    this.priceRanges[0] = Math.min(...prices)
-    this.priceRanges[1] = Math.max(...prices)
-    // this.priceRanges[1] = this.priceRanges[0]+((this.priceRanges[3]-this.priceRanges[0])*0.33)
-    // this.priceRanges[1] = (Math.round(this.priceRanges[1]*100))/100
-    // this.priceRanges[2] = this.priceRanges[0]+((this.priceRanges[3]-this.priceRanges[0])*0.66)
-    // this.priceRanges[2] = (Math.round(this.priceRanges[2]*100))/100
-    console.log(this.priceRanges)
-  }
-  async getPriceRanges(index:number) {
-    return String(this.priceRanges[index])
-  }
-
-  priceFilter() {
-    console.log("AAAAAA")
-    var slider = <HTMLInputElement>document.getElementById('price-range-input')
-    var val = slider?.value
-    console.log(val)
   }
 }
