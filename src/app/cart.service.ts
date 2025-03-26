@@ -9,9 +9,13 @@ import { Observable } from 'rxjs';
 export class CartService {
 
 
-  constructor(private http:HttpClient, private auth:AuthService) { }
+  constructor(private http:HttpClient, private auth:AuthService) {
 
-  private cartApi = 'http://localhost:3000/cart'
+  }
 
-  
+  private cartApi = 'http://localhost:3000/cart/'
+
+  getCart(id:number) {
+    return this.http.get(this.cartApi+'testcart/'+id)
+  }
 }

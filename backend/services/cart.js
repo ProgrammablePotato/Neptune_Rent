@@ -79,11 +79,25 @@ async function deleteCart(id){
     }
 }
 
+async function getTestCart(id) {
+    const query = `select contents from cart_test where user_id = ?`
+    const params = [id]
+    try {
+        const row = await db.query(query, params)
+        if (!row) throw new Error("A keresett kosár nem található!")
+        return row
+    } catch (error) {
+        console.error(error)
+        throw error
+    }
+}
+
 module.exports = {
     getUserCartById,
     getUserCartByName,
     addToUserCart,
     updateUserCart,
     getAllCart,
-    deleteCart
+    deleteCart,
+    getTestCart
 }
