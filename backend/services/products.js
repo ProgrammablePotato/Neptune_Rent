@@ -95,6 +95,18 @@ async function getBrand(){
     }
 }
 
+async function getBrandByCategory(category){
+    const query = `select distinct brand from products where category = ?`
+    const params = [category]
+    try{
+        const rows = await db.query(query, params)
+        return rows
+    }
+    catch(error){
+        console.error(error)
+    }
+}
+
 module.exports = {
     createProduct,
     getAllProducts,
@@ -102,5 +114,6 @@ module.exports = {
     deleteProduct,
     editProduct,
     addProduct,
-    getBrand
+    getBrand,
+    getBrandByCategory
 }
