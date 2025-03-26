@@ -16,6 +16,6 @@ export class CartService {
   private cartApi = 'http://localhost:3000/cart/'
 
   getCart(id:number) {
-    return this.http.get(this.cartApi+'testcart/'+id)
+    return this.http.get(this.cartApi+'test/'+id)
   }
 }

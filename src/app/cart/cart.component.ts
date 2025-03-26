@@ -19,7 +19,7 @@ export class CartComponent implements OnInit {
     this.cartId = this.activeRouter.snapshot.paramMap.get('id')
     console.log(this.cartId)
     this.cartService.getCart(this.cartId).subscribe((data) => {
-      console.log("Cart contents",data)
+      console.log("Cart contents:",data)
     })
   }
 }
