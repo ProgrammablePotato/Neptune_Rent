@@ -3,6 +3,7 @@ import { BaseService } from '../base.service';
 import { Router } from '@angular/router';
 import { NewsService } from '../news.service';
 import { SearchService } from '../search.service';
+import { initFlowbite } from 'flowbite';
 
 @Component({
   selector: 'app-accessories',
@@ -62,13 +63,22 @@ export class AccessoriesComponent {
   }
 
   filterBrand(brand:String) {
-    for (let i = 0; i < this.accessories.length; i++) {
-      if (this.accessories[i].brand === brand) {
-        this.filteredAccessories.push(this.accessories[i])
+    this.hideDropdown()
+    this.filteredAccessories = []
+    this.accessories.forEach((element:any) => {
+      if (element.brand == brand) {
+        this.filteredAccessories.push(element)
       }
-    }
+    });
+    console.log(this.filteredAccessories)
   }
   resetFilter() {
+    this.hideDropdown()
     this.filteredAccessories = this.accessories
+  }
+  hideDropdown() {
+    let dropdown = document.getElementById("dropdown")
+    console.log(dropdown?.getAttribute("aria-hidden"))
+    dropdown?.setAttribute("aria-hidden","false")
   }
 }
