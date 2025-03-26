@@ -67,13 +67,13 @@ export class AccessoriesComponent {
   }
 
   filterBrand(brand:String) {
-    this.hideDropdown()
     this.filteredAccessories = []
     this.accessories.forEach((element:any) => {
       if (element.brand == brand) {
         this.filteredAccessories.push(element)
       }
-    });
+    })
+    this.hideDropdown()
     console.log(this.filteredAccessories)
   }
   resetFilter() {
