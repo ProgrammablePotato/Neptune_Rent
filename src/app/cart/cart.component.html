@@ -1,16 +1,21 @@
 <div class="cart-container">
     <h2>Kosár tartalma</h2>
-        <div *ngIf="cartItems.length > 0; else emptyCart">
-        <div *ngFor="let item of cartItems" class="cart-item">
+        <div *ngIf="product.length > 0; else emptyCart">
+        <div *ngFor="let product of product" class="cart-item">
         <p>
-            <strong>Termék ID: {{ item.id }}</strong>
+            <strong>Termék ID: {{ product.id }}</strong>
         </p>
-        <p>Mennyiség: {{ item.quantity }}</p>
-        <p>Ár: {{ item.price | currency }}</p>
+        <p>Termék neve: {{product.name}}</p>
+        <p>Mennyiség: {{ product.quantity }}</p>
+        <p>Ár: {{ product.price | currency }}</p>
         </div>
         <h3>Összesen: {{ totalPrice | currency }}</h3>
     </div>
     <ng-template #emptyCart>
         <p>A kosár üres.</p>
     </ng-template>
+</div>
+
+<div *ngFor="let product of product">
+    {{product.price | json}}
 </div>

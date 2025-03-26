@@ -1,7 +1,7 @@
 import { Component, OnInit} from '@angular/core';
 import { CartService } from '../cart.service';
-import { AuthService } from '../auth.service';
 import { ActivatedRoute } from '@angular/router';
+import { BaseService } from '../base.service';
 @Component({
   selector: 'app-cart',
   templateUrl: './cart.component.html',
@@ -9,29 +9,20 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class CartComponent implements OnInit {
   cartId:any
-  cartItems: any[] = []
+  product: any[] = []
+  price: number = 0
+  quantity: number = 0
   totalPrice: number = 0
 
-  constructor(private cartService: CartService, private auth:AuthService, private activeRouter: ActivatedRoute) {}
+  constructor(private cartService: CartService, private base:BaseService, private activeRouter: ActivatedRoute) {}
 
-  getCart() {
-    this.cartService.getCart(this.cartId).subscribe((data: any) => {
-      try {
-        if (data.length > 0 && data[0].contents) {
-          const parsedContents = JSON.parse(data[0].contents.replace(/'/g, '"'))
-          this.cartItems = Object.entries(parsedContents).map(([productId, quantity]) => ({
-            id: productId,
-            quantity: quantity,
-            price: this.totalPrice
-          }))
-        } else {
-          this.cartItems = []
-        }
-        this.totalPrice = this.cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0)
-      } catch (error) {
-        console.error('Hiba a kosár adatainak feldolgozásakor:', error)
-        this.cartItems = []
-      }
+  getCart(){
+    this.cartService.getCart(this.cartId).subscribe((data:any) => {
+      console.log("cucc", data)
+      this.product = data
+      this.price = Number.parseFloat(data.price)
+      this.quantity = data.quantity
+      this.totalPrice = this.price * this.quantity
     })
   }
 
