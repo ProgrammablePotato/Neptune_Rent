@@ -12,7 +12,7 @@ import { min } from 'rxjs';
   styleUrl: './accessories.component.css'
 })
 export class AccessoriesComponent {
-  priceRanges:number[] = [0,0,0,0]
+  priceRanges = [0,0]
 
   accessories: any = []
   filteredAccessories: any = []
@@ -25,7 +25,6 @@ export class AccessoriesComponent {
     this.base.currentPage = this.router.url
     this.getAccessories()
     this.getNews()
-    // this.getProductsByBrand()
   }
 
   // getProductsByBrand() {
@@ -91,14 +90,21 @@ export class AccessoriesComponent {
       prices.push(element.price)
     });
     this.priceRanges[0] = Math.min(...prices)
-    this.priceRanges[3] = Math.max(...prices)
-    this.priceRanges[1] = this.priceRanges[0]+((this.priceRanges[3]-this.priceRanges[0])*0.33)
-    this.priceRanges[1] = (Math.round(this.priceRanges[1]*100))/100
-    this.priceRanges[2] = this.priceRanges[0]+((this.priceRanges[3]-this.priceRanges[0])*0.66)
-    this.priceRanges[2] = (Math.round(this.priceRanges[2]*100))/100
+    this.priceRanges[1] = Math.max(...prices)
+    // this.priceRanges[1] = this.priceRanges[0]+((this.priceRanges[3]-this.priceRanges[0])*0.33)
+    // this.priceRanges[1] = (Math.round(this.priceRanges[1]*100))/100
+    // this.priceRanges[2] = this.priceRanges[0]+((this.priceRanges[3]-this.priceRanges[0])*0.66)
+    // this.priceRanges[2] = (Math.round(this.priceRanges[2]*100))/100
     console.log(this.priceRanges)
   }
-  getPriceRanges(index:number) {
-    return this.priceRanges[index]
+  async getPriceRanges(index:number) {
+    return String(this.priceRanges[index])
+  }
+
+  priceFilter() {
+    console.log("AAAAAA")
+    var slider = <HTMLInputElement>document.getElementById('price-range-input')
+    var val = slider?.value
+    console.log(val)
   }
 }

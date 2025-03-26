@@ -29,39 +29,37 @@
   </button>
 </div>
 
-<div class="m-5 bg-gray-800 p-5 rounded-lg flex">
-  <div class="flex-1">
-    <p class="text-white text-xl mb-1">Search:</p><br>
-    <input type="text" placeholder="Search products..." [(ngModel)]="searchTerm" class="bg-gray-600 p-2 rounded-lg text-white">
-  </div>
-
-  <div class="flex-1">
-    <button id="dropdownDefaultButton" data-dropdown-toggle="dropdown" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center" type="button">
-      Brands
-      <svg class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
-      </svg>
-    </button>
-    <!-- Dropdown menu -->
-    <div id="dropdown" class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow-sm w-44 dark:bg-gray-700" >
-        <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefaultButton allButton brandButton" aria-hidden="true">
-          <li>
-              <button (click)="resetFilter()" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white w-full text-left">All</button>
-          </li>
-          <li *ngFor="let brand of brands">
-              <button (click)="filterBrand(brand)" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white w-full text-left">{{brand}}</button>
-          </li>
-        </ul>
+<div class="m-5 bg-gray-800 p-5 rounded-lg flex justify-end">
+  <div class="lg:w-1/2 w-full flex float-right">
+    <div class="flex-1">
+      <p class="text-white text-xl mb-1">Search:</p><br>
+      <input type="text" placeholder="Search products..." [(ngModel)]="searchTerm" class="bg-gray-600 p-2 rounded-lg text-white">
     </div>
-  </div>
-
-  <div class="flex-1">
-    <label for="default-range" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select the maximum price</label>
-    <input id="default-range" type="range" value="50" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700">
-    <span class="text-sm text-gray-500 dark:text-gray-400 absolute start-0 -bottom-6">{{priceRanges[0]}}</span>
-    <span class="text-sm text-gray-500 dark:text-gray-400 absolute start-1/3 -translate-x-1/2 rtl:translate-x-1/2 -bottom-6">{{priceRanges[1]}}</span>
-    <span class="text-sm text-gray-500 dark:text-gray-400 absolute start-2/3 -translate-x-1/2 rtl:translate-x-1/2 -bottom-6">{{getPriceRanges(2)}}</span>
-    <span class="text-sm text-gray-500 dark:text-gray-400 absolute end-0 -bottom-6">{{getPriceRanges(3)}}</span>
+    <div class="flex-1">
+      <button id="dropdownDefaultButton" data-dropdown-toggle="dropdown" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center" type="button">
+        Brands
+        <svg class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
+        </svg>
+      </button>
+      <!-- Dropdown menu -->
+      <div id="dropdown" class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow-sm w-44 dark:bg-gray-700" >
+          <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefaultButton allButton brandButton" aria-hidden="true">
+            <li>
+                <button (click)="resetFilter()" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white w-full text-left">All</button>
+            </li>
+            <li *ngFor="let brand of brands">
+                <button (click)="filterBrand(brand)" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white w-full text-left">{{brand}}</button>
+            </li>
+          </ul>
+      </div>
+    </div>
+    <div class="relative">
+      <label for="price-range-input" class="text-white">Select max price:</label>
+      <input  id="price-range-input" type="range" value="50" min="1" max="100" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700" (mousemove)="priceFilter()">
+      <span class="text-sm text-gray-500 dark:text-gray-400 absolute start-0 bottom-3">Min (${{priceRanges[0]}})</span>
+      <span class="text-sm text-gray-500 dark:text-gray-400 absolute end-0 bottom-3">Max (${{priceRanges[1]}})</span>
+    </div>
   </div>
 </div>
 
