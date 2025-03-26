@@ -11,28 +11,38 @@ import { SearchService } from '../search.service';
 })
 export class AccessoriesComponent {
   accessories: any = []
-  filteredAccessories: any[] = []
+  filteredAccessories: any = []
+  
   accNews: any[] = []
-  currentSlideIndex: number = 0
   searchTerm: string = ''
-  brands: any[] = []
+  brands: String[] = []
 
   constructor(private base: BaseService, private router: Router, private news: NewsService, private search:SearchService) {
     this.base.currentPage = this.router.url
     this.getAccessories()
     this.getNews()
-    this.getProductsByBrand()
+    // this.getProductsByBrand()
   }
 
-  getProductsByBrand() {
-    this.base.getProdByBrand().subscribe((data) => {
-      this.brands = data as any[]
-      console.log("Brand: ", this.brands)
-    })
+  // getProductsByBrand() {
+  //   this.base.getProdByBrand().subscribe((data) => {
+  //     this.brands = data as any[]
+  //     console.log("Brand: ", this.brands)
+  //   })
+  // }
+
+  getBrandNames() {
+    console.log(this.accessories.length)
+    for (let i = 0; i < this.accessories.length; i++) {
+      if (!this.brands.includes(this.accessories[i].brand)) {
+        this.brands.push(this.accessories[i].brand)
+      }
+    }
+    console.log("Brand names:"+this.brands)
   }
 
   async getNews(){
-    this.news.getAccessNews().subscribe((data) => {
+    await this.news.getAccessNews().subscribe((data) => {
       this.accNews = data.articles.slice(0, 5)
       console.log(this.accNews)
     })
@@ -46,29 +56,10 @@ export class AccessoriesComponent {
 
   async getAccessories() {
     this.accessories = await this.base.getProductsByCategory("accessories")
-    this.filteredAccessories = this.accessories
     console.log("Accessories: ", this.accessories)
     this.base.roundPrices()
-  }
-
-  prevSlide() {
-    if (this.currentSlideIndex > 0) {
-      this.currentSlideIndex--
-      console.log(this.currentSlideIndex)
-    } else {
-      this.currentSlideIndex = this.accNews.length - 1
-      console.log(this.currentSlideIndex)
-    }
-  }
-
-  nextSlide() {
-    if (this.currentSlideIndex < this.accNews.length - 1) {
-      this.currentSlideIndex++
-      console.log(this.currentSlideIndex)
-    } else {
-      this.currentSlideIndex = 0
-      console.log(this.currentSlideIndex)
-    }
+    this.filteredAccessories = this.accessories
+    this.getBrandNames()
   }
 
   filterBrand(brand:String) {
