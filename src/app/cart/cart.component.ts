@@ -22,7 +22,7 @@ export class CartComponent implements OnInit {
           this.cartItems = Object.entries(parsedContents).map(([productId, quantity]) => ({
             id: productId,
             quantity: quantity,
-            price: 100
+            price: this.totalPrice
           }))
         } else {
           this.cartItems = []
