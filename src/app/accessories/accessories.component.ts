@@ -12,7 +12,7 @@ import { SearchService } from '../search.service';
 export class AccessoriesComponent {
   accessories: any = []
   filteredAccessories: any = []
-  
+
   accNews: any[] = []
   searchTerm: string = ''
   brands: String[] = []
@@ -32,7 +32,6 @@ export class AccessoriesComponent {
   // }
 
   getBrandNames() {
-    console.log(this.accessories.length)
     for (let i = 0; i < this.accessories.length; i++) {
       if (!this.brands.includes(this.accessories[i].brand)) {
         this.brands.push(this.accessories[i].brand)
