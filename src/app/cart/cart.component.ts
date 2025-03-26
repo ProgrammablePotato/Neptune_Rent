@@ -9,17 +9,34 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class CartComponent implements OnInit {
   cartId:any
+  cartItems: any[] = []
+  totalPrice: number = 0
 
   constructor(private cartService: CartService, private auth:AuthService, private activeRouter: ActivatedRoute) {}
 
   getCart() {
-    
+    this.cartService.getCart(this.cartId).subscribe((data: any) => {
+      try {
+        if (data.length > 0 && data[0].contents) {
+          const parsedContents = JSON.parse(data[0].contents.replace(/'/g, '"'))
+          this.cartItems = Object.entries(parsedContents).map(([productId, quantity]) => ({
+            id: productId,
+            quantity: quantity,
+            price: 100
+          }))
+        } else {
+          this.cartItems = []
+        }
+        this.totalPrice = this.cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0)
+      } catch (error) {
+        console.error('Hiba a kosár adatainak feldolgozásakor:', error)
+        this.cartItems = []
+      }
+    })
   }
+
   ngOnInit(): void {
     this.cartId = this.activeRouter.snapshot.paramMap.get('id')
-    console.log(this.cartId)
-    this.cartService.getCart(this.cartId).subscribe((data) => {
-      console.log("Cart contents:",data)
-    })
+    this.getCart()
   }
 }

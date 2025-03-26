@@ -1,1 +1,16 @@
-<p>cart works!</p>
+<div class="cart-container">
+    <h2>Kosár tartalma</h2>
+        <div *ngIf="cartItems.length > 0; else emptyCart">
+        <div *ngFor="let item of cartItems" class="cart-item">
+        <p>
+            <strong>Termék ID: {{ item.id }}</strong>
+        </p>
+        <p>Mennyiség: {{ item.quantity }}</p>
+        <p>Ár: {{ item.price | currency }}</p>
+        </div>
+        <h3>Összesen: {{ totalPrice | currency }}</h3>
+    </div>
+    <ng-template #emptyCart>
+        <p>A kosár üres.</p>
+    </ng-template>
+</div>
