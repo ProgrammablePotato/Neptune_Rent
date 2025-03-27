@@ -13,16 +13,17 @@ export class HomeComponent {
 
   allNews:any = []
   currentSlideIndex: number = 0
+
   products:any = []
   filteredProducts:any = []
+
   searchTerm: string = '' 
-  brand:any[] = []
+  brands:any[] = []
 
   constructor(private news:NewsService, private base:BaseService, private router:Router, private search:SearchService){
     this.base.currentPage = this.router.url
     this.getNews()
     this.getProducts()
-    this.getProductsByBrand()
   }
 
   async getNews(){
@@ -38,36 +39,42 @@ export class HomeComponent {
     })
   }
 
-  prevSlide() {
-    if (this.currentSlideIndex > 0) {
-      this.currentSlideIndex--
-      console.log(this.currentSlideIndex)
-    } else {
-      this.currentSlideIndex = this.allNews.length - 1
-      console.log(this.currentSlideIndex)
-    }
-  }
-
-  nextSlide() {
-    if (this.currentSlideIndex < this.allNews.length - 1) {
-      this.currentSlideIndex++
-      console.log(this.currentSlideIndex)
-    } else {
-      this.currentSlideIndex = 0
-      console.log(this.currentSlideIndex)
-    }
-  }
-
   async getProducts() {
     this.products = await this.base.getProducts()
     console.log("Products: ", this.products)
     this.base.roundPrices()
+    this.filteredProducts = this.products
+    this.getBrandNames()
   }
 
-  getProductsByBrand() {
-    this.base.getProdByBrand().subscribe((data) => {
-      this.brand = data as any[]
-      console.log("Brand: ", this.brand)
+  filterBrand(brand:String) {
+    this.filteredProducts = []
+    this.products.forEach((element:any) => {
+      if (element.brand == brand) {
+        this.filteredProducts.push(element)
+      }
     })
+    this.hideDropdown()
+    console.log(this.filteredProducts)
+  }
+  resetFilter() {
+    this.hideDropdown()
+    this.filteredProducts = this.products
+  }
+  hideDropdown() {
+    let dropdown = document.getElementById("dropdown")
+    console.log(dropdown?.getAttribute("aria-hidden"))
+    dropdown?.setAttribute("aria-hidden","false")
+  }
+  getNewsNumber(news:any) {
+    return this.allNews.indexOf(news)
+  }
+  getBrandNames() {
+    for (let i = 0; i < this.products.length; i++) {
+      if (!this.brands.includes(this.products[i].brand)) {
+        this.brands.push(this.products[i].brand)
+      }
+    }
+    console.log("Brand names:"+this.brands)
   }
 }
