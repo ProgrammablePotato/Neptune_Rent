@@ -77,4 +77,13 @@ router.get('/test/:id', async (req, res) => {
     }
 })
 
+router.post('/test/:id', async (req, res) => {
+    try {
+        const cart = await cartService.addToTestCart(req.params.id, req.body.product_id)
+        res.json(cart)
+    } catch (error) {
+        res.status(500).json({ message: error.message })
+    }
+})
+
 module.exports = router
