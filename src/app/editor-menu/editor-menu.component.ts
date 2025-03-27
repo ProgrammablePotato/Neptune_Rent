@@ -21,15 +21,13 @@ export class EditorMenuComponent {
     })
   }
 
-  deleteProduct(id:number) {
-    this.base.deleteProduct(id).subscribe(
-      {
-        next: () => {
-          console.log("Item deleted!")
-          this.getProducts()
-        },
-        error: () => console.log("Error while deleting item!")
-      }
-    )
+  deleteProduct(id: number) {
+    this.base.deleteProduct(id).subscribe({
+      next: () => {
+        console.log("Item deleted!")
+        this.products = this.products.filter(p => p.id !== id)
+      },
+      error: () => console.log("Error while deleting item!")
+    })
   }
 }

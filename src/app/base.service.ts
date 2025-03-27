@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AuthService } from './auth.service';
+import { tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -88,9 +89,12 @@ export class BaseService {
     return this.http.patch(url,data)
   }
 
-  deleteProduct(id:any) {
+  deleteProduct(id: number) {
     const url = `${this.apiUrl}/products/delete/${id}`
-    console.log(url)
-    return this.http.delete(url)
+    return this.http.delete(url).pipe(
+      tap(() => {
+        this.getProducts().then(() => console.log("Product list updated after deletion"))
+      })
+    )
   }
 }
