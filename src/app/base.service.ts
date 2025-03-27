@@ -83,8 +83,12 @@ export class BaseService {
   }
 
   editProduct(id:any,data:any) {
-    const url = `${this.apiUrl}/products/${id}.json`
+    const url = `${this.apiUrl}/products/${id}`
     console.log(url)
     return this.http.patch(url,data)
+  }
+
+  deleteProduct() {
+    
   }
 }

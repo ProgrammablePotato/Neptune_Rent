@@ -20,4 +20,8 @@ export class EditorMenuComponent {
       console.log("Editor products",this.products)
     })
   }
+
+  deleteProduct() {
+    
+  }
 }
