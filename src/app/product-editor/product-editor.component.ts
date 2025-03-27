@@ -16,7 +16,7 @@ export class ProductEditorComponent {
 
   constructor(private activeRouter: ActivatedRoute, private base: BaseService) { }
 
-  ngOnInit(): void {
+  ngOnInit() {
     const category = this.activeRouter.snapshot.paramMap.get('category')
     this.productId = Number(this.activeRouter.snapshot.paramMap.get('id'))
     if (category && !isNaN(this.productId)) {

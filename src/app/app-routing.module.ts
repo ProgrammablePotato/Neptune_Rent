@@ -28,9 +28,12 @@ const routes: Routes = [
   {path: 'register', component: RegisterComponent},
   {path: 'user', component: UserComponent, canActivate:[loggedUserGuard]},
   {path: 'cart/:id', component: CartComponent, canActivate:[loggedUserGuard]},
-  {path: 'admin', component: AdminComponent, canActivate:[adminGuard], children:[{path: 'prodeditor', component: EditorMenuComponent, canActivate:[adminGuard]},
-    {path: 'uview', component: UserEditorComponent, canActivate:[adminGuard]},
-    {path: 'prodeditorr/:category/:id', component: ProductEditorComponent, canActivate:[adminGuard]}]},
+  {path: 'admin', component: AdminComponent, canActivate:[adminGuard],
+    children:[
+    {path: 'editormenu', component: EditorMenuComponent, canActivate:[adminGuard]},
+    {path: 'usereditor', component: UserEditorComponent, canActivate:[adminGuard]}
+  ]},
+  {path: 'producteditor/:category/:id', component: ProductEditorComponent, canActivate:[adminGuard]},
   {path: 'pcs', component: PcsComponent},
   {path: 'laptops', component: LaptopsComponent},
   {path: 'servers', component: ServersComponent},
