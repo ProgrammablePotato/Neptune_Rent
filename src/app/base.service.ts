@@ -88,7 +88,9 @@ export class BaseService {
     return this.http.patch(url,data)
   }
 
-  deleteProduct() {
-    
+  deleteProduct(id:any) {
+    const url = `${this.apiUrl}/products/delete/${id}`
+    console.log(url)
+    return this.http.delete(url)
   }
 }

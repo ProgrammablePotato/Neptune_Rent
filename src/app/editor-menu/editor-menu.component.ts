@@ -21,7 +21,12 @@ export class EditorMenuComponent {
     })
   }
 
-  deleteProduct() {
-    
+  deleteProduct(id:number) {
+    this.base.deleteProduct(id).subscribe(
+      {
+        next: () => console.log("Item deleted!"),
+        error: () => console.log("Error while deleting item!!")
+      }
+    )
   }
 }

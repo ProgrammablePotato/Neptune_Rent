@@ -83,4 +83,7 @@ export class AccessoriesComponent {
     console.log(dropdown?.getAttribute("aria-hidden"))
     dropdown?.setAttribute("aria-hidden","false")
   }
+  getNewsNumber(news:any) {
+    return this.accNews.indexOf(news)
+  }
 }

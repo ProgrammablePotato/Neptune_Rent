@@ -50,7 +50,7 @@ router.patch('/:id', async (req, res) => {
     }
 })
 
-router.delete('delProd/:id', async (req, res) => {
+router.delete('/delete/:id', async (req, res) => {
     try {
         const product = await productService.deleteProduct(req.params.id)
         res.json(product)
