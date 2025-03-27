@@ -25,7 +25,7 @@ export class EditorMenuComponent {
     this.base.deleteProduct(id).subscribe(
       {
         next: () => console.log("Item deleted!"),
-        error: () => console.log("Error while deleting item!!")
+        error: () => console.log("Error while deleting item!")
       }
     )
   }

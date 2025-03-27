@@ -11,9 +11,11 @@ import { SearchService } from '../search.service';
 })
 export class LaptopsComponent {
   products: any = []
+
   laptops: any = []
+  filteredLaptops: any = []
+
   laptopNews: any[] = []
-  currentSlideIndex: number = 0
   searchTerm: string = ''
   brands: any[] = []
 
@@ -27,6 +29,8 @@ export class LaptopsComponent {
     this.laptops = await this.base.getProductsByCategory("laptops")
     console.log("Laptops: ", this.laptops)
     this.base.roundPrices()
+    this.filteredLaptops = this.laptops
+    this.getBrandNames()
   }
 
   async getNews(){
@@ -41,27 +45,34 @@ export class LaptopsComponent {
       this.searchTerm = res
     })
   }
-
-  prevSlide() {
-    if (this.currentSlideIndex > 0) {
-      this.currentSlideIndex--
-      console.log(this.currentSlideIndex)
-    } else {
-      this.currentSlideIndex = this.laptopNews.length - 1
-      console.log(this.currentSlideIndex)
-    }
-  }
-
-  nextSlide() {
-    if (this.currentSlideIndex < this.laptopNews.length - 1) {
-      this.currentSlideIndex++
-      console.log(this.currentSlideIndex)
-    } else {
-      this.currentSlideIndex = 0
-      console.log(this.currentSlideIndex)
-    }
-  }
   filterBrand(brand:String) {
-
+    this.filteredLaptops = []
+    this.laptops.forEach((element:any) => {
+      if (element.brand == brand) {
+        this.filteredLaptops.push(element)
+      }
+    })
+    this.hideDropdown()
+    console.log(this.filteredLaptops)
+  }
+  resetFilter() {
+    this.hideDropdown()
+    this.filteredLaptops = this.laptops
+  }
+  hideDropdown() {
+    let dropdown = document.getElementById("dropdown")
+    console.log(dropdown?.getAttribute("aria-hidden"))
+    dropdown?.setAttribute("aria-hidden","false")
+  }
+  getNewsNumber(news:any) {
+    return this.laptopNews.indexOf(news)
+  }
+  getBrandNames() {
+    for (let i = 0; i < this.laptops.length; i++) {
+      if (!this.brands.includes(this.laptops[i].brand)) {
+        this.brands.push(this.laptops[i].brand)
+      }
+    }
+    console.log("Brand names:"+this.brands)
   }
 }

@@ -49,8 +49,4 @@ export class ProductEditorComponent {
       }
     )
   }
-
-  deleteProduct() {
-
-  }
 }

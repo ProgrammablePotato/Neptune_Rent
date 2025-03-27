@@ -11,10 +11,14 @@ import { SearchService } from '../search.service';
 })
 export class ServicesComponent {
   products: any = []
+
   services: any = []
+  filteredServices:any = []
+
   serviceNews: any[] = []
   currentSlideIndex: number = 0
   searchTerm: string = ''
+  brands:any[] = []
 
   constructor(private base: BaseService, private search: SearchService, private router: Router, private news: NewsService) {
     this.base.currentPage = this.router.url
@@ -26,6 +30,8 @@ export class ServicesComponent {
     this.services = await this.base.getProductsByCategory("services")
     console.log("Services: ", this.services)
     this.base.roundPrices()
+    this.filteredServices = this.services
+    this.getBrandNames()
   }
 
   async getNews() {
@@ -41,23 +47,34 @@ export class ServicesComponent {
     })
   }
 
-  prevSlide() {
-    if (this.currentSlideIndex > 0) {
-      this.currentSlideIndex--
-      console.log(this.currentSlideIndex)
-    } else {
-      this.currentSlideIndex = this.serviceNews.length - 1
-      console.log(this.currentSlideIndex)
-    }
+  filterBrand(brand:String) {
+    this.filteredServices = []
+    this.services.forEach((element:any) => {
+      if (element.brand == brand) {
+        this.filteredServices.push(element)
+      }
+    })
+    this.hideDropdown()
+    console.log(this.filteredServices)
   }
-
-  nextSlide() {
-    if (this.currentSlideIndex < this.serviceNews.length - 1) {
-      this.currentSlideIndex++
-      console.log(this.currentSlideIndex)
-    } else {
-      this.currentSlideIndex = 0
-      console.log(this.currentSlideIndex)
+  resetFilter() {
+    this.hideDropdown()
+    this.filteredServices = this.services
+  }
+  hideDropdown() {
+    let dropdown = document.getElementById("dropdown")
+    console.log(dropdown?.getAttribute("aria-hidden"))
+    dropdown?.setAttribute("aria-hidden","false")
+  }
+  getNewsNumber(news:any) {
+    return this.serviceNews.indexOf(news)
+  }
+  getBrandNames() {
+    for (let i = 0; i < this.services.length; i++) {
+      if (!this.brands.includes(this.services[i].brand)) {
+        this.brands.push(this.services[i].brand)
+      }
     }
+    console.log("Brand names:"+this.brands)
   }
 }

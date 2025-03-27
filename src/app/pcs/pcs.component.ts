@@ -11,7 +11,10 @@ import { SearchService } from '../search.service';
 })
 export class PcsComponent {
   products: any = []
+
   pcs: any = []
+  filteredPcs:any = []
+
   pcNews: any[] = []
   currentSlideIndex: number = 0
   searchTerm: string = ''
@@ -21,13 +24,14 @@ export class PcsComponent {
     this.base.currentPage = this.router.url
     this.getPCs()
     this.getNews()
-    this.getProductsByBrand()
   }
 
   async getPCs() {
     this.pcs = await this.base.getProductsByCategory("pcs")
     console.log("pcs: ", this.pcs)
     this.base.roundPrices()
+    this.filteredPcs = this.pcs
+    this.getBrandNames()
   }
 
   async getNews(){
@@ -42,31 +46,34 @@ export class PcsComponent {
       this.searchTerm = res
     })
   }
-
-  getProductsByBrand() {
-    this.base.getProdByBrand().subscribe((data) => {
-      this.brands = data as any[]
-      console.log("Brand: ", this.brands)
+  filterBrand(brand:String) {
+    this.filteredPcs = []
+    this.pcs.forEach((element:any) => {
+      if (element.brand == brand) {
+        this.filteredPcs.push(element)
+      }
     })
+    this.hideDropdown()
+    console.log(this.filteredPcs)
   }
-
-  prevSlide() {
-    if (this.currentSlideIndex > 0) {
-      this.currentSlideIndex--
-      console.log(this.currentSlideIndex)
-    } else {
-      this.currentSlideIndex = this.pcNews.length - 1
-      console.log(this.currentSlideIndex)
-    }
+  resetFilter() {
+    this.hideDropdown()
+    this.filteredPcs = this.pcs
   }
-
-  nextSlide() {
-    if (this.currentSlideIndex < this.pcNews.length - 1) {
-      this.currentSlideIndex++
-      console.log(this.currentSlideIndex)
-    } else {
-      this.currentSlideIndex = 0
-      console.log(this.currentSlideIndex)
+  hideDropdown() {
+    let dropdown = document.getElementById("dropdown")
+    console.log(dropdown?.getAttribute("aria-hidden"))
+    dropdown?.setAttribute("aria-hidden","false")
+  }
+  getNewsNumber(news:any) {
+    return this.pcNews.indexOf(news)
+  }
+  getBrandNames() {
+    for (let i = 0; i < this.pcs.length; i++) {
+      if (!this.brands.includes(this.pcs[i].brand)) {
+        this.brands.push(this.pcs[i].brand)
+      }
     }
+    console.log("Brand names:"+this.brands)
   }
 }

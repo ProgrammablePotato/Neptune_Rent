@@ -11,10 +11,14 @@ import { SearchService } from '../search.service';
 })
 export class ServersComponent {
   products: any = []
+
   servers: any = []
+  filteredServers:any = []
+
   serverNews: any[] = []
   currentSlideIndex: number = 0
   searchTerm: string = ''
+  brands: any[] = []
 
   constructor(private base: BaseService, private search: SearchService, private router: Router, private news: NewsService) {
     this.base.currentPage = this.router.url
@@ -26,6 +30,8 @@ export class ServersComponent {
     this.servers = await this.base.getProductsByCategory("servers")
     console.log("Servers: ", this.servers)
     this.base.roundPrices()
+    this.filteredServers = this.servers
+    this.getBrandNames()
   }
 
   async getNews() {
@@ -41,23 +47,34 @@ export class ServersComponent {
     })
   }
 
-  prevSlide() {
-    if (this.currentSlideIndex > 0) {
-      this.currentSlideIndex--
-      console.log(this.currentSlideIndex)
-    } else {
-      this.currentSlideIndex = this.serverNews.length - 1
-      console.log(this.currentSlideIndex)
-    }
+  filterBrand(brand:String) {
+    this.filteredServers = []
+    this.servers.forEach((element:any) => {
+      if (element.brand == brand) {
+        this.filteredServers.push(element)
+      }
+    })
+    this.hideDropdown()
+    console.log(this.filteredServers)
   }
-
-  nextSlide() {
-    if (this.currentSlideIndex < this.serverNews.length - 1) {
-      this.currentSlideIndex++
-      console.log(this.currentSlideIndex)
-    } else {
-      this.currentSlideIndex = 0
-      console.log(this.currentSlideIndex)
+  resetFilter() {
+    this.hideDropdown()
+    this.filteredServers = this.servers
+  }
+  hideDropdown() {
+    let dropdown = document.getElementById("dropdown")
+    console.log(dropdown?.getAttribute("aria-hidden"))
+    dropdown?.setAttribute("aria-hidden","false")
+  }
+  getNewsNumber(news:any) {
+    return this.serverNews.indexOf(news)
+  }
+  getBrandNames() {
+    for (let i = 0; i < this.servers.length; i++) {
+      if (!this.brands.includes(this.servers[i].brand)) {
+        this.brands.push(this.servers[i].brand)
+      }
     }
+    console.log("Brand names:"+this.brands)
   }
 }
