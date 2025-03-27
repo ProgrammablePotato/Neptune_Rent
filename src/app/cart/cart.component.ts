@@ -1,33 +1,34 @@
 import { Component, OnInit} from '@angular/core';
 import { CartService } from '../cart.service';
 import { ActivatedRoute } from '@angular/router';
-import { BaseService } from '../base.service';
 @Component({
   selector: 'app-cart',
   templateUrl: './cart.component.html',
   styleUrl: './cart.component.css'
 })
 export class CartComponent implements OnInit {
-  cartId:any
-  product: any[] = []
-  price: number = 0
-  quantity: number = 0
+  cartId: any
+  cartItems: any[] = []
   totalPrice: number = 0
 
-  constructor(private cartService: CartService, private base:BaseService, private activeRouter: ActivatedRoute) {}
-
-  getCart(){
-    this.cartService.getCart(this.cartId).subscribe((data:any) => {
-      console.log("cucc", data)
-      this.product = data
-      this.price = Number.parseFloat(data.price)
-      this.quantity = data.quantity
-      this.totalPrice = this.price * this.quantity
-    })
-  }
+  constructor(private cartService: CartService, private activeRouter: ActivatedRoute) {}
 
   ngOnInit(): void {
     this.cartId = this.activeRouter.snapshot.paramMap.get('id')
-    this.getCart()
+    if (this.cartId) {
+      this.cartId = this.cartId
+      this.loadCart(this.cartId)
+    }
+  }
+
+  loadCart(id: number): void {
+    this.cartService.getCart(id).subscribe((data: any) => {
+      this.cartItems = data
+      this.calculateTotal()
+    })
+  }
+
+  calculateTotal(): void {
+    this.totalPrice = this.cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0)
   }
 }
