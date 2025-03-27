@@ -14,10 +14,25 @@ export class NewsService {
   private apiUrlServers = 'https://newsapi.org/v2/everything?q=servers&apiKey='
   private apiUrlServices = 'https://newsapi.org/v2/everything?q=networking&apiKey='
 
+  news:any = []
+
   constructor(private http: HttpClient) {}
 
   getTechNews(): Observable<any> {
     return this.http.get<any>(`${this.apiUrlTech}${this.apiKey}`)
+  }
+
+  getTechNewsNew(): Promise<Observable<any>> {
+    return new Promise((resolve) => {
+      if (this.news.length > 0) {
+        resolve(this.news)
+      } else {
+        this.http.get(`${this.apiUrlTech}${this.apiKey}`).subscribe((news:any) => {
+          this.news = news.articles.slice(0, 5)
+          resolve(this.news)
+        })
+      }
+    })
   }
 
   getAccessNews(): Observable<any> {

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NewsService } from '../news.service';
 import { BaseService } from '../base.service';
 import { Router } from '@angular/router';
@@ -9,7 +9,7 @@ import { SearchService } from '../search.service';
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit {
 
   allNews:any = []
   currentSlideIndex: number = 0
@@ -21,8 +21,12 @@ export class HomeComponent {
   brands:any[] = []
 
   constructor(private news:NewsService, private base:BaseService, private router:Router, private search:SearchService){
+    
+  }
+
+  ngOnInit(): void {
     this.base.currentPage = this.router.url
-    this.getNews()
+    this.getNewsNew()
     this.getProducts()
   }
 
@@ -30,6 +34,14 @@ export class HomeComponent {
     this.news.getTechNews().subscribe((data) => {
       this.allNews = data.articles.slice(0, 5)
       console.log(this.allNews)
+    })
+  }
+
+  async getNewsNew() {
+    await this.news.getTechNewsNew().then((news:any) => {
+      this.allNews = news
+    }).catch((error) => {
+      console.log("Nem jó")
     })
   }
 
