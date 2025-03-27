@@ -37,9 +37,14 @@
     </div>
 </div>
 
-<div class="m-2 bg-gray-800 text-white p-3 rounded-lg">
-    <span class="text-2xl m-2">Administrators' product editor menu</span>
-    <p class="text-md m-2">Attention! Deleting a product removes it forever!</p>
+<div class="m-2 bg-gray-800 text-white p-3 rounded-lg flex">
+    <div class="flex-1">
+        <span class="text-2xl m-2">Administrators' product editor menu</span>
+        <p class="text-md m-2">Attention! Deleting a product removes it forever!</p>
+    </div>
+    <div class="flex-1 h-full block mt-auto mb-auto relative">
+        <button class="p-3 bg-blue-300 rounded-lg float-right text-blue-900 font-bold" routerLink="/producteditor/new/0">Add new product</button>
+    </div>
 </div>
 
 <div class="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 rounded-lg xl:max-w-[80vw] xl:ml-auto xl:mr-auto 2xl:max-w-[80vw]">

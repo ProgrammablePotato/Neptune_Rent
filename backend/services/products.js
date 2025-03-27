@@ -70,13 +70,13 @@ async function editProduct(id, product){
 }
 
 async function addProduct(detail){
-    const {name, category, brand, price, description, image_url} = detail
-    const query = `insert into products (name, category, brand, price, description, image_url) values (?, ?, ?, ?, ?, ?)`
-    const params = [name, category, brand, price, description, image_url]
+    const {name, category, brand, price, description, image_url, stock} = detail
+    const query = `insert into products (name, category, brand, price, description, image_url, stock) values (?, ?, ?, ?, ?, ?, ?)`
+    const params = [name, category, brand, price, description, image_url, stock]
     console.log(query, params)
     try{
         const result = await db.query(query, params)
-        if (!result.affectedRows) throw new Error("A termék hozzáadása sikertelen!")
+        if (!result.message) throw new Error("A termék hozzáadása sikertelen!")
         return { success: true }
     }
     catch(error){

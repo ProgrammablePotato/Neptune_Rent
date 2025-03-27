@@ -93,4 +93,9 @@ export class BaseService {
     console.log(url)
     return this.http.delete(url)
   }
+  addProduct(product:any) {
+    const url = `${this.apiUrl}/products`
+    return this.http.post(url,product
+    )
+  }
 }

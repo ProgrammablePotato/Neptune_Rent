@@ -9,6 +9,7 @@ import { BaseService } from '../base.service';
 })
 export class ProductEditorComponent {
   product: any = null
+  category: string = ""
   loading: boolean = true
   error: string | null = null
   editingField: string | null = null
@@ -19,7 +20,21 @@ export class ProductEditorComponent {
   ngOnInit() {
     const category = this.activeRouter.snapshot.paramMap.get('category')
     this.productId = Number(this.activeRouter.snapshot.paramMap.get('id'))
-    if (category && !isNaN(this.productId)) {
+    if (category == "new") {
+      this.category = category
+      this.product = {
+        name: "",
+        category: "",
+        brand: "",
+        price: 0,
+        description: "",
+        image_url: "no",
+        stock: 0,
+        id : -1
+      }
+      this.loading = false
+    }
+    else if (category && !isNaN(this.productId)) {
       this.base.getProductByCategoryAndId(category, this.productId)
         .then(
           (data) => {
@@ -29,11 +44,11 @@ export class ProductEditorComponent {
           })
           .catch( (error) => {
             this.error = 'Error!'
-            this.loading = false;
+            this.loading = false
           })
     } else {
       this.error = 'Invalid product data!'
-      this.loading = false;
+      this.loading = false
     }
   }
 
@@ -42,10 +57,24 @@ export class ProductEditorComponent {
   }
 
   save(){
+    if (this.category == "new") {
+      this.add()
+    }
     this.base.editProduct(this.productId, this.product).subscribe(
       {
         next: () => console.log(this.product, this.productId, this.product.category),
         error: () => console.error('Error!')
+      }
+    )
+  }
+  add() {
+    console.log("Adding: ",this.product)
+    this.product.price = Number.parseFloat(this.product.price)
+    this.product.stock = Number.parseInt(this.product.stock)
+    this.base.addProduct(this.product).subscribe(
+      {
+        next: () => console.log("Product created!"),
+        error: () => console.log("Failed to create product!")
       }
     )
   }
