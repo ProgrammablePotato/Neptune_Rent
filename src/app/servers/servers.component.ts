@@ -76,4 +76,9 @@ export class ServersComponent {
     }
     console.log("Brand names:"+this.brands)
   }
+  filterProducts() {
+    this.filteredServers = this.servers.filter((product: any) => 
+      product.name.toLowerCase().includes(this.searchTerm.toLowerCase())
+    )
+  }
 }

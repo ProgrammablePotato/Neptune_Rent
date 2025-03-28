@@ -77,4 +77,9 @@ export class ServicesComponent {
     }
     console.log("Brand names:"+this.brands)
   }
+  filterProducts() {
+    this.filteredServices = this.services.filter((product: any) => 
+      product.name.toLowerCase().includes(this.searchTerm.toLowerCase())
+    )
+  }
 }

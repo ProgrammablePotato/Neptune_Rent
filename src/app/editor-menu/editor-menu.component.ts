@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { BaseService } from '../base.service';
 import { ActivatedRoute } from '@angular/router';
+import { SearchService } from '../search.service';
 
 @Component({
   selector: 'app-editor-menu',
@@ -9,8 +10,10 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class EditorMenuComponent {
   products:any[] = []
+  filteredProducts:any = []
+  searchTerm: string = ''
 
-  constructor(private base:BaseService) {
+  constructor(private base:BaseService, private search:SearchService) {
     this.getProducts()
   }
 
@@ -28,6 +31,16 @@ export class EditorMenuComponent {
         this.products = this.products.filter(p => p.id !== id)
       },
       error: () => console.log("Error while deleting item!")
+    })
+  }
+  filterProducts() {
+    this.filteredProducts = this.products.filter((product: any) => 
+      product.name.toLowerCase().includes(this.searchTerm.toLowerCase())
+    )
+  }
+  searchProducts() {
+    this.search.getSearchWord().subscribe((res) => {
+      this.searchTerm = res
     })
   }
 }

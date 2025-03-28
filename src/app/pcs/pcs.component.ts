@@ -76,4 +76,9 @@ export class PcsComponent {
     }
     console.log("Brand names:"+this.brands)
   }
+  filterProducts() {
+    this.filteredPcs = this.pcs.filter((product: any) => 
+      product.name.toLowerCase().includes(this.searchTerm.toLowerCase())
+    )
+  }
 }

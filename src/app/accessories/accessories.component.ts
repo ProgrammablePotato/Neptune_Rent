@@ -86,4 +86,9 @@ export class AccessoriesComponent {
   getNewsNumber(news:any) {
     return this.accNews.indexOf(news)
   }
+  filterProducts() {
+    this.filteredAccessories = this.accessories.filter((product: any) => 
+      product.name.toLowerCase().includes(this.searchTerm.toLowerCase())
+    )
+  }
 }
