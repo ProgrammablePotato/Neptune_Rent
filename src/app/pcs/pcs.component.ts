@@ -35,7 +35,7 @@ export class PcsComponent {
   }
 
   async getNews(){
-    this.news.getPcNews().subscribe((data) => {
+    this.news.getPcNews().then((data) => {
       this.pcNews = data.articles.slice(0, 5)
       console.log(this.pcNews)
     })

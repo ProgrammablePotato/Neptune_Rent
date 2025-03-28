@@ -35,23 +35,48 @@ export class NewsService {
     })
   }
 
-  getAccessNews(): Observable<any> {
-    return this.http.get(`${this.apiUrlAccessories}${this.apiKey}`)
+  getAccessNews(): Promise<any> {
+    return new Promise((resolve, reject) => {
+      this.http.get(`${this.apiUrlAccessories}${this.apiKey}`).subscribe({
+        next: (data) => resolve(data),
+        error: (err) => reject(err)
+      });
+    });
   }
 
-  getPcNews(): Observable<any> {{
-    return this.http.get(`${this.apiUrlPc}${this.apiKey}`)
-  }}
+  getPcNews(): Promise<any> {
+    return new Promise((resolve, reject) => {
+      this.http.get(`${this.apiUrlPc}${this.apiKey}`).subscribe({
+        next: (data) => resolve(data),
+        error: (err) => reject(err)
+      });
+    });
+  }
 
-  getLaptopNews(): Observable<any> {{
-    return this.http.get(`${this.apiUrlLaptop}${this.apiKey}`)
-  }}
+  getLaptopNews(): Promise<any> {
+    return new Promise((resolve, reject) => {
+      this.http.get(`${this.apiUrlLaptop}${this.apiKey}`).subscribe({
+        next: (data) => resolve(data),
+        error: (err) => reject(err)
+      });
+    });
+  }
 
-  getServerNews(): Observable<any> {{
-    return this.http.get(`${this.apiUrlServers}${this.apiKey}`)
-  }}
+  getServerNews(): Promise<any> {
+    return new Promise((resolve, reject) => {
+      this.http.get(`${this.apiUrlServers}${this.apiKey}`).subscribe({
+        next: (data) => resolve(data),
+        error: (err) => reject(err)
+      });
+    });
+  }
 
-  getServiceNews(): Observable<any> {{
-    return this.http.get(`${this.apiUrlServices}${this.apiKey}`)
-  }}
+  getServiceNews(): Promise<any> {
+    return new Promise((resolve, reject) => {
+      this.http.get(`${this.apiUrlServices}${this.apiKey}`).subscribe({
+        next: (data) => resolve(data),
+        error: (err) => reject(err)
+      });
+    });
+  }
 }

@@ -34,10 +34,9 @@ export class LaptopsComponent {
   }
 
   async getNews(){
-    this.news.getLaptopNews().subscribe((data) => {
-      this.laptopNews = data.articles.slice(0, 5)
-      console.log(this.laptopNews)
-    })
+    const data = await this.news.getLaptopNews();
+    this.laptopNews = data.articles.slice(0, 5);
+    console.log(this.laptopNews);
   }
 
   searchProducts() {

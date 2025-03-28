@@ -34,7 +34,7 @@ router.get('/:id', async (req, res) => {
 
 router.post('/', async (req, res) => {
     try {
-        const product = await productService.addProduct(req.body)
+        const product = await productService.createProduct(req.body)
         res.json(product)
     } catch (error) {
         res.status(500).json({ message: error.message })

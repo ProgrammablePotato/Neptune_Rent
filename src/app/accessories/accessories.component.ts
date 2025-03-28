@@ -44,7 +44,7 @@ export class AccessoriesComponent {
   }
 
   async getNews(){
-    await this.news.getAccessNews().subscribe((data) => {
+    await this.news.getAccessNews().then((data) => {
       this.accNews = data.articles.slice(0, 5)
       console.log(this.accNews)
     })

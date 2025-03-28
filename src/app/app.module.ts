@@ -62,7 +62,6 @@ import { SearchPipe } from './search.pipe';
     BrowserModule,
     AppRoutingModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
-    AngularFireModule,
     FormsModule,
     ReactiveFormsModule
   ],

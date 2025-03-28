@@ -35,7 +35,7 @@ export class ServicesComponent {
   }
 
   async getNews() {
-    this.news.getServiceNews().subscribe((data) => {
+    this.news.getServiceNews().then((data) => {
       this.serviceNews = data.articles.slice(0, 5)
       console.log(this.serviceNews)
     })

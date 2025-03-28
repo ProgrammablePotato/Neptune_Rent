@@ -35,10 +35,9 @@ export class ServersComponent {
   }
 
   async getNews() {
-    this.news.getServerNews().subscribe((data) => {
-      this.serverNews = data.articles.slice(0, 5)
-      console.log(this.serverNews)
-    })
+    const data = await this.news.getServerNews();
+    this.serverNews = data.articles.slice(0, 5);
+    console.log(this.serverNews);
   }
 
   searchProducts() {

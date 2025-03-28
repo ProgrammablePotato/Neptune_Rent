@@ -1,8 +1,9 @@
 const db = require("./db")
 
 async function createProduct(product) {
-    const query = `INSERT INTO products (name, category, brand, price, description, image_url) VALUES (?, ?, ?, ?, ?, ?)`
-    const params = [product.name, product.category, product.brand, product.price, product.description, product.imageUrl]
+    const query = `INSERT INTO products (name, category, brand, price, description, stock) VALUES (?, ?, ?, ?, ?, ?)`
+    const params = [product.name, product.category, product.brand, product.price, product.description, product.stock]
+    console.log(query, params)
 
     const result = await db.query(query, params);
     let message = "Hiba a termék létrehozásánál!";
@@ -69,21 +70,6 @@ async function editProduct(id, product){
     }
 }
 
-async function addProduct(detail){
-    const {name, category, brand, price, description, image_url, stock} = detail
-    const query = `insert into products (name, category, brand, price, description, image_url, stock) values (?, ?, ?, ?, ?, ?, ?)`
-    const params = [name, category, brand, price, description, image_url, stock]
-    console.log(query, params)
-    try{
-        const result = await db.query(query, params)
-        if (!result.message) throw new Error("A termék hozzáadása sikertelen!")
-        return { success: true }
-    }
-    catch(error){
-        console.error(error)
-    }
-}
-
 async function getBrand(){
     const query = `select distinct brand from products`
     try{
@@ -101,6 +87,5 @@ module.exports = {
     getProduct,
     deleteProduct,
     editProduct,
-    addProduct,
     getBrand,
 }

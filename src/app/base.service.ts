@@ -12,10 +12,7 @@ export class BaseService {
   products:any = []
   users:any = []
 
-  constructor (private auth:AuthService, private http:HttpClient) {
-    this.getProducts()
-    this.getUsers()
-  }
+  constructor (private auth:AuthService, private http:HttpClient) { }
 
   getProducts(): Promise<any[]> {
     return new Promise((resolve) => 
@@ -93,13 +90,13 @@ export class BaseService {
     const url = `${this.apiUrl}/products/delete/${id}`
     return this.http.delete(url).pipe(
       tap(() => {
-        this.getProducts().then(() => console.log("Product list updated after deletion"))
+        this.getProducts().then(() => console.log("Updated"))
       })
     )
   }
+
   addProduct(product:any) {
     const url = `${this.apiUrl}/products`
-    return this.http.post(url,product
-    )
+    return this.http.post(url,product)
   }
 }

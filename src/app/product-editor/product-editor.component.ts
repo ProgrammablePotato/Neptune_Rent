@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { BaseService } from '../base.service';
 
 @Component({
@@ -15,7 +15,7 @@ export class ProductEditorComponent {
   editingField: string | null = null
   productId:number = 0
 
-  constructor(private activeRouter: ActivatedRoute, private base: BaseService) { }
+  constructor(private activeRouter: ActivatedRoute, private base: BaseService, private router:Router) { }
 
   ngOnInit() {
     const category = this.activeRouter.snapshot.paramMap.get('category')
@@ -29,7 +29,7 @@ export class ProductEditorComponent {
         price: 0,
         description: "",
         image_url: "no",
-        stock: 0,
+        stock: 1,
         id : -1
       }
       this.loading = false
@@ -60,22 +60,38 @@ export class ProductEditorComponent {
     if (this.category == "new") {
       this.add()
     }
+    else{
+      this.update()
+    }
+  }
+
+  update(){
     this.base.editProduct(this.productId, this.product).subscribe(
       {
-        next: () => console.log(this.product, this.productId, this.product.category),
+        next: () => {
+          alert("Product edited")
+          console.log(this.product, this.productId, this.product.category)
+        },
+        complete: () => this.router.navigate(['/admin/editormenu']),
         error: () => console.error('Error!')
       }
     )
   }
+
   add() {
     console.log("Adding: ",this.product)
     this.product.price = Number.parseFloat(this.product.price)
     this.product.stock = Number.parseInt(this.product.stock)
     this.base.addProduct(this.product).subscribe(
       {
-        next: () => console.log("Product created!"),
+        next: () => alert("Product added!"),
+        complete: () => this.router.navigate(['/admin/editormenu']),
         error: () => console.log("Failed to create product!")
       }
     )
+  }
+
+  image(){
+    alert("Image upload is not available yet!")
   }
 }
