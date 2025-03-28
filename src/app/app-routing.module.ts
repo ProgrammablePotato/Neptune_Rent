@@ -23,6 +23,7 @@ import { VerifymailComponent } from './verifymail/verifymail.component';
 
 const routes: Routes = [
   {path: 'home', component: HomeComponent},
+  {path: '', redirectTo: '/home', pathMatch: 'full'},
   {path: 'login', component: LoginComponent},
   {path: 'register', component: RegisterComponent},
   {path: 'user', component: UserComponent, canActivate:[loggedUserGuard]},
@@ -41,8 +42,7 @@ const routes: Routes = [
   {path: 'services', component: ServicesComponent},
   {path: 'details/:category/:id', component: ProductDetailsComponent},
   {path: 'verifymail', component:VerifymailComponent},
-  {path: '**', component: ErrorComponent},
-  {path: '', redirectTo: '/home', pathMatch: 'full'}
+  {path: '**', component: ErrorComponent}
 ];
 
 @NgModule({

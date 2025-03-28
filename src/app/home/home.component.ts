@@ -45,6 +45,12 @@ export class HomeComponent implements OnInit {
     })
   }
 
+  filterProducts() {
+    this.filteredProducts = this.products.filter((product: any) => 
+      product.name.toLowerCase().includes(this.searchTerm.toLowerCase())
+    )
+  }
+
   searchProducts() {
     this.search.getSearchWord().subscribe((res) => {
       this.searchTerm = res
