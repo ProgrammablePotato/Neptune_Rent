@@ -31,6 +31,7 @@ import { provideHttpClient } from '@angular/common/http';
 import { CookieService } from 'ngx-cookie-service';
 import { VerifymailComponent } from './verifymail/verifymail.component';
 import { SearchPipe } from './search.pipe';
+import { ProductsComponent } from './products/products.component';
 
 @NgModule({
   declarations: [
@@ -56,7 +57,8 @@ import { SearchPipe } from './search.pipe';
     UserEditorComponent,
     FooterComponent,
     VerifymailComponent,
-    SearchPipe
+    SearchPipe,
+    ProductsComponent
   ],
   imports: [
     BrowserModule,

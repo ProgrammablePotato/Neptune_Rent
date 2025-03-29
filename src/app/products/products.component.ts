@@ -1,70 +1,78 @@
 import { Component, OnInit } from '@angular/core';
 import { NewsService } from '../news.service';
 import { BaseService } from '../base.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { SearchService } from '../search.service';
 
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrl: './home.component.css'
+  selector: 'app-products',
+  templateUrl: './products.component.html',
+  styleUrl: './products.component.css'
 })
-export class HomeComponent implements OnInit {
-
+export class ProductsComponent implements OnInit {
   allNews:any = []
   currentSlideIndex: number = 0
-
+  
+  allProducts:any = []
   products:any = []
   filteredProducts:any = []
-
+  
+  category:string = ''
   searchTerm: string = '' 
   brands:any[] = []
-
-  constructor(private news:NewsService, private base:BaseService, private router:Router, private search:SearchService){
+  
+  constructor(private news:NewsService, private base:BaseService, private router:Router, private search:SearchService, private activated:ActivatedRoute){
     
   }
-
   ngOnInit(): void {
     this.base.currentPage = this.router.url
+    this.category = String(this.activated.snapshot.paramMap.get('category'))
     this.getNewsNew()
     this.getProducts()
+    
   }
-
+  
   // async getNews(){
   //   this.news.getTechNews().subscribe((data) => {
   //     this.allNews = data.articles.slice(0, 5)
   //     console.log(this.allNews)
   //   })
   // }
-
+  
   async getNewsNew() {
-    await this.news.getTechNewsNew('all').then((news:any) => {
+    await this.news.getTechNewsNew(this.category).then((news:any) => {
       this.allNews = news
     }).catch((error) => {
       console.log("Nem jó")
     })
   }
-
+  
   filterProducts() {
     this.filteredProducts = this.products.filter((product: any) => 
       product.name.toLowerCase().includes(this.searchTerm.toLowerCase())
     )
   }
-
+  
   searchProducts() {
     this.search.getSearchWord().subscribe((res) => {
       this.searchTerm = res
     })
   }
-
   async getProducts() {
-    this.products = await this.base.getProducts()
+    this.allProducts = await this.base.getProducts()
     console.log("Products: ", this.products)
     this.base.roundPrices()
+    this.filterCategory()
     this.filteredProducts = this.products
     this.getBrandNames()
   }
-
+  filterCategory() {
+    this.allProducts.forEach((product:any) => {
+      if (product.category == this.category) {
+        this.products.push(product)
+      }
+    })
+  }
   filterBrand(brand:String) {
     this.filteredProducts = []
     this.products.forEach((element:any) => {

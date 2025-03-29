@@ -20,6 +20,7 @@ import { ErrorComponent } from './error/error.component';
 import { UserEditorComponent } from './user-editor/user-editor.component';
 import { EditorMenuComponent } from './editor-menu/editor-menu.component';
 import { VerifymailComponent } from './verifymail/verifymail.component';
+import { ProductsComponent } from './products/products.component';
 
 const routes: Routes = [
   {path: 'home', component: HomeComponent},
@@ -34,6 +35,7 @@ const routes: Routes = [
     {path: 'usereditor', component: UserEditorComponent, canActivate:[adminGuard]}
   ]},
   {path: 'producteditor/:category/:id', component: ProductEditorComponent, canActivate:[adminGuard]},
+  {path: 'products/:category', component: ProductsComponent},
   {path: 'pcs', component: PcsComponent},
   {path: 'laptops', component: LaptopsComponent},
   {path: 'servers', component: ServersComponent},
@@ -46,7 +48,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, {onSameUrlNavigation: 'reload'})],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

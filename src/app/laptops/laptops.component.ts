@@ -34,7 +34,7 @@ export class LaptopsComponent {
   }
 
   async getNews(){
-    const data = await this.news.getLaptopNews();
+    const data:any = await this.news.getTechNewsNew('laptops');
     this.laptopNews = data.articles.slice(0, 5);
     console.log(this.laptopNews);
   }

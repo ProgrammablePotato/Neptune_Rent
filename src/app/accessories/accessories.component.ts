@@ -44,7 +44,7 @@ export class AccessoriesComponent {
   }
 
   async getNews(){
-    await this.news.getAccessNews().then((data) => {
+    await this.news.getTechNewsNew('accessories').then((data:any) => {
       this.accNews = data.articles.slice(0, 5)
       console.log(this.accNews)
     })

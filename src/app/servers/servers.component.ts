@@ -35,7 +35,7 @@ export class ServersComponent {
   }
 
   async getNews() {
-    const data = await this.news.getServerNews();
+    const data:any = await this.news.getTechNewsNew('servers');
     this.serverNews = data.articles.slice(0, 5);
     console.log(this.serverNews);
   }

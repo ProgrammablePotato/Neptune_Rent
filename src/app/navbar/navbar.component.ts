@@ -83,7 +83,7 @@ export class NavbarComponent {
     ]
   }
   getPoints() {
-    return this.points.slice(0,7)
+    return this.points.slice(1,6)
   }
 
   userIsAdmin(){

@@ -12,8 +12,14 @@
       </button>
       <div class="w-full md:block md:w-auto h-fit" *ngIf="menuVisibility == 'visible'">
         <ul class=" font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
+          <li>
+            <a [ngClass]="isCurrent('home')" routerLink="home" (click)="setCurrentPage('home')">Home</a>
+          </li>
           <li *ngFor="let point of getPoints()">
-            <a [ngClass]="isCurrent(point.path)" [routerLink]="point.path" (click)="setCurrentPage(point.path)">{{point.name}}</a>
+            <a [ngClass]="isCurrent('products/'+point.path)" [routerLink]="'products/'+point.path" (click)="setCurrentPage(point.path)">{{point.name}}</a>
+          </li>
+          <li>
+            <a [ngClass]="isCurrent('aboutus')" routerLink="aboutus" (click)="setCurrentPage('aboutus')">{{points[7].name}}</a>
           </li>
           <li *ngIf="!loggedUser">
             <a [ngClass]="isCurrent('login')" routerLink="login" (click)="setCurrentPage('login')">{{points[7].name}}</a>
