@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, NgModule, OnDestroy, OnInit } from '@angular/core';
 import { NewsService } from '../news.service';
 import { BaseService } from '../base.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouteReuseStrategy } from '@angular/router';
 import { SearchService } from '../search.service';
+import { initFlowbite, initCarousels, initDropdowns } from 'flowbite';
 
 @Component({
   selector: 'app-products',
@@ -10,8 +11,7 @@ import { SearchService } from '../search.service';
   styleUrl: './products.component.css'
 })
 export class ProductsComponent implements OnInit {
-  allNews:any = []
-  currentSlideIndex: number = 0
+  categoryNews:any = []
   
   allProducts:any = []
   products:any = []
@@ -22,14 +22,17 @@ export class ProductsComponent implements OnInit {
   brands:any[] = []
   
   constructor(private news:NewsService, private base:BaseService, private router:Router, private search:SearchService, private activated:ActivatedRoute){
+    this.router.routeReuseStrategy.shouldReuseRoute = function () {
+      return false;
+    };
     
   }
-  ngOnInit(): void {
+  ngOnInit() {
     this.base.currentPage = this.router.url
     this.category = String(this.activated.snapshot.paramMap.get('category'))
-    this.getNewsNew()
     this.getProducts()
-    
+    this.getNewsNew()
+    initFlowbite()
   }
   
   // async getNews(){
@@ -41,7 +44,8 @@ export class ProductsComponent implements OnInit {
   
   async getNewsNew() {
     await this.news.getTechNewsNew(this.category).then((news:any) => {
-      this.allNews = news
+      this.categoryNews = news
+      console.log("Filtered news: ", news)
     }).catch((error) => {
       console.log("Nem jó")
     })
@@ -52,7 +56,6 @@ export class ProductsComponent implements OnInit {
       product.name.toLowerCase().includes(this.searchTerm.toLowerCase())
     )
   }
-  
   searchProducts() {
     this.search.getSearchWord().subscribe((res) => {
       this.searchTerm = res
@@ -80,20 +83,13 @@ export class ProductsComponent implements OnInit {
         this.filteredProducts.push(element)
       }
     })
-    this.hideDropdown()
     console.log(this.filteredProducts)
   }
   resetFilter() {
-    this.hideDropdown()
     this.filteredProducts = this.products
   }
-  hideDropdown() {
-    let dropdown = document.getElementById("dropdown")
-    console.log(dropdown?.getAttribute("aria-hidden"))
-    dropdown?.setAttribute("aria-hidden","false")
-  }
   getNewsNumber(news:any) {
-    return this.allNews.indexOf(news)
+    return this.categoryNews.indexOf(news)
   }
   getBrandNames() {
     for (let i = 0; i < this.products.length; i++) {
@@ -103,4 +99,9 @@ export class ProductsComponent implements OnInit {
     }
     console.log("Brand names:"+this.brands)
   }
+  redirectTo(uri: string) {
+    this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+      this.router.navigate([uri])});
+  }
 }
+

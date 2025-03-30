@@ -32,6 +32,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { VerifymailComponent } from './verifymail/verifymail.component';
 import { SearchPipe } from './search.pipe';
 import { ProductsComponent } from './products/products.component';
+import { RouteReuseStrategy } from '@angular/router';
 
 @NgModule({
   declarations: [

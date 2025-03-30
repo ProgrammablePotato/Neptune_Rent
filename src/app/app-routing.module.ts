@@ -35,7 +35,7 @@ const routes: Routes = [
     {path: 'usereditor', component: UserEditorComponent, canActivate:[adminGuard]}
   ]},
   {path: 'producteditor/:category/:id', component: ProductEditorComponent, canActivate:[adminGuard]},
-  {path: 'products/:category', component: ProductsComponent},
+  {path: 'products/:category', component: ProductsComponent, pathMatch:'prefix'},
   {path: 'pcs', component: PcsComponent},
   {path: 'laptops', component: LaptopsComponent},
   {path: 'servers', component: ServersComponent},
@@ -48,7 +48,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, {onSameUrlNavigation: 'reload'})],
+  imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

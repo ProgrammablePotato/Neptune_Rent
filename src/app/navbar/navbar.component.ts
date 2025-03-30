@@ -33,7 +33,8 @@ export class NavbarComponent {
   }
   
   ngOnDestroy(): void {  
-    this.sub?.unsubscribe()    
+    this.sub?.unsubscribe()   
+    
   }
 
   logout(){
@@ -71,11 +72,11 @@ export class NavbarComponent {
   setMenuWords() {
     this.points = [
       {path:"home",name:"Home"},
-      {path:"accessories",name:"Accessories"},
-      {path:"pcs",name:"PCs"},
-      {path:"laptops",name:"Laptops"},
-      {path:"servers",name:"Servers"},
-      {path:"services",name:"Services"},
+      {path:"products/accessories",name:"Accessories"},
+      {path:"products/pcs",name:"PCs"},
+      {path:"products/laptops",name:"Laptops"},
+      {path:"products/servers",name:"Servers"},
+      {path:"products/services",name:"Services"},
       {path:"aboutus",name:"About Us"},
       {path:"login",name:"Login"},
       {path:"user",name:"User"},
@@ -83,7 +84,7 @@ export class NavbarComponent {
     ]
   }
   getPoints() {
-    return this.points.slice(1,6)
+    return this.points.slice(0,7)
   }
 
   userIsAdmin(){

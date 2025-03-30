@@ -1,25 +1,19 @@
 <nav class="bg-white border-gray-200 dark:bg-gray-900 m-2 rounded-lg">
-    <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4" (window:resize)=isSmall()>
-      <a routerLink="home" class="flex items-center space-x-3 rtl:space-x-reverse">
+    <div class="flex flex-wrap items-center justify-between mx-auto p-4 w-full" (window:resize)=isSmall()>
+      <a routerLink="home" class="flex items-center space-x-3 rtl:space-x-reverse float-left">
           <img src="logo.png" class="h-8" alt="NeptuneLogo" />
           <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">Neptune Rent</span>
       </a>
       <button type="button" (click)="hideShow()" class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600">
-          <span class="sr-only"></span>
-          <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
-              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h15M1 7h15M1 13h15"/>
-          </svg>
+        <span class="sr-only">Menu</span>
+        <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
+          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h15M1 7h15M1 13h15"/>
+        </svg>
       </button>
       <div class="w-full md:block md:w-auto h-fit" *ngIf="menuVisibility == 'visible'">
         <ul class=" font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
-          <li>
-            <a [ngClass]="isCurrent('home')" routerLink="home" (click)="setCurrentPage('home')">Home</a>
-          </li>
           <li *ngFor="let point of getPoints()">
-            <a [ngClass]="isCurrent('products/'+point.path)" [routerLink]="'products/'+point.path" (click)="setCurrentPage(point.path)">{{point.name}}</a>
-          </li>
-          <li>
-            <a [ngClass]="isCurrent('aboutus')" routerLink="aboutus" (click)="setCurrentPage('aboutus')">{{points[7].name}}</a>
+            <a [ngClass]="isCurrent(point.path)" [routerLink]="point.path" (click)="setCurrentPage(point.path)">{{point.name}}</a>
           </li>
           <li *ngIf="!loggedUser">
             <a [ngClass]="isCurrent('login')" routerLink="login" (click)="setCurrentPage('login')">{{points[7].name}}</a>
@@ -35,10 +29,5 @@
           </li>
         </ul>
       </div>
-      <!-- <button (click)="switchLanguage()" style="color:white">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-          <path stroke-linecap="round" stroke-linejoin="round" d="m10.5 21 5.25-11.25L21 21m-9-3h7.5M3 5.621a48.474 48.474 0 0 1 6-.371m0 0c1.12 0 2.233.038 3.334.114M9 5.25V3m3.334 2.364C11.176 10.658 7.69 15.08 3 17.502m9.334-12.138c.896.061 1.785.147 2.666.257m-4.589 8.495a18.023 18.023 0 0 1-3.827-5.802" />
-        </svg>
-      </button> -->
     </div>
   </nav>
