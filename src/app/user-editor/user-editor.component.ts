@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../auth.service';
+import { BaseService } from '../base.service';
 
 @Component({
   selector: 'app-user-editor',
@@ -10,7 +11,7 @@ export class UserEditorComponent {
   loggedUser:any
   users:any
 
-  constructor(private auth:AuthService){
+  constructor(private auth:AuthService,private base:BaseService){
     this.auth.getLoggedUser().subscribe(
       (loggedUser)=>{
         this.loggedUser=loggedUser
@@ -34,5 +35,8 @@ export class UserEditorComponent {
     )
     console.log(tomb)
     this.auth.setUserClaims(uid,tomb[0].claims)?.subscribe()
+  }
+  deleteUser() {
+    this.base.deleteUser()
   }
 }
