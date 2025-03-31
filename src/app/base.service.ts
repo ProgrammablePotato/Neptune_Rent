@@ -14,8 +14,14 @@ export class BaseService {
 
   constructor (private auth:AuthService, private http:HttpClient) { }
 
+  /*  PRODUCT-RELATED FUNCTIONS--------------------------------------------------
+  *
+  *   Get, Add, Update, Delete, etc.
+  *
+  *   ---------------------------------------------------------------------------
+  */
   getProducts(): Promise<any[]> {
-    return new Promise((resolve) => 
+    return new Promise((resolve) =>
     {
       if (this.products.length > 0) {
         resolve(this.products)
@@ -28,14 +34,6 @@ export class BaseService {
       }
     })
   }
-
-  getUsers() {
-    this.http.get(`${this.apiUrl}/users`).subscribe((users:any) => {
-      this.users = users
-      console.log("Users: ",this.users)
-    })
-  }
-
   getProductsByCategory(cat: string): Promise<any[]> {
     return new Promise((resolve) => {
       if (this.products.length > 0) {
@@ -48,44 +46,30 @@ export class BaseService {
       }
     })
   }
-
-  getProductsByBrand(): Promise<any[]> {
-    return new Promise((resolve) => {
-      if (this.products.length > 0) {
-        resolve(this.products)
-      } else {
-        this.http.get(`${this.apiUrl}/products/getBrand`).subscribe((prods: any) => {
-          this.products = prods
-          resolve(this.products)
-        })
-      }
-    })
-  }
-
-  getProdByBrand(){
-    return this.http.get(`${this.apiUrl}/products/getBrand`)
-  }
-
+  // getProductsByBrand(): Promise<any[]> {
+  //   return new Promise((resolve) => {
+  //     if (this.products.length > 0) {
+  //       resolve(this.products)
+  //     } else {
+  //       this.http.get(`${this.apiUrl}/products/getBrand`).subscribe((prods: any) => {
+  //         this.products = prods
+  //         resolve(this.products)
+  //       })
+  //     }
+  //   })
+  // }
   getProductByCategoryAndId(cat: string, id: number) {
     return this.getProductsByCategory(cat).then((prods) => prods.find((prod) => prod.id === id))
   }
-
-  generateRandomId(){
-    return Math.random().toString(36).substring(2, 10) + Math.random().toString(36).substring(2, 10)
+  addProduct(product:any) {
+    const url = `${this.apiUrl}/products`
+    return this.http.post(url,product)
   }
-
-  roundPrices() {
-    for (let x = 0; x < this.products.length; x++) {
-      this.products[x].price = (Math.round(this.products[x].price*100))/100
-    }
-  }
-
   editProduct(id:any,data:any) {
     const url = `${this.apiUrl}/products/${id}`
     console.log(url)
     return this.http.patch(url,data)
   }
-
   deleteProduct(id: number) {
     const url = `${this.apiUrl}/products/delete/${id}`
     return this.http.delete(url).pipe(
@@ -94,9 +78,31 @@ export class BaseService {
       })
     )
   }
-
-  addProduct(product:any) {
-    const url = `${this.apiUrl}/products`
-    return this.http.post(url,product)
+  roundPrices() {
+    for (let x = 0; x < this.products.length; x++) {
+      this.products[x].price = (Math.round(this.products[x].price*100))/100
+    }
+  }
+  /*  USER-RELATED FUNCTIONS--------------------------------------------------
+  *
+  *   Get, Add, Update, Delete, etc.
+  *
+  *   ---------------------------------------------------------------------------*/
+  getUsers() {
+    this.http.get(`${this.apiUrl}/users`).subscribe((users:any) => {
+      this.users = users
+      console.log("Users: ",this.users)
+    })
+  }
+  deleteUser() {
+    console.log("delete user")
+  }
+  /*  OTHER FUNCTIONS--------------------------------------------------
+  *
+  *   Get, Add, Update, Delete, etc.
+  *
+  *   ---------------------------------------------------------------------------*/
+  generateRandomId(){
+    return Math.random().toString(36).substring(2, 10) + Math.random().toString(36).substring(2, 10)
   }
 }

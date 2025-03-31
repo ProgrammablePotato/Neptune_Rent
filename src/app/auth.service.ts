@@ -30,6 +30,7 @@ export class AuthService {
             (token: any) => {
               this.loggedUser.accessToken = token
               const headers = new HttpHeaders().set('Authorization', token)
+              console.log("Headers", headers)
               this.http.get(this.apiUrl + "getClaims/" + user.uid, { headers }).subscribe(
                 {
                   next: (claims) => {

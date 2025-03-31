@@ -59,7 +59,7 @@ import { RouteReuseStrategy } from '@angular/router';
     FooterComponent,
     VerifymailComponent,
     SearchPipe,
-    ProductsComponent
+    ProductsComponent,
   ],
   imports: [
     BrowserModule,
