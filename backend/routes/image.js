@@ -2,7 +2,7 @@ const express = require('express')
 const router = express.Router()
 const image = require('../services/image')
 
-router.get('/', async (req, res) => {
+router.post('/', async (req, res) => {
     try {
         const imageUrl = await image.getImage(req.body.product)
         res.json(imageUrl)
