@@ -99,4 +99,9 @@ export class BaseService {
     const url = `${this.apiUrl}/products`
     return this.http.post(url,product)
   }
+
+  getImage(product:any) {
+    console.log("Product: ",product)
+    return this.http.get(`${this.apiUrl}/images/:`, product)
+  }
 }
