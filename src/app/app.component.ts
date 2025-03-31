@@ -24,16 +24,13 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     initFlowbite();
-    initAccordions();
-    initCarousels();
-    initCollapses();
-    initDials();
-    initDismisses();
-    initDrawers();
-    initDropdowns();
-    initModals();
-    initPopovers();
-    initTabs();
-    initTooltips();
+  }
+  dropDownCollapse(collapse:boolean) {
+    var dropdown:any = document.getElementById("dropdown")
+    if (collapse) {
+      dropdown.style.display = "none"
+    } else {
+      dropdown.style.display = "block"
+    }
   }
 }

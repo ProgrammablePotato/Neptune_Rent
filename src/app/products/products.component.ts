@@ -4,6 +4,7 @@ import { BaseService } from '../base.service';
 import { ActivatedRoute, Router, RouteReuseStrategy } from '@angular/router';
 import { SearchService } from '../search.service';
 import { initFlowbite, initCarousels, initDropdowns } from 'flowbite';
+import { AppComponent } from '../app.component';
 
 @Component({
   selector: 'app-products',
@@ -21,7 +22,7 @@ export class ProductsComponent implements OnInit {
   searchTerm: string = '' 
   brands:any[] = []
   
-  constructor(private news:NewsService, private base:BaseService, private router:Router, private search:SearchService, private activated:ActivatedRoute){
+  constructor(private news:NewsService, private base:BaseService, private router:Router, private search:SearchService, private activated:ActivatedRoute,public app:AppComponent){
     this.router.routeReuseStrategy.shouldReuseRoute = function () {
       return false;
     };
@@ -83,10 +84,11 @@ export class ProductsComponent implements OnInit {
         this.filteredProducts.push(element)
       }
     })
-    console.log(this.filteredProducts)
+    this.app.dropDownCollapse(true)
   }
   resetFilter() {
     this.filteredProducts = this.products
+    this.app.dropDownCollapse(true)
   }
   getNewsNumber(news:any) {
     return this.categoryNews.indexOf(news)
