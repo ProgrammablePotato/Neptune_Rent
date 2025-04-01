@@ -94,8 +94,8 @@ export class BaseService {
       console.log("Users: ",this.users)
     })
   }
-  deleteUser() {
-    console.log("delete user")
+  deleteUser(uid:string) {
+    return this.http.delete(`${this.apiUrl}/users/delUser/${uid}`)
   }
   /*  OTHER FUNCTIONS--------------------------------------------------
   *
