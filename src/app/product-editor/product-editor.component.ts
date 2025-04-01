@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { BaseService } from '../base.service';
 import { initDropdowns, initFlowbite } from 'flowbite';
 import { AppComponent } from '../app.component';
+import { dropdownCollapse, dropdownExtend } from '../app.component';
 
 @Component({
   selector: 'app-product-editor',
@@ -10,6 +11,9 @@ import { AppComponent } from '../app.component';
   styleUrl: './product-editor.component.css'
 })
 export class ProductEditorComponent {
+  public dropdownCollapse = dropdownCollapse
+  public dropdownExtend = dropdownExtend
+
   categories = ["Accessories","PCs","Laptops","Servers","Services"]
   product: any = null
   category: string = ""
@@ -18,7 +22,7 @@ export class ProductEditorComponent {
   editingField: string | null = null
   productId:number = 0
 
-  constructor(private activeRouter: ActivatedRoute, private base: BaseService, private router:Router, public app:AppComponent) { }
+  constructor(private activeRouter: ActivatedRoute, private base: BaseService, private router:Router) { }
 
   ngOnInit() {
     const category = this.activeRouter.snapshot.paramMap.get('category')
@@ -128,7 +132,7 @@ export class ProductEditorComponent {
   }
   setCategory(category:string) {
     this.product.category = category
-    this.app.dropDownCollapse(true)
+    dropdownCollapse('category')
   }
   getCategory() {
     if (this.product.category == "") {

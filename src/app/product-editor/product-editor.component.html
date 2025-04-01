@@ -30,14 +30,14 @@
                 </ng-template>
             </p>
         </div>
-        <div class="relative h-fit w-fit" (mouseleave)="this.app.dropDownCollapse(true)" (mouseenter)="this.app.dropDownCollapse(false)">
+        <div class="relative h-fit w-fit" (mouseleave)="dropdownCollapse('category')" (mouseenter)="dropdownExtend('category')">
             <button class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-2 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-md px-5 py-2.5 text-center inline-flex items-center " type="button">
                 {{getCategory()}}
                 <svg class="w-2.5 h-2.5 ms-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
                 </svg>
             </button>
-            <div id="dropdown" class="z-10 rounded-lg w-44 bg-gray-700 absolute text-md">
+            <div id="neptune-dropdown-category" class="z-10 rounded-lg w-44 bg-gray-700 absolute text-md">
                 <ul class="py-2 text-sm text-gray-700 dark:text-gray-200">
                     <li *ngFor="let category of categories">
                         <button (click)="setCategory(category)" class="bg-gray-700 hover:bg-slate-500 h-10 text-white p-2 w-full text-left">{{category}}</button>

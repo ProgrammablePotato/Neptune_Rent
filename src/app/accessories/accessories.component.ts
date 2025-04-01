@@ -27,12 +27,12 @@ export class AccessoriesComponent {
     this.getNews()
   }
 
-  getProductsByBrand() {
-    this.base.getProdByBrand().subscribe((data) => {
-      this.brands = data as any[]
-      console.log("Brand: ", this.brands)
-    })
-  }
+  // getProductsByBrand() {
+  //   this.base.getProdByBrand().subscribe((data) => {
+  //     this.brands = data as any[]
+  //     console.log("Brand: ", this.brands)
+  //   })
+  // }
 
   getBrandNames() {
     for (let i = 0; i < this.accessories.length; i++) {

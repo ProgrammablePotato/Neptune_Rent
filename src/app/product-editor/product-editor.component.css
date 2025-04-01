@@ -1,4 +1,4 @@
-#dropdown {
+[id^=neptune-dropdown] {
     display: none;
 }
 input::-webkit-outer-spin-button,
