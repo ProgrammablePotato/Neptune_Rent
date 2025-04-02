@@ -80,6 +80,17 @@ async function getBrand(){
         console.error(error)
     }
 }
+async function getLatestImage(category) {
+    const query = `SELECT image_url FROM products where category = ? ORDER BY id DESC LIMIT 1`
+    const params = [category]
+    try {
+      const row = db.query(query, params)
+      if (!row) throw new Error("A termék nem található!")
+      return row
+    } catch (error) {
+      console.error(error)
+    }
+}
 
 module.exports = {
     createProduct,
@@ -88,4 +99,5 @@ module.exports = {
     deleteProduct,
     editProduct,
     getBrand,
+    getLatestImage
 }
