@@ -4,7 +4,7 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const admin =require("firebase-admin")
 
-var serviceAccount = require("./neptune-rent-firebase-adminsdk-sgxzh-2f7f14ccdf.json");
+var serviceAccount = require("./neptune-rent-firebase-adminsdk-sgxzh-256d086b2b.json");
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
