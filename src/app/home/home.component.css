@@ -1,13 +1,3 @@
-.neptune-product-image {
-    background-size: cover;
-    background-position: center;
-}
-.neptune-hover-inset-border {
-  border-style: solid;
-  border-color: aqua;
-  border-width: 0px;
-  border-radius: 0.5rem;
-}
-.neptune-hover-inset-border:hover {
-  border-width: 5px;
-}
+@import "../app.component.css";
+
+

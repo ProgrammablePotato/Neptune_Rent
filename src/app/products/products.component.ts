@@ -19,15 +19,15 @@ export class ProductsComponent implements OnInit {
   nextNews:any
 
   categoryNews:any = []
-  
+
   allProducts:any = []
   products:any = []
   filteredProducts:any = []
-  
+
   category:string = ''
-  searchTerm: string = '' 
+  searchTerm: string = ''
   brands:any[] = []
-  
+
   constructor(private news:NewsService, private base:BaseService, private router:Router, private search:SearchService, private activated:ActivatedRoute){
     this.router.routeReuseStrategy.shouldReuseRoute = function () {
       return false;
@@ -40,14 +40,14 @@ export class ProductsComponent implements OnInit {
     this.getNewsNew()
     initFlowbite()
   }
-  
+
   // async getNews(){
   //   this.news.getTechNews().subscribe((data) => {
   //     this.allNews = data.articles.slice(0, 5)
   //     console.log(this.allNews)
   //   })
   // }
-  
+
   async getNewsNew() {
     await this.news.getTechNewsNew(this.category).then((news:any) => {
       this.categoryNews = news
@@ -58,9 +58,9 @@ export class ProductsComponent implements OnInit {
     this.activeNews = this.categoryNews[0]
     this.activeNews = this.categoryNews[1]
   }
-  
+
   filterProducts() {
-    this.filteredProducts = this.products.filter((product: any) => 
+    this.filteredProducts = this.products.filter((product: any) =>
       product.name.toLowerCase().includes(this.searchTerm.toLowerCase())
     )
   }
@@ -84,17 +84,17 @@ export class ProductsComponent implements OnInit {
       }
     })
   }
-  filterBrand(brand:String) {
-    this.filteredProducts = []
-    this.products.forEach((element:any) => {
-      if (element.brand == brand) {
-        this.filteredProducts.push(element)
-      }
-    })
-    dropdownCollapse('brand')
-  }
-  resetFilter() {
-    this.filteredProducts = this.products
+  filterBrand(brand:any) {
+    if (brand == null) {
+      this.filteredProducts = this.products
+    } else {
+      this.filteredProducts = []
+      this.products.forEach((element:any) => {
+        if (element.brand == brand) {
+          this.filteredProducts.push(element)
+        }
+      })
+    }
     dropdownCollapse('brand')
   }
   getNewsNumber(news:any) {

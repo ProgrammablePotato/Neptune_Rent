@@ -1,7 +1,1 @@
-.neptune-product-image {
-    background-size: cover;
-    background-position: center;
-}
-[id^=neptune-dropdown] {
-    display: none;
-}
+@import "../app.component.css";

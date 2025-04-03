@@ -1,69 +1,5 @@
-<!-- News caruosel -->
+<div class="neptune-news-carousel w-2/3">
 
-<!-- <div id="default-carousel" class="relative w-full xl:max-w-[80vw] xl:ml-auto xl:mr-auto" data-carousel="slide">
-    <div class="relative h-56 overflow-hidden rounded-lg md:h-96">
-    <div class="hidden duration-1000 ease-in-out -top-1/2" *ngFor="let news of categoryNews" data-carousel-item>
-        <img [src]="news.urlToImage" class="absolute block w-full" alt="...">
-        <a [href]="news.url" target="_blank">
-        <div class="absolute bottom-4 left-4 text-white bg-black/50 p-2 rounded-lg">
-            <h3 class="text-xl font-semibold">{{ news.title }}</h3>
-        </div>
-        </a>
-    </div>
-    </div>
-    <button type="button" class="absolute top-0 start-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none" data-carousel-prev>
-    <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
-        <svg class="w-4 h-4 text-white dark:text-gray-800 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
-        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 1 1 5l4 4"/>
-        </svg>
-        <span class="sr-only">Previous</span>
-    </span>
-    </button>
-    <button type="button" class="absolute top-0 end-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none" data-carousel-next>
-    <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
-        <svg class="w-4 h-4 text-white dark:text-gray-800 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
-        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
-        </svg>
-        <span class="sr-only">Next</span>
-    </span>
-    </button>
-</div> -->
-
-<div id="neptune-carousel" class="relative w-full xl:max-w-[80vw] xl:ml-auto xl:mr-auto">
-    <div class="relative h-56 overflow-hidden rounded-lg md:h-96">
-        <div id="active-carousel-item" class="hidden duration-1000 ease-in-out -top-1/2">
-            <img [src]="activeNews.urlToImage" class="absolute block w-full" alt="...">
-            <a [href]="activeNews.url" target="_blank">
-                <div class="absolute bottom-4 left-4 text-white bg-black/50 p-2 rounded-lg">
-                    <h3 class="text-xl font-semibold">{{ activeNews.title }}</h3>
-                </div>
-            </a>
-        </div>
-        <div id="inactive-carousel-item" class="hidden duration-1000 ease-in-out -top-1/2">
-            <img [src]="activeNews.urlToImage" class="absolute block w-full" alt="...">
-            <a [href]="activeNews.url" target="_blank">
-                <div class="absolute bottom-4 left-4 text-white bg-black/50 p-2 rounded-lg">
-                    <h3 class="text-xl font-semibold">{{ activeNews.title }}</h3>
-                </div>
-            </a>
-        </div>
-    </div>
-    <button type="button" class="absolute top-0 start-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none">
-        <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
-            <svg class="w-4 h-4 text-white dark:text-gray-800 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
-            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 1 1 5l4 4"/>
-            </svg>
-            <span class="sr-only">Previous</span>
-        </span>
-    </button>
-    <button type="button" class="absolute top-0 end-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none">
-        <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
-            <svg class="w-4 h-4 text-white dark:text-gray-800 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
-            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
-            </svg>
-            <span class="sr-only">Next</span>
-        </span>
-    </button>
 </div>
 
 <!-- Search and filter menu -->
@@ -84,7 +20,7 @@
         <div id="neptune-dropdown-brand" class="z-10 rounded-lg w-44 bg-gray-700 absolute text-md">
             <ul class="py-2 text-sm text-gray-700 dark:text-gray-200">
                 <li>
-                    <button (click)="resetFilter()" class="bg-gray-700 hover:bg-slate-500 h-10 text-white p-2 w-full text-left">All</button>
+                    <button (click)="filterBrand(null)" class="bg-gray-700 hover:bg-slate-500 h-10 text-white p-2 w-full text-left">All</button>
                 </li>
                 <li *ngFor="let brand of brands">
                     <button (click)="filterBrand(brand)" class="bg-gray-700 hover:bg-slate-500 h-10 text-white p-2 w-full text-left">{{brand}}</button>
