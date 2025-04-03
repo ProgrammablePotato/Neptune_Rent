@@ -64,26 +64,26 @@ router.delete('/:id', async (req, res) => {
     }
 })
 
-router.get('/test/:id', async (req, res) => {
-    try {
-        const cart = await cartService.getTestCart(req.params.id)
-        if (cart.length === 0) {
-            return res.json({ message: 'Nincs termék a felhasználó kosarában' })
-        }
-        res.json(cart)
-    }
-    catch (error) {
-        res.status(500).json({ message: error.message })
-    }
-})
+// router.get('/test/:id', async (req, res) => {
+//     try {
+//         const cart = await cartService.getTestCart(req.params.id)
+//         if (cart.length === 0) {
+//             return res.json({ message: 'Nincs termék a felhasználó kosarában' })
+//         }
+//         res.json(cart)
+//     }
+//     catch (error) {
+//         res.status(500).json({ message: error.message })
+//     }
+// })
 
-router.post('/test/:id', async (req, res) => {
-    try {
-        const cart = await cartService.addToTestCart(req.params.id, req.body.product_id)
-        res.json(cart)
-    } catch (error) {
-        res.status(500).json({ message: error.message })
-    }
-})
+// router.post('/test/:id', async (req, res) => {
+//     try {
+//         const cart = await cartService.addToTestCart(req.params.id, req.body.product_id)
+//         res.json(cart)
+//     } catch (error) {
+//         res.status(500).json({ message: error.message })
+//     }
+// })
 
 module.exports = router

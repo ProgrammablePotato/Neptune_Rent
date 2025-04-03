@@ -13,16 +13,6 @@ router.get('/', async (req, res) => {
     }
 })
 
-router.get('/getBrand', async (req, res) => {
-    try {
-        const productList = await productService.getBrand()
-        res.json(productList)
-    } catch (error) {
-        console.error(error)
-        res.status(500).json({ message: error.message })
-    }
-})
-
 router.get('/:id', async (req, res) => {
     try {
         const product = await productService.getProduct(req.params.id)
@@ -58,7 +48,8 @@ router.delete('/:id', async (req, res) => {
         res.status(500).json({ message: error.message })
     }
 })
-router.get('/categoryimg/:category', async (req, res) => {
+
+router.get('/catimg/:category', async (req, res) => {
     try {
         const url = await productService.getLatestImage(req.params.category)
         res.json(url)
