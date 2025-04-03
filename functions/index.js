@@ -4,7 +4,7 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const admin =require("firebase-admin")
 
-var serviceAccount = require("./neptune-rent-firebase-adminsdk-sgxzh-d0760cba36.json");
+var serviceAccount = require("./neptune-rent-firebase-adminsdk-sgxzh-7e101fa8dd.json");
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
@@ -19,7 +19,6 @@ app.use(bodyParser.json());
 
 const verifyToken = (req,res, next)=>{
     const idToken = req.headers.authorization
-    console.log("ID token:", idToken)
     admin.auth().verifyIdToken(idToken).then(
         (decodeData)=>{
             req.user=decodeData;
