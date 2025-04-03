@@ -77,9 +77,6 @@ export class BaseService {
     return this.http.delete(`${this.apiUrl}/users/${uid}`)
   }
 
-  generateRandomId(){
-    return Math.random().toString(36).substring(2, 10) + Math.random().toString(36).substring(2, 10)
-  }
   getLatestImageForCategory(cat:string) {
     return this.http.get(`${this.apiUrl}/products/categoryimg/${cat}`)
   }

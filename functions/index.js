@@ -4,7 +4,7 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const admin =require("firebase-admin")
 
-var serviceAccount = require("./neptune-rent-firebase-adminsdk-sgxzh-256d086b2b.json");
+var serviceAccount = require("./neptune-rent-firebase-adminsdk-sgxzh-d0760cba36.json");
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
@@ -17,8 +17,8 @@ app.use(cors({origin:'*'}));
 
 app.use(bodyParser.json());
 
-const verifyToken= (req,res, next)=>{
-    const idToken= req.headers.authorization
+const verifyToken = (req,res, next)=>{
+    const idToken = req.headers.authorization
     console.log("ID token:", idToken)
     admin.auth().verifyIdToken(idToken).then(
         (decodeData)=>{
@@ -32,7 +32,7 @@ const verifyToken= (req,res, next)=>{
     })
 }
 
-const verifyAdmin =(req,res, next)=>{
+const verifyAdmin = (req,res, next)=>{
   console.log(req.user)
   if (req.user && req.user.admin){
     next()
@@ -79,7 +79,7 @@ app.post('/setCustomClaims',verifyToken, verifyAdmin,(req,res)=>{
   })
 })
 
-app.get('/getClaims/:uid?',verifyToken, verifyAdmin,(req,res)=>{
+app.get('/getClaims/:uid?', verifyToken, (req,res)=>{
   let {uid}= req.params
   if (!uid || !req.user.admin) uid = req.user.uid
   admin.auth().getUser(uid).then(
@@ -91,7 +91,6 @@ app.get('/getClaims/:uid?',verifyToken, verifyAdmin,(req,res)=>{
     res.status(500).json({message:"Hiba a claimsok lekérdezésénél!", error:error})
   }
 )})
-
 
 app.patch("/updateUser", verifyToken, async (req, res) => {
   try {

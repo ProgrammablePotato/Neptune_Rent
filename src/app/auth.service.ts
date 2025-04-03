@@ -29,7 +29,8 @@ export class AuthService {
           user.getIdToken().then(
             (token: any) => {
               this.loggedUser.accessToken = token
-              const headers = new HttpHeaders().set('Authorization', token)
+              console.log("Access token", this.loggedUser.accessToken)
+              const headers = new HttpHeaders().set('Authorization', `${token}`)
               console.log("Headers", headers)
               this.http.get(this.fireApi + "getClaims/" + user.uid, { headers }).subscribe(
                 {
@@ -168,8 +169,5 @@ export class AuthService {
   }
   deleteSelfUser() {
     this.auth.currentUser.then(user => user?.delete())
-  }
-  deleteUser() {
-    
   }
 }
