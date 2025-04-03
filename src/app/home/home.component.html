@@ -25,7 +25,7 @@
     </div>
 </div> -->
 
-<div class="relative md:mr-auto md:ml-auto mr-5 ml-5 md:p-5 p-2 bg-gray-800 md:flex block text-white text-lg rounded-lg w-2/3 m-5 hover:border-solid" *ngFor="let card of cards">
+<div class="relative md:mr-auto md:ml-auto mr-5 ml-5 md:p-5 p-2 bg-gray-800 md:flex block text-white text-lg rounded-lg w-2/3 m-5 " *ngFor="let card of cards">
   <div class="flex-1 p-2">
     <span class="mb-5 text-3xl font-bold ">{{card.title}}</span>
     <hr class="mb-5">
@@ -35,5 +35,5 @@
   <div class="flex-1 p-2">
     <img src="cat.jfif" alt="" class="w-full">
   </div>
-  <a href="" [routerLink]="getRoute(card.title)" class="absolute w-full h-full top-0 left-0"></a>
+  <a href="" [routerLink]="getRoute(card.title)" class="absolute w-full h-full top-0 left-0 neptune-hover-inset-border"></a>
 </div>

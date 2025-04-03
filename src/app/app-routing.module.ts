@@ -9,12 +9,7 @@ import { CartComponent } from './cart/cart.component';
 import { AdminComponent } from './admin/admin.component';
 import { adminGuard } from './admin.guard';
 import { ProductEditorComponent } from './product-editor/product-editor.component';
-import { PcsComponent } from './pcs/pcs.component';
-import { LaptopsComponent } from './laptops/laptops.component';
-import { ServersComponent } from './servers/servers.component';
-import { AccessoriesComponent } from './accessories/accessories.component';
 import { AboutUsComponent } from './about-us/about-us.component';
-import { ServicesComponent } from './services/services.component';
 import { ProductDetailsComponent } from './product-details/product-details.component';
 import { ErrorComponent } from './error/error.component';
 import { UserEditorComponent } from './user-editor/user-editor.component';
@@ -36,12 +31,7 @@ const routes: Routes = [
   ]},
   {path: 'producteditor/:category/:id', component: ProductEditorComponent, canActivate:[adminGuard]},
   {path: 'products/:category', component: ProductsComponent, pathMatch:'prefix'},
-  {path: 'pcs', component: PcsComponent},
-  {path: 'laptops', component: LaptopsComponent},
-  {path: 'servers', component: ServersComponent},
-  {path: 'accessories', component: AccessoriesComponent},
   {path: 'aboutus', component: AboutUsComponent},
-  {path: 'services', component: ServicesComponent},
   {path: 'details/:category/:id', component: ProductDetailsComponent},
   {path: 'verifymail', component:VerifymailComponent},
   {path: '**', component: ErrorComponent}
