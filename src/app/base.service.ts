@@ -14,12 +14,6 @@ export class BaseService {
 
   constructor (private auth:AuthService, private http:HttpClient) { }
 
-  /*  PRODUCT-RELATED FUNCTIONS--------------------------------------------------
-  *
-  *   Get, Add, Update, Delete, etc.
-  *
-  *   ---------------------------------------------------------------------------
-  */
   getProducts(): Promise<any[]> {
     return new Promise((resolve) =>
     {
@@ -72,11 +66,7 @@ export class BaseService {
       this.products[x].price = (Math.round(this.products[x].price*100))/100
     }
   }
-  /*  USER-RELATED FUNCTIONS--------------------------------------------------
-  *
-  *   Get, Add, Update, Delete, etc.
-  *
-  *   ---------------------------------------------------------------------------*/
+
   getUsers() {
     this.http.get(`${this.apiUrl}/users`).subscribe((users:any) => {
       this.users = users
@@ -86,11 +76,7 @@ export class BaseService {
   deleteUser(uid:string) {
     return this.http.delete(`${this.apiUrl}/users/${uid}`)
   }
-  /*  OTHER FUNCTIONS--------------------------------------------------
-  *
-  *   Get, Add, Update, Delete, etc.
-  *
-  *   ---------------------------------------------------------------------------*/
+
   generateRandomId(){
     return Math.random().toString(36).substring(2, 10) + Math.random().toString(36).substring(2, 10)
   }
