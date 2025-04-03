@@ -3,7 +3,7 @@ const router = express.Router()
 
 const userService = require('../services/user')
 
-router.post('getUser/:id', async (req, res) => {
+router.post('/:id', async (req, res) => {
     try {
         const user = await userService.getUserDetails(req.params.id, req.body.details)
         res.json(user)
@@ -40,7 +40,7 @@ router.patch('/:id', async (req, res) => {
     }
 })
 
-router.delete('delUser/:id', async (req, res) => {
+router.delete('/:id', async (req, res) => {
     try {
         const user = await userService.deleteUser(req.params.id)
         res.json(user)

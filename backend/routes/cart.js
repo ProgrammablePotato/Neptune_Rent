@@ -55,7 +55,7 @@ router.patch('/:id', async (req, res) => {
     }
 })
 
-router.delete('delCart/:id', async (req, res) => {
+router.delete('/:id', async (req, res) => {
     try {
         const cart = await cartService.deleteUserCart(req.params.id)
         res.json(cart)
