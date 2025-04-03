@@ -71,7 +71,7 @@ export class BaseService {
     return this.http.patch(url,data)
   }
   deleteProduct(id: number) {
-    const url = `${this.apiUrl}/products/delete/${id}`
+    const url = `${this.apiUrl}/products/${id}`
     return this.http.delete(url).pipe(
       tap(() => {
         this.getProducts().then(() => console.log("Updated"))
@@ -95,7 +95,7 @@ export class BaseService {
     })
   }
   deleteUser(uid:string) {
-    return this.http.delete(`${this.apiUrl}/users/delUser/${uid}`)
+    return this.http.delete(`${this.apiUrl}/users/${uid}`)
   }
   /*  OTHER FUNCTIONS--------------------------------------------------
   *

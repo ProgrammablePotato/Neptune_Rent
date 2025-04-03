@@ -1,11 +1,12 @@
-import { Component, NgModule, OnDestroy, OnInit } from '@angular/core';
+import { Component, NgModule, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
 import { NewsService } from '../news.service';
 import { BaseService } from '../base.service';
-import { ActivatedRoute, Router, RouteReuseStrategy } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router, RouteReuseStrategy } from '@angular/router';
 import { SearchService } from '../search.service';
 import { initFlowbite, initCarousels, initDropdowns } from 'flowbite';
 import { AppComponent } from '../app.component';
 import { dropdownCollapse, dropdownExtend } from '../app.component';
+import { filter } from 'rxjs';
 
 @Component({
   selector: 'app-products',
@@ -37,8 +38,6 @@ export class ProductsComponent implements OnInit {
     this.base.currentPage = this.router.url
     this.category = String(this.activated.snapshot.paramMap.get('category'))
     this.getProducts()
-    this.getNewsNew()
-    initFlowbite()
   }
 
   // async getNews(){
@@ -55,8 +54,6 @@ export class ProductsComponent implements OnInit {
     }).catch((error) => {
       console.log("Nem jó")
     })
-    this.activeNews = this.categoryNews[0]
-    this.activeNews = this.categoryNews[1]
   }
 
   filterProducts() {
@@ -76,6 +73,7 @@ export class ProductsComponent implements OnInit {
     this.filterCategory()
     this.filteredProducts = this.products
     this.getBrandNames()
+    await this.getNewsNew()
   }
   filterCategory() {
     this.allProducts.forEach((product:any) => {
