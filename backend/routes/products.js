@@ -58,5 +58,13 @@ router.delete('/delete/:id', async (req, res) => {
         res.status(500).json({ message: error.message })
     }
 })
+router.get('/categoryimg/:category', async (req, res) => {
+    try {
+        const url = await productService.getLatestImage(req.params.category)
+        res.json(url)
+    } catch (error) {
+        res.status(500).json({ message: error.message })
+    }
+})
 
 module.exports = router

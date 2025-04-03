@@ -1,6 +1,6 @@
 <!-- News caruosel -->
 
-<div id="default-carousel" class="relative w-full xl:max-w-[80vw] xl:ml-auto xl:mr-auto" data-carousel="slide">
+<!-- <div id="default-carousel" class="relative w-full xl:max-w-[80vw] xl:ml-auto xl:mr-auto" data-carousel="slide">
     <div class="relative h-56 overflow-hidden rounded-lg md:h-96">
     <div class="hidden duration-1000 ease-in-out -top-1/2" *ngFor="let news of categoryNews" data-carousel-item>
         <img [src]="news.urlToImage" class="absolute block w-full" alt="...">
@@ -27,6 +27,43 @@
         <span class="sr-only">Next</span>
     </span>
     </button>
+</div> -->
+
+<div id="neptune-carousel" class="relative w-full xl:max-w-[80vw] xl:ml-auto xl:mr-auto">
+    <div class="relative h-56 overflow-hidden rounded-lg md:h-96">
+        <div id="active-carousel-item" class="hidden duration-1000 ease-in-out -top-1/2">
+            <img [src]="activeNews.urlToImage" class="absolute block w-full" alt="...">
+            <a [href]="activeNews.url" target="_blank">
+                <div class="absolute bottom-4 left-4 text-white bg-black/50 p-2 rounded-lg">
+                    <h3 class="text-xl font-semibold">{{ activeNews.title }}</h3>
+                </div>
+            </a>
+        </div>
+        <div id="inactive-carousel-item" class="hidden duration-1000 ease-in-out -top-1/2">
+            <img [src]="activeNews.urlToImage" class="absolute block w-full" alt="...">
+            <a [href]="activeNews.url" target="_blank">
+                <div class="absolute bottom-4 left-4 text-white bg-black/50 p-2 rounded-lg">
+                    <h3 class="text-xl font-semibold">{{ activeNews.title }}</h3>
+                </div>
+            </a>
+        </div>
+    </div>
+    <button type="button" class="absolute top-0 start-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none">
+        <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
+            <svg class="w-4 h-4 text-white dark:text-gray-800 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 1 1 5l4 4"/>
+            </svg>
+            <span class="sr-only">Previous</span>
+        </span>
+    </button>
+    <button type="button" class="absolute top-0 end-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none">
+        <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
+            <svg class="w-4 h-4 text-white dark:text-gray-800 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
+            </svg>
+            <span class="sr-only">Next</span>
+        </span>
+    </button>
 </div>
 
 <!-- Search and filter menu -->
@@ -37,20 +74,20 @@
         <p class="text-white text-xl mb-1">Search:</p><br>
         <input type="text" placeholder="Search products..." [(ngModel)]="searchTerm" (ngModelChange)="filterProducts()" class="bg-gray-600 p-2 rounded-lg text-white">
     </div>
-    <div class="flex-1">
-        <button id="dropdownDefaultButton" data-dropdown-toggle="dropdown" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center" type="button">
-        Brands
-        <svg class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
-        </svg>
+    <div class="flex-1 h-fit relative" (mouseleave)="dropdownCollapse('brand')" (mouseenter)="dropdownExtend('brand')" (click)="dropdownExtend('brand')">
+        <button class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-2 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-md px-5 py-2.5 text-center inline-flex items-center " type="button">
+            Brands
+            <svg class="w-2.5 h-2.5 ms-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
+            </svg>
         </button>
-        <div id="dropdown" class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow-sm w-44 dark:bg-gray-700" >
-            <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefaultButton allButton brandButton" aria-hidden="true">
+        <div id="neptune-dropdown-brand" class="z-10 rounded-lg w-44 bg-gray-700 absolute text-md">
+            <ul class="py-2 text-sm text-gray-700 dark:text-gray-200">
                 <li>
-                <button (click)="resetFilter()" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white w-full text-left">All</button>
+                    <button (click)="resetFilter()" class="bg-gray-700 hover:bg-slate-500 h-10 text-white p-2 w-full text-left">All</button>
                 </li>
                 <li *ngFor="let brand of brands">
-                <button (click)="filterBrand(brand)" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white w-full text-left">{{brand}}</button>
+                    <button (click)="filterBrand(brand)" class="bg-gray-700 hover:bg-slate-500 h-10 text-white p-2 w-full text-left">{{brand}}</button>
                 </li>
             </ul>
         </div>
@@ -77,7 +114,7 @@
                 <p class="mb-3 font-normal text-gray-700 dark:text-gray-400 justify-end w-full">{{product.price}}$</p>
             </div>
         </div>
-        <button routerLink="/producteditor/{{product.category}}/{{product.id}}" class="mt-auto mb-auto inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-3 focus:outline-none focus:ring-blue-300">
+        <button routerLink="/details/{{product.category}}/{{product.id}}" class="mt-auto mb-auto inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-3 focus:outline-none focus:ring-blue-300">
             More
             <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>

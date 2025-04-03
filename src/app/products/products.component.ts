@@ -4,6 +4,8 @@ import { BaseService } from '../base.service';
 import { ActivatedRoute, Router, RouteReuseStrategy } from '@angular/router';
 import { SearchService } from '../search.service';
 import { initFlowbite, initCarousels, initDropdowns } from 'flowbite';
+import { AppComponent } from '../app.component';
+import { dropdownCollapse, dropdownExtend } from '../app.component';
 
 @Component({
   selector: 'app-products',
@@ -11,6 +13,11 @@ import { initFlowbite, initCarousels, initDropdowns } from 'flowbite';
   styleUrl: './products.component.css'
 })
 export class ProductsComponent implements OnInit {
+  public dropdownCollapse = dropdownCollapse
+  public dropdownExtend = dropdownExtend
+  activeNews:any
+  nextNews:any
+
   categoryNews:any = []
   
   allProducts:any = []
@@ -25,7 +32,6 @@ export class ProductsComponent implements OnInit {
     this.router.routeReuseStrategy.shouldReuseRoute = function () {
       return false;
     };
-    
   }
   ngOnInit() {
     this.base.currentPage = this.router.url
@@ -49,6 +55,8 @@ export class ProductsComponent implements OnInit {
     }).catch((error) => {
       console.log("Nem jó")
     })
+    this.activeNews = this.categoryNews[0]
+    this.activeNews = this.categoryNews[1]
   }
   
   filterProducts() {
@@ -83,10 +91,11 @@ export class ProductsComponent implements OnInit {
         this.filteredProducts.push(element)
       }
     })
-    console.log(this.filteredProducts)
+    dropdownCollapse('brand')
   }
   resetFilter() {
     this.filteredProducts = this.products
+    dropdownCollapse('brand')
   }
   getNewsNumber(news:any) {
     return this.categoryNews.indexOf(news)

@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BaseService } from '../base.service';
 import { initDropdowns, initFlowbite } from 'flowbite';
+import { AppComponent } from '../app.component';
+import { dropdownCollapse, dropdownExtend } from '../app.component';
 
 @Component({
   selector: 'app-product-editor',
@@ -9,6 +11,9 @@ import { initDropdowns, initFlowbite } from 'flowbite';
   styleUrl: './product-editor.component.css'
 })
 export class ProductEditorComponent {
+  public dropdownCollapse = dropdownCollapse
+  public dropdownExtend = dropdownExtend
+
   categories = ["Accessories","PCs","Laptops","Servers","Services"]
   product: any = null
   category: string = ""
@@ -26,12 +31,12 @@ export class ProductEditorComponent {
       this.category = category
       this.product = {
         name: "",
-        category: "Select a category",
+        category: "",
         brand: "",
         price: 0,
         description: "",
         image_url: "no",
-        stock: 1,
+        stock: 0,
         id : -1
       }
       this.loading = false
@@ -52,7 +57,6 @@ export class ProductEditorComponent {
       this.error = 'Invalid product data!'
       this.loading = false
     }
-    initFlowbite()
   }
 
   edit(field: string): void {
@@ -69,6 +73,7 @@ export class ProductEditorComponent {
   }
 
   update(){
+    this.product.category = this.product.category.toLowerCase()
     this.base.editProduct(this.productId, this.product).subscribe(
       {
         next: () => {
@@ -80,8 +85,36 @@ export class ProductEditorComponent {
       }
     )
   }
-
   add() {
+    console.log(this.product)
+    this.editingField = null
+    let message = this.isFilled()
+    if (message == "") {
+      this.startAdd()
+    }
+    else {
+      this.errorMessage(message)
+    }
+  }
+  isFilled() {
+    let message = ""
+    Object.values(this.product).forEach((data) => {
+      if (data == "" || data == 0) {
+        message = "Please fill all fields correctly before registering the new product!"
+      }
+    })
+    return message
+  }
+  errorMessage(message:string) {
+    if (message == "") {
+      console.log("no error")
+      return
+    }
+    var alert:any = document.getElementById("alert-incorrect-data")
+    alert.style.display = "block"
+    alert.innerHTML = message
+  }
+  startAdd() {
     console.log("Adding: ",this.product)
     this.product.price = Number.parseFloat(this.product.price)
     this.product.stock = Number.parseInt(this.product.stock)
@@ -94,20 +127,16 @@ export class ProductEditorComponent {
       }
     )
   }
-
   image(){
     alert("Image upload is not available yet!")
   }
-  dropDownToggle() {
-    var dropdown:any = document.getElementById("dropdown")
-    if (dropdown?.style.display == "none" || dropdown?.style.display == "") {
-      dropdown.style.display = "block"
-    } else {
-      dropdown.style.display = "none"
-    }
-  }
   setCategory(category:string) {
     this.product.category = category
-    this.dropDownToggle()
+    dropdownCollapse('category')
+  }
+  getCategory() {
+    if (this.product.category == "") {
+      return "Select a category"
+    } return this.product.category
   }
 }

@@ -2,3 +2,6 @@
     background-size: cover;
     background-position: center;
 }
+[id^=neptune-dropdown] {
+    display: none;
+}

@@ -10,6 +10,7 @@ import { BaseService } from '../base.service';
 export class UserEditorComponent {
   loggedUser:any
   users:any
+  uid:string = ""
 
   constructor(private auth:AuthService,private base:BaseService){
     this.auth.getLoggedUser().subscribe(
@@ -17,7 +18,11 @@ export class UserEditorComponent {
         this.loggedUser=loggedUser
         console.log("Users logged", this.loggedUser)
         if (this.loggedUser) this.auth.getUsers()?.subscribe(
-          (users)=>this.users=users
+          {
+            next: (users)=>{this.users = users
+              console.log(this.users)
+            }
+          }
         )
       }
     )
@@ -36,7 +41,25 @@ export class UserEditorComponent {
     console.log(tomb)
     this.auth.setUserClaims(uid,tomb[0].claims)?.subscribe()
   }
-  deleteUser() {
-    this.base.deleteUser()
+  startDeleteUser(uid:string) {
+    this.uid = uid
+    this.toggleModal(true)
+  }
+  deleteUser(uid:string) {
+    this.base.deleteUser(uid).subscribe(
+      {
+        next: () => {console.log("User deleted")},
+        error: (error) => {console.log("Error while dleeting the user!")} 
+      }
+    )
+    this.toggleModal(false)
+  }
+  toggleModal(on:boolean) {
+    var modal:any = document.getElementById("confirm-modal")
+    if (on) {
+      modal.style.display = "block"
+    } else {
+      modal.style.display = "none"
+    }
   }
 }

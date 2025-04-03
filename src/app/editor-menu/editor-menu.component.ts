@@ -12,6 +12,7 @@ export class EditorMenuComponent {
   products:any[] = []
   filteredProducts:any = []
   searchTerm: string = ''
+  public id = 0
 
   constructor(private base:BaseService, private search:SearchService) {
     this.getProducts()
@@ -23,15 +24,20 @@ export class EditorMenuComponent {
       console.log("Editor products",this.products)
     })
   }
+  startDelete(id:number) {
+    this.id = id
+    this.toggleModal(true)
+  }
 
   deleteProduct(id: number) {
     this.base.deleteProduct(id).subscribe({
       next: () => {
         console.log("Item deleted!")
-        this.products = this.products.filter(p => p.id !== id)
       },
       error: () => console.log("Error while deleting item!")
     })
+    this.products = this.products.filter(p => p.id !== id)
+    this.toggleModal(false)
   }
   filterProducts() {
     this.filteredProducts = this.products.filter((product: any) => 
@@ -42,5 +48,32 @@ export class EditorMenuComponent {
     this.search.getSearchWord().subscribe((res) => {
       this.searchTerm = res
     })
+  }
+  toggleModal(on:boolean) {
+    var modal:any = document.getElementById("confirm-modal")
+    if (on) {
+      modal.style.display = "block"
+    } else {
+      modal.style.display = "none"
+    }
+  }
+  addTestProduct() {
+    let product = {
+      name: "Test",
+      category: "pcs",
+      brand: "Hell",
+      price: 20,
+      description: "Testing",
+      image_url: "no",
+      stock: 20,
+      id : -1
+    }
+    console.log(product)
+    this.base.addProduct(product).subscribe(
+      {
+        next: () => alert("Test product added!"),
+        error: () => console.log("Failed to create product!")
+      }
+    )
   }
 }

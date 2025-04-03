@@ -17,8 +17,8 @@ export class AuthService {
   private adminSub= new BehaviorSubject<boolean>(false)
   private loggedUserSub= new BehaviorSubject<boolean>(false)
 
-  apiUrl = 'http://127.0.0.1:5001/neptune-rent/us-central1/api/'
-  expressApi = 'http://localhost:3000/users/'
+  fireApi = 'http://127.0.0.1:5001/neptune-rent/us-central1/api/'
+  sqlApi = 'http://localhost:3000/users/'
 
   constructor(private auth:AngularFireAuth, private router:Router, private http:HttpClient) {
     this.auth.authState.subscribe(
@@ -31,7 +31,7 @@ export class AuthService {
               this.loggedUser.accessToken = token
               const headers = new HttpHeaders().set('Authorization', token)
               console.log("Headers", headers)
-              this.http.get(this.apiUrl + "getClaims/" + user.uid, { headers }).subscribe(
+              this.http.get(this.fireApi + "getClaims/" + user.uid, { headers }).subscribe(
                 {
                   next: (claims) => {
                     console.log("Claims", claims)
@@ -124,7 +124,7 @@ export class AuthService {
     if (this.loggedUser.accessToken)
     {
       const headers= new HttpHeaders().set('Authorization',this.loggedUser.accessToken)
-      return this.http.get(this.apiUrl+"users", {headers})
+      return this.http.get(this.fireApi+"users", {headers})
     }
     return null
   }
@@ -137,7 +137,7 @@ export class AuthService {
           uid:uid
         }
         const headers= new HttpHeaders().set('Authorization',this.loggedUser.accessToken)
-        return this.http.post(this.apiUrl+"setCustomClaims",body, {headers})
+        return this.http.post(this.fireApi+"setCustomClaims",body, {headers})
       }
       return null
   }
@@ -147,7 +147,7 @@ export class AuthService {
       {
         let body={displayName, phoneNumber, email, password}
         const headers= new HttpHeaders().set('Authorization',this.loggedUser.accessToken)
-        return this.http.patch(this.apiUrl+"updateUser/",body, {headers})
+        return this.http.patch(this.fireApi+"updateUser/",body, {headers})
       }
       return null
   }
@@ -158,12 +158,18 @@ export class AuthService {
         firebase_uid=this.loggedUser.uid
         let body={firebase_uid, name, zipcode, city, addr1, addr2, country, email, phone, nick}
         const headers = new HttpHeaders().set('Authorization', this.loggedUser.accessToken)
-        return this.http.post(this.expressApi, body, { headers })
+        return this.http.post(this.sqlApi, body, { headers })
       }
       return null
   }
 
   getUserId(firebaseUid: string): Observable<{ id: number }> {
-    return this.http.post<{ id: number }>(`${this.expressApi}`, { details: 'id', firebase_uid: firebaseUid });
+    return this.http.post<{ id: number }>(`${this.sqlApi}`, { details: 'id', firebase_uid: firebaseUid });
+  }
+  deleteSelfUser() {
+    this.auth.currentUser.then(user => user?.delete())
+  }
+  deleteUser() {
+    
   }
 }

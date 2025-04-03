@@ -13,6 +13,7 @@ import {
   initTabs,
   initTooltips,
 } from 'flowbite';
+import { delay } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -24,16 +25,25 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     initFlowbite();
-    initAccordions();
-    initCarousels();
-    initCollapses();
-    initDials();
-    initDismisses();
-    initDrawers();
-    initDropdowns();
-    initModals();
-    initPopovers();
-    initTabs();
-    initTooltips();
   }
 }
+export async function newsCarouselSlide(news:any[]) {
+    let activeNews:any
+    // let nextNews:any
+    let newsCount = 0
+    var activeItem = document.getElementById("active-carousel-item")
+    // var inactiveItem = document.getElementById("inactive-carousel-item")
+    while (true) {
+      activeNews = news[newsCount]
+      delay(5000)
+      newsCount++
+    }
+  }
+export function dropdownCollapse(id:string) {
+    var dropdown:any = document.getElementById(`neptune-dropdown-${id}`)
+    dropdown.style.display = "none"
+  }
+export function dropdownExtend(id:string) {
+    var dropdown:any = document.getElementById(`neptune-dropdown-${id}`)
+    dropdown.style.display = "block"
+  }
