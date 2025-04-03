@@ -18,7 +18,8 @@ app.use(cors({origin:'*'}));
 app.use(bodyParser.json());
 
 const verifyToken= (req,res, next)=>{
-    const idToken= req.headers.authorization;
+    const idToken= req.headers.authorization
+    console.log("ID token:", idToken)
     admin.auth().verifyIdToken(idToken).then(
         (decodeData)=>{
             req.user=decodeData;
