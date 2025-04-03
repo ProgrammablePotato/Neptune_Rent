@@ -1,8 +1,9 @@
-<div class="neptune-news-carousel xl:max-w-[80vw] mr-auto ml-auto mt-5 mb-5 relative h-[30vh] block">
-  <div *ngFor="let news of categoryNews" class="absolute top-0 overflow-hidden h-full">
-    <span class="m-2 bottom-0 bg-black bg-opacity-70 text-2xl rounded-lg text-white absolute p-3">{{news.title}}</span>
-    <img [src]="news.urlToImage" alt="" class="w-full">
-  </div>
+<div class="relative neptune-news-carousel xl:max-w-[80vw] mr-auto ml-auto mt-5 mb-5 h-[30vh] block">
+    <div *ngFor="let news of categoryNews" class="absolute overflow-hidden h-full w-full">
+        
+        <img [src]="news.urlToImage" alt="" class="w-full -top-1/2 absolute">
+        <span class="m-2 bottom-0 bg-black bg-opacity-70 text-2xl rounded-lg text-white absolute p-3">{{news.title}}</span>
+    </div>
 </div>
 
 <!-- Search and filter menu -->

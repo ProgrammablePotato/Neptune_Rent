@@ -80,4 +80,13 @@ export class BaseService {
   getLatestImageForCategory(cat:string) {
     return this.http.get(`${this.apiUrl}/products/categoryimg/${cat}`)
   }
+  uploadImage(image:any) {
+    return this.http.post(`${this.apiUrl}/images/`,image)
+  }
+  getImage(filename:string) {
+    return this.http.get(`${this.apiUrl}/images/${filename}`)
+  }
+  deleteImage(filename:string) {
+    return this.http.delete(`${this.apiUrl}/images/${filename}`)
+  }
 }
