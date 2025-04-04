@@ -9,29 +9,47 @@
 <!-- Search and filter menu -->
 
 <div class="m-5 bg-gray-800 p-5 rounded-lg flex xl:max-w-[80vw] xl:ml-auto xl:mr-auto">
-    <div class="lg:w-1 w-full flex float-right">
-    <div class="flex-1">
-        <p class="text-white text-xl mb-1">Search:</p><br>
-        <input type="text" placeholder="Search products..." [(ngModel)]="searchTerm" (ngModelChange)="filterProducts()" class="bg-gray-600 p-2 rounded-lg text-white">
-    </div>
-    <div class="flex-1 h-fit relative" (mouseleave)="dropdownCollapse('brand')" (mouseenter)="dropdownExtend('brand')" (click)="dropdownExtend('brand')">
-        <button class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-2 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-md px-5 py-2.5 text-center inline-flex items-center " type="button">
-            Brands
-            <svg class="w-2.5 h-2.5 ms-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
-            </svg>
-        </button>
-        <div id="neptune-dropdown-brand" class="z-10 rounded-lg w-44 bg-gray-700 absolute text-md">
-            <ul class="py-2 text-sm text-gray-700 dark:text-gray-200">
-                <li>
-                    <button (click)="filterBrand(null)" class="bg-gray-700 hover:bg-slate-500 h-10 text-white p-2 w-full text-left">All</button>
-                </li>
-                <li *ngFor="let brand of brands">
-                    <button (click)="filterBrand(brand)" class="bg-gray-700 hover:bg-slate-500 h-10 text-white p-2 w-full text-left">{{brand}}</button>
-                </li>
-            </ul>
+    <div class="flex w-full float-right">
+        <div class="m-2">
+            <p class="text-white text-xl mb-1">Search:</p><br>
+            <input type="text" placeholder="Search products..." [(ngModel)]="searchTerm" (ngModelChange)="filterProducts()" class="bg-gray-600 p-2 rounded-lg text-white">
         </div>
-    </div>
+        <div class="m-2 h-fit relative" (mouseleave)="dropdownCollapse('brand')" (mouseenter)="dropdownExtend('brand')" (click)="dropdownExtend('brand')">
+            <button class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-2 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-md px-5 py-2.5 text-center inline-flex items-center " type="button">
+                Brands
+                <svg class="w-2.5 h-2.5 ms-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
+                </svg>
+            </button>
+            <div id="neptune-dropdown-brand" class="z-10 rounded-lg w-44 bg-gray-700 absolute text-md">
+                <ul class="py-2 text-sm text-gray-700 dark:text-gray-200">
+                    <li>
+                        <button (click)="filterBrand(null)" class="bg-gray-700 hover:bg-slate-500 h-10 text-white p-2 w-full text-left">All</button>
+                    </li>
+                    <li *ngFor="let brand of brands">
+                        <button (click)="filterBrand(brand)" class="bg-gray-700 hover:bg-slate-500 h-10 text-white p-2 w-full text-left">{{brand}}</button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="m-2 h-fit relative" (mouseleave)="dropdownCollapse('price')" (mouseenter)="dropdownExtend('price')" (click)="dropdownExtend('price')">
+            <button class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-2 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-md px-5 py-2.5 text-center inline-flex items-center w-fit" type="button">
+                Sort by price
+                <svg class="w-2.5 h-2.5 ms-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
+                </svg>
+            </button>
+            <div id="neptune-dropdown-price" class="z-10 rounded-lg w-44 bg-gray-700 absolute text-md">
+                <ul class="py-2 text-sm text-gray-700 dark:text-gray-200">
+                    <li>
+                        <button (click)="sortByPrice(true)" class="bg-gray-700 hover:bg-slate-500 h-10 text-white p-2 w-full text-left">Smallest first</button>
+                    </li>
+                    <li>
+                        <button (click)="sortByPrice(false)" class="bg-gray-700 hover:bg-slate-500 h-10 text-white p-2 w-full text-left">Highest first</button>
+                    </li>
+                </ul>
+            </div>
+        </div>
     </div>
 </div>
 

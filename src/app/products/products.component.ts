@@ -22,7 +22,7 @@ export class ProductsComponent implements OnInit {
   categoryNews:any = []
 
   allProducts:any = []
-  products:any = []
+  products:any[] = []
   filteredProducts:any = []
 
   category:string = ''
@@ -38,6 +38,7 @@ export class ProductsComponent implements OnInit {
     this.base.currentPage = this.router.url
     this.category = String(this.activated.snapshot.paramMap.get('category'))
     this.getProducts()
+    
   }
 
   // async getNews(){
@@ -109,6 +110,21 @@ export class ProductsComponent implements OnInit {
   redirectTo(uri: string) {
     this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
       this.router.navigate([uri])});
+  }
+  sortByPrice(ascending:boolean) {
+    let sorted = this.filteredProducts
+    for (let x = 0; x < sorted.length; x++) {
+      for (let y = 0; y < x; y++) {
+        if (sorted[x-y].price < sorted[x-y-1].price) {
+          let tmp = sorted[x-y]
+          sorted[x-y] = sorted[x-y-1]
+          sorted[x-y-1] = tmp
+        }
+      }
+    }
+    if (!ascending) sorted.reverse()
+    this.filteredProducts = sorted
+    this.dropdownCollapse("price")
   }
 }
 
