@@ -93,10 +93,25 @@ async function getAllUser(){
     }
 }
 
+async function getUserByFirebaseUid(firebase_uid) {
+    const query = `SELECT * FROM users WHERE firebase_uid = ?`
+    const params = [firebase_uid]
+    console.log(query, params)
+    try {
+        const [row] = await db.query(query, params)
+        if (!row) throw new Error("A felhasználó nem található!")
+        return row
+    } catch (error) {
+        console.error(error)
+        throw error
+    }
+}
+
 module.exports = {
     addUser,
     editUser,
     getUserDetails,
     deleteUser,
-    getAllUser
+    getAllUser,
+    getUserByFirebaseUid
 }

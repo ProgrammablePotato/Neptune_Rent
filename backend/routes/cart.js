@@ -37,14 +37,14 @@ router.get('/byId/:id', async (req, res) => {
     }
 })
 
-router.post('/:id', async (req, res) => {
-    try {
-        const cart = await cartService.addToUserCart(req.params.id, req.body.contents)
-        res.json(cart)
-    } catch (error) {
-        res.status(500).json({ message: error.message })
-    }
-})
+// router.post('/:id', async (req, res) => {
+//     try {
+//         const cart = await cartService.addToUserCart(req.params.id, req.body.contents)
+//         res.json(cart)
+//     } catch (error) {
+//         res.status(500).json({ message: error.message })
+//     }
+// })
 
 router.patch('/:id', async (req, res) => {
     try {
@@ -77,13 +77,13 @@ router.delete('/:id', async (req, res) => {
 //     }
 // })
 
-// router.post('/test/:id', async (req, res) => {
-//     try {
-//         const cart = await cartService.addToTestCart(req.params.id, req.body.product_id)
-//         res.json(cart)
-//     } catch (error) {
-//         res.status(500).json({ message: error.message })
-//     }
-// })
+router.post('/:id', async (req, res) => {
+    try {
+        const cart = await cartService.addToTestCart(req.params.id, req.body.product_id)
+        res.json(cart)
+    } catch (error) {
+        res.status(500).json({ message: error.message })
+    }
+})
 
 module.exports = router

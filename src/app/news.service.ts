@@ -33,7 +33,6 @@ export class NewsService {
       if (this.news.length > 0) {
         resolve(this.news)
       } else {
-        console.log("Index of category:",this.urlKeywords.indexOf(category))
         this.http.get<any>(`${this.apiUrls[this.urlKeywords.indexOf(category)]}${this.apiKey}`).subscribe({
           next: (news)=> {
             this.news = news.articles.slice(0, 5)

@@ -83,19 +83,19 @@ async function getTestCart(user_id) {
     const query = `
         SELECT id, user_id, price, quantity, brand, name, prod_id
         FROM cart_test
-        WHERE user_id = ?`;
+        WHERE user_id = ?`
 
     try {
-        const rows = await db.query(query, [user_id]);
+        const rows = await db.query(query, [user_id])
         
         if (!rows || rows.length === 0) {
-            throw new Error("A kosár üres vagy nem található!");
+            throw new Error("A kosár üres vagy nem található!")
         }
 
-        return rows;
+        return rows
     } catch (error) {
-        console.error("Hiba történt a kosár lekérdezésekor:", error);
-        throw error;
+        console.error("Hiba történt a kosár lekérdezésekor:", error)
+        throw error
     }
 }
 
@@ -105,29 +105,29 @@ async function addToTestCart(user_id, product_id) {
             p.brand, p.name, k.ppu, k.quantity
         FROM kotegelo k
         JOIN products p ON k.product_id = p.id
-        WHERE k.product_id = ? AND k.user_id = ?`;
+        WHERE k.product_id = ? AND k.user_id = ?`
 
     try {
-        const [result] = await db.query(selectQuery, [product_id, user_id]);
+        const [result] = await db.query(selectQuery, [product_id, user_id])
 
         if (!result) {
-            throw new Error("A termék nem található a kotegelo táblában!");
+            throw new Error("A termék nem található a kotegelo táblában!")
         }
 
-        const { brand, name, ppu, quantity } = result;
+        const { brand, name, ppu, quantity } = result
 
         const insertQuery = `
             INSERT INTO cart_test (user_id, prod_id, price, quantity, brand, name)
             VALUES (?, ?, ?, ?, ?, ?)
             ON DUPLICATE KEY UPDATE 
-            quantity = quantity + VALUES(quantity)`;
+            quantity = quantity + VALUES(quantity)`
 
-        await db.query(insertQuery, [user_id, product_id, ppu, quantity, brand, name]);
+        await db.query(insertQuery, [user_id, product_id, ppu, quantity, brand, name])
 
-        return { message: "Termék hozzáadva a kosárhoz!" };
+        return { message: "Termék hozzáadva a kosárhoz!" }
     } catch (error) {
-        console.error("Hiba történt:", error);
-        throw error;
+        console.error("Hiba történt:", error)
+        throw error
     }
 }
 

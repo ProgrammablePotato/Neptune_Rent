@@ -107,7 +107,6 @@ export class HomeComponent implements OnInit {
         this.brands.push(this.products[i].brand)
       }
     }
-    console.log("Brand names:"+this.brands)
   }
   initCategoryCards() {
     let right = true
@@ -118,7 +117,6 @@ export class HomeComponent implements OnInit {
         image : ""
       }
       this.base.getLatestImageForCategory(category.toLowerCase()).subscribe((data:any) => {
-        console.log("image url",data)
         card.image = data[0].image_url
       })
       this.cards.push(card)

@@ -49,4 +49,13 @@ router.delete('/:id', async (req, res) => {
     }
 })
 
+router.get('/firebase/:uid', async (req, res) => {
+    try {
+        const user = await userService.getUserByFirebaseUid(req.params.uid)
+        res.json(user)
+    } catch (error) {
+        res.status(500).json({ message: error.message })
+    }
+})
+
 module.exports = router

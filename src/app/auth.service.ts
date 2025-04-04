@@ -29,22 +29,17 @@ export class AuthService {
       (user:any)=>{
         if (user){
           this.loggedUser=user?._delegate
-          console.log("User", user)
           user.getIdToken().then(
             (token: any) => {
               this.loggedUser.accessToken = token
-              console.log("Access token", this.loggedUser.accessToken)
               const headers = new HttpHeaders().set('Authorization', `${token}`)
-              console.log("Headers", headers)
               this.http.get(this.fireApi + "getClaims/" + user.uid, { headers }).subscribe(
                 {
                   next: (claims) => {
-                    console.log("Claims", claims)
                     this.loggedUser.claims = claims
                     this.userSub.next(this.loggedUser)
                     this.adminSub.next(this.loggedUser.claims.admin)
                     this.loggedUserSub.next(true)
-                    console.log("User: ", this.loggedUser)
                   },
                   error: (error) => {
                     console.log(error)
@@ -171,6 +166,7 @@ export class AuthService {
   getUserId(firebaseUid: string): Observable<{ id: number }> {
     return this.http.post<{ id: number }>(`${this.sqlApi}`, { details: 'id', firebase_uid: firebaseUid });
   }
+
   deleteSelfUser() {
     this.auth.currentUser.then(user => user?.delete())
   }

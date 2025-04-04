@@ -8,7 +8,7 @@
         <h1 class="text-white m-2 lg:text-5xl text-2xl mb-5">{{ product.name }}</h1>
         <hr>
         <p class="text-white text-xl m-2"><span class="font-bold">Price: </span>${{ product.price }}</p>
-        <p class="text-white m-2 text-xl dark:bg-slate-700 rounded-lg p-5">{{ product.description }} Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nam aut dolorem eveniet voluptate, pariatur ipsam dicta deserunt aliquam et modi, earum sapiente animi enim, excepturi eius corrupti assumenda maxime id. Debitis necessitatibus ipsa aspernatur. Quae aut suscipit, ex mollitia eos iusto vero atque nesciunt assumenda autem itaque voluptas? Dolor, totam.</p>
+        <p class="text-white m-2 text-xl dark:bg-slate-700 rounded-lg p-5">{{ product.description }} <br> Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nam aut dolorem eveniet voluptate, pariatur ipsam dicta deserunt aliquam et modi, earum sapiente animi enim, excepturi eius corrupti assumenda maxime id. Debitis necessitatibus ipsa aspernatur. Quae aut suscipit, ex mollitia eos iusto vero atque nesciunt assumenda autem itaque voluptas? Dolor, totam.</p>
         <div class="absolute bottom-0 w-full flex">
             <button (click)="addToCart()"class="text-xl text-white dark:bg-green-800 p-5 rounded-lg m-2 w-fit popup"><p class="block float-left">Add to cart</p>
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 block float-right ml-2">
@@ -26,3 +26,20 @@
     </div>
 </div>
 
+<div *ngIf="!reviewSent" class="mt-10">
+    <h2 class="text-white text-xl font-bold mb-2">Add a Review</h2>
+    <textarea [(ngModel)]="reviewText" placeholder="Write your review..." class="w-full p-2 rounded mb-2 dark:bg-gray-700 text-white"></textarea>
+    <label class="text-white mr-2">Rating:</label>
+    <select [(ngModel)]="rating" class="dark:bg-gray-700 text-white p-1 rounded">
+        <option *ngFor="let r of [1,2,3,4,5]" [value]="r">{{ r }}</option>
+    </select>
+    <button (click)="submitReview()" class="dark:bg-blue-700 text-white p-2 rounded ml-4">Submit Review</button>
+</div>
+    <div *ngIf="reviewSent" class="text-green-500 mt-2">Köszönjük az értékelést!</div>
+    <div *ngIf="reviews.length > 0" class="mt-10">
+    <h2 class="text-white text-xl font-bold">Reviews:</h2>
+    <div *ngFor="let r of reviews" class="bg-gray-900 rounded p-4 my-2">
+        <p class="text-white italic">“{{ r.reviewText }}”</p>
+        <p class="text-yellow-400">Rating: {{ r.rating }}/5</p>
+    </div>
+</div>
