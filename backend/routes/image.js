@@ -4,7 +4,7 @@ const upload = require('../services/image')
 const path = require('path')
 const fs = require('fs')
 
-router.post('/', upload.single('file'), (req, res) => {
+router.post('/', upload.single('image'), (req, res) => {
     if (!req.file) {
         return res.status(400).json({ message: 'Nincs fájl feltöltve.' })
     }
