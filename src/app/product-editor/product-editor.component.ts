@@ -21,8 +21,25 @@ export class ProductEditorComponent {
   error: string | null = null
   editingField: string | null = null
   productId:number = 0
+  imageUrl?: string
 
   constructor(private activeRouter: ActivatedRoute, private base: BaseService, private router:Router) { }
+
+  onFileSelected(event: any) {
+    const file = event.target.files[0]
+    if (file) {
+      const formData = new FormData()
+      formData.append('image', file)
+      console.log("File", file)
+      this.base.uploadImage(file).subscribe({
+        next: (res: any) => {
+          console.log("formdata",formData)
+          this.imageUrl = `http://localhost:3000/upload/${res.imageUrl}`
+        },
+        error: (err) => console.error("Upload error:", err)
+      })
+    }
+  }
 
   ngOnInit() {
     const category = this.activeRouter.snapshot.paramMap.get('category')

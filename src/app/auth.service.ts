@@ -21,6 +21,10 @@ export class AuthService {
   sqlApi = 'http://localhost:3000/users/'
 
   constructor(private auth:AngularFireAuth, private router:Router, private http:HttpClient) {
+    this.authFunction()
+  }
+
+  authFunction(){
     this.auth.authState.subscribe(
       (user:any)=>{
         if (user){
