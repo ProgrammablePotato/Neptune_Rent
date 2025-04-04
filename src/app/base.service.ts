@@ -78,7 +78,7 @@ export class BaseService {
   }
 
   getLatestImageForCategory(cat:string) {
-    return this.http.get(`${this.apiUrl}/products/categoryimg/${cat}`)
+    return this.http.get(`${this.apiUrl}/products/catimg/${cat}`)
   }
   uploadImage(image:any) {
     return this.http.post(`${this.apiUrl}/images/`,image)

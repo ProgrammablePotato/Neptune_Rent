@@ -28,60 +28,23 @@ export class NewsService {
 
   constructor(private http: HttpClient) {}
 
-  getTechNews(category:string): Observable<any> {
-    return this.http.get<any>(`${this.apiUrls[this.urlKeywords.indexOf(category)]}${this.apiKey}`)
-  }
-  getTechNewsNew(category:string): Promise<Observable<any>> {
+  getTechNews(category:string): Promise<Observable<any>> {
     return new Promise((resolve) => {
       if (this.news.length > 0) {
         resolve(this.news)
       } else {
         console.log("Index of category:",this.urlKeywords.indexOf(category))
-        this.http.get(`${this.apiUrls[this.urlKeywords.indexOf(category)]}${this.apiKey}`).subscribe((news:any) => {
-          this.news = news.articles.slice(0, 5)
-          resolve(this.news)
+        this.http.get<any>(`${this.apiUrls[this.urlKeywords.indexOf(category)]}${this.apiKey}`).subscribe({
+          next: (news)=> {
+            this.news = news.articles.slice(0, 5)
+            resolve(this.news)
+          },
+          error: (error) => {
+            console.log(error)
+          }
         })
       }
     })
   }
-  // getAccessNews(): Promise<any> {
-  //   return new Promise((resolve, reject) => {
-  //     this.http.get(`${this.apiUrlAccessories}${this.apiKey}`).subscribe({
-  //       next: (data) => resolve(data),
-  //       error: (err) => reject(err)
-  //     });
-  //   });
-  // }
-  // getPcNews(): Promise<any> {
-  //   return new Promise((resolve, reject) => {
-  //     this.http.get(`${this.apiUrlPc}${this.apiKey}`).subscribe({
-  //       next: (data) => resolve(data),
-  //       error: (err) => reject(err)
-  //     });
-  //   });
-  // }
-  // getLaptopNews(): Promise<any> {
-  //   return new Promise((resolve, reject) => {
-  //     this.http.get(`${this.apiUrlLaptop}${this.apiKey}`).subscribe({
-  //       next: (data) => resolve(data),
-  //       error: (err) => reject(err)
-  //     });
-  //   });
-  // }
-  // getServerNews(): Promise<any> {
-  //   return new Promise((resolve, reject) => {
-  //     this.http.get(`${this.apiUrlServers}${this.apiKey}`).subscribe({
-  //       next: (data) => resolve(data),
-  //       error: (err) => reject(err)
-  //     });
-  //   });
-  // }
-  // getServiceNews(): Promise<any> {
-  //   return new Promise((resolve, reject) => {
-  //     this.http.get(`${this.apiUrlServices}${this.apiKey}`).subscribe({
-  //       next: (data) => resolve(data),
-  //       error: (err) => reject(err)
-  //     });
-  //   });
-  // }
+  
 }

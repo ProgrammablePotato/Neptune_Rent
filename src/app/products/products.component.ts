@@ -33,30 +33,23 @@ export class ProductsComponent implements OnInit {
     this.router.routeReuseStrategy.shouldReuseRoute = function () {
       return false;
     };
+    
   }
   ngOnInit() {
     this.base.currentPage = this.router.url
     this.category = String(this.activated.snapshot.paramMap.get('category'))
+    console.log("category",this.category)
+    this.getNews()
     this.getProducts()
-    
   }
-
-  // async getNews(){
-  //   this.news.getTechNews().subscribe((data) => {
-  //     this.allNews = data.articles.slice(0, 5)
-  //     console.log(this.allNews)
-  //   })
-  // }
-
-  async getNewsNew() {
-    await this.news.getTechNewsNew(this.category).then((news:any) => {
+  async getNews() {
+    await this.news.getTechNews(this.category).then((news:any) => {
       this.categoryNews = news
       console.log("Filtered news: ", news)
-    }).catch((error) => {
+    }).catch((error:any) => {
       console.log("Nem jó")
     })
   }
-
   filterProducts() {
     this.filteredProducts = this.products.filter((product: any) =>
       product.name.toLowerCase().includes(this.searchTerm.toLowerCase())
@@ -69,12 +62,10 @@ export class ProductsComponent implements OnInit {
   }
   async getProducts() {
     this.allProducts = await this.base.getProducts()
-    console.log("Products: ", this.products)
     this.base.roundPrices()
     this.filterCategory()
     this.filteredProducts = this.products
     this.getBrandNames()
-    await this.getNewsNew()
   }
   filterCategory() {
     this.allProducts.forEach((product:any) => {

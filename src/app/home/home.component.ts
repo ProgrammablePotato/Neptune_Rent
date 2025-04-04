@@ -3,6 +3,7 @@ import { NewsService } from '../news.service';
 import { BaseService } from '../base.service';
 import { Router } from '@angular/router';
 import { SearchService } from '../search.service';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-home',
@@ -29,9 +30,13 @@ export class HomeComponent implements OnInit {
 
   searchTerm: string = ''
   brands:any[] = []
+  loggedUser:any
 
-  constructor(private news:NewsService, private base:BaseService, private router:Router, private search:SearchService){
+  constructor(private news:NewsService, private base:BaseService, private router:Router, private search:SearchService, private auth:AuthService){
     this.initCategoryCards()
+    this.auth.getLoggedUser().subscribe((user) => {
+      this.loggedUser = user
+    })
   }
 
   ngOnInit(): void {
@@ -48,7 +53,7 @@ export class HomeComponent implements OnInit {
   // }
 
   async getNewsNew() {
-    await this.news.getTechNewsNew('all').then((news:any) => {
+    await this.news.getTechNews('all').then((news:any) => {
       this.allNews = news
     }).catch((error) => {
       console.log("Nem jó")
@@ -69,7 +74,6 @@ export class HomeComponent implements OnInit {
 
   async getProducts() {
     this.products = await this.base.getProducts()
-    console.log("Products: ", this.products)
     this.base.roundPrices()
     this.filteredProducts = this.products
     this.getBrandNames()
