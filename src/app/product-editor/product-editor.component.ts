@@ -35,6 +35,7 @@ export class ProductEditorComponent {
         next: (res: any) => {
           console.log("formdata",formData)
           this.imageUrl = `http://localhost:3000/upload/${res.imageUrl}`
+          this.product.image_url = res.imageUrl
         },
         error: (err) => console.error("Upload error:", err)
       })

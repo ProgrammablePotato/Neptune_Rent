@@ -3,6 +3,7 @@ const router = express.Router()
 const upload = require('../services/image')
 const path = require('path')
 const fs = require('fs')
+const db = require("./services/db")
 
 router.post('/', upload.single('image'), (req, res) => {
     if (!req.file) {

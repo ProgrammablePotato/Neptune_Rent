@@ -1,8 +1,8 @@
 const db = require("./db")
 
 async function createProduct(product) {
-    const query = `INSERT INTO products (name, category, brand, price, description, stock) VALUES (?, ?, ?, ?, ?, ?)`
-    const params = [product.name, product.category, product.brand, product.price, product.description, product.stock]
+    const query = `INSERT INTO products (name, category, brand, price, description, stock, image_url) VALUES (?, ?, ?, ?, ?, ?, ?)`
+    const params = [product.name, product.category, product.brand, product.price, product.description, product.stock, product.image_url]
     console.log(query, params)
 
     const result = await db.query(query, params);
