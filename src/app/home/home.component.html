@@ -13,7 +13,8 @@
       <span>TESTING IMAGE URL: {{card.image}}</span>
     </div>
     <div class="flex-1 p-2">
-      <img src="cat.jfif" alt="" class="w-full">
+      <img *ngIf="card.image == 'test'" src="cat.jfif" alt="" class="w-full">
+      <img *ngIf="card.image != 'test'" [src]="getImagePath(card.image)" alt="">
     </div>
     <a href="" [routerLink]="getRoute(card.title)" class="absolute w-full h-full top-0 left-0 neptune-hover-inset-border"></a>
   </div>

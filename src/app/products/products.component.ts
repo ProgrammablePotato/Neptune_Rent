@@ -33,7 +33,7 @@ export class ProductsComponent implements OnInit {
     this.router.routeReuseStrategy.shouldReuseRoute = function () {
       return false;
     };
-    
+
   }
   ngOnInit() {
     this.base.currentPage = this.router.url
@@ -41,6 +41,7 @@ export class ProductsComponent implements OnInit {
     console.log("category",this.category)
     this.getNews()
     this.getProducts()
+    console.log(this.products)
   }
   async getNews() {
     await this.news.getTechNews(this.category).then((news:any) => {
@@ -117,5 +118,7 @@ export class ProductsComponent implements OnInit {
     this.filteredProducts = sorted
     this.dropdownCollapse("price")
   }
+  getImagePath(file:string) {
+    return file.substring(1)
+  }
 }
-

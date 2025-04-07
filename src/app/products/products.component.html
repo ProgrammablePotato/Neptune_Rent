@@ -1,6 +1,6 @@
 <div class="relative neptune-news-carousel xl:max-w-[80vw] mr-auto ml-auto mt-5 mb-5 h-[30vh] block">
     <div *ngFor="let news of categoryNews" class="absolute overflow-hidden h-full w-full">
-        
+
         <img [src]="news.urlToImage" alt="" class="w-full -top-1/2 absolute">
         <span class="m-2 bottom-0 bg-black bg-opacity-70 text-2xl rounded-lg text-white absolute p-3">{{news.title}}</span>
     </div>
@@ -57,9 +57,9 @@
 
 <div class="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 rounded-lg xl:max-w-[80vw] xl:ml-auto xl:mr-auto">
     <div *ngFor="let product of filteredProducts" class="p-3 m-1 rounded-lg dark:bg-gray-800 dark:border-gray-700 flex md:block">
-        <div *ngIf="!product.image" class="2xl:h-80 md:h-60 min-h-30 w-full inline-block neptune-product-image flex-1 rounded-sm" [style]="{'background-image':'url(cat.jfif)'}">
+        <div *ngIf="!product.image_url || product.image_url == 'test'" class="2xl:h-80 md:h-60 min-h-30 w-full inline-block neptune-product-image flex-1 rounded-sm" [style]="{'background-image':'url(cat.jfif)'}">
         </div>
-        <div *ngIf="product.image" class="2xl:h-80 md:h-60 min-h-30 w-full inline-block neptune-product-image flex-1 rounded-sm" [style]="{'background-image':'url('+product.image+')'}">
+        <div *ngIf="product.image_url != 'test'" class="2xl:h-80 md:h-60 min-h-30 w-full inline-block neptune-product-image flex-1 rounded-sm" [ngStyle]="{'background-image':'url('+getImagePath(product.image_url)+')'}">
         </div>
         <div class="flex-1 m-2 md:m-0 min-h-40 relative">
             <div>

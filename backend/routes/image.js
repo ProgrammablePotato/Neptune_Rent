@@ -3,12 +3,14 @@ const router = express.Router()
 const upload = require('../services/image')
 const path = require('path')
 const fs = require('fs')
+const productsService = require("../services/products")
 
 router.post('/', upload.single('image'), (req, res) => {
     if (!req.file) {
         return res.status(400).json({ message: 'Nincs fájl feltöltve.' })
     }
     res.json({ imageUrl: `/uploads/${req.file.filename}` })
+    productsService.patchPath(`/uploads/${req.file.filename}`,req.id)
 })
 
 router.get('/', (req, res) => {

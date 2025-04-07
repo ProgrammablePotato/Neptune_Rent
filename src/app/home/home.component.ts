@@ -125,4 +125,7 @@ export class HomeComponent implements OnInit {
   getRoute(cat:string) {
     return "../products/"+(cat.toLowerCase())
   }
+  getImagePath(file:string) {
+    return file.substring(1)
+  }
 }

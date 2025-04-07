@@ -81,9 +81,10 @@ export class BaseService {
     return this.http.get(`${this.apiUrl}/products/catimg/${cat}`)
   }
 
-  uploadImage(file: any) {
+  uploadImage(file: any,id:number) {
     const formData = new FormData()
     formData.append('image', file)
+    formData.append('id',id.toString())
     return this.http.post<{ imageUrl: string }>(this.apiUrl+'/upload/', formData)
   }
 

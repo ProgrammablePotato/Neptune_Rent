@@ -22,24 +22,12 @@ export class ProductEditorComponent {
   editingField: string | null = null
   productId:number = 0
   imageUrl?: string
+  file:any
 
   constructor(private activeRouter: ActivatedRoute, private base: BaseService, private router:Router) { }
 
   onFileSelected(event: any) {
-    const file = event.target.files[0]
-    if (file) {
-      const formData = new FormData()
-      formData.append('image', file)
-      console.log("File", file)
-      this.base.uploadImage(file).subscribe({
-        next: (res: any) => {
-          console.log("formdata",formData)
-          this.imageUrl = `http://localhost:3000/upload/${res.imageUrl}`
-          this.product.image_url = res.imageUrl
-        },
-        error: (err) => console.error("Upload error:", err)
-      })
-    }
+    this.file = event.target.files[0]
   }
 
   ngOnInit() {
@@ -90,7 +78,8 @@ export class ProductEditorComponent {
     }
   }
 
-  update(){
+  async update(){
+    await this.uploadImage()
     this.product.category = this.product.category.toLowerCase()
     this.base.editProduct(this.productId, this.product).subscribe(
       {
@@ -102,6 +91,22 @@ export class ProductEditorComponent {
         error: () => console.error('Error!')
       }
     )
+  }
+  uploadImage() {
+    if (this.file) {
+      // const formData = new FormData()
+      // formData.append('image', this.file)
+      console.log("File", this.file)
+      this.base.uploadImage(this.file,this.product.id).subscribe({
+        next: (res: any) => {
+          // console.log("formdata",formData)
+          console.log(res.imageUrl)
+          this.imageUrl = `http://localhost:3000/upload/${res.imageUrl}`
+          this.product.image_url = res.imageUrl
+        },
+        error: (err) => console.error("Upload error:", err)
+      })
+    }
   }
   add() {
     console.log(this.product)
@@ -144,9 +149,6 @@ export class ProductEditorComponent {
         error: () => console.log("Failed to create product!")
       }
     )
-  }
-  image(){
-    alert("Image upload is not available yet!")
   }
   setCategory(category:string) {
     this.product.category = category
