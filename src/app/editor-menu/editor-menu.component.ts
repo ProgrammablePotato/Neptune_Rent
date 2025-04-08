@@ -61,7 +61,7 @@ export class EditorMenuComponent {
     let product = {
       name: "Test",
       category: "pcs",
-      brand: "Hell",
+      brand: "UwU",
       price: 20,
       description: "Testing",
       image_url: "no",
@@ -75,5 +75,8 @@ export class EditorMenuComponent {
         error: () => console.log("Failed to create product!")
       }
     )
+  }
+  getImagePath(file:string) {
+    return "uploads/"+file
   }
 }

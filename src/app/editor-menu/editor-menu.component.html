@@ -24,9 +24,9 @@
 <div class="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 rounded-lg xl:max-w-[80vw] xl:ml-auto xl:mr-auto 2xl:max-w-[80vw]">
     <div *ngFor="let product of products" class="p-3 m-1 rounded-lg dark:bg-gray-800 dark:border-gray-700 flex md:block relative">
         <div>
-            <div *ngIf="!product.image" class="2xl:h-80 md:h-60 min-h-30 w-full inline-block neptune-product-image flex-1 rounded-sm" [style]="{'background-image':'url(cat.jfif)'}">
+            <div *ngIf="!product.image_url || product.image_url == 'test'" class="2xl:h-80 md:h-60 min-h-30 w-full inline-block neptune-product-image flex-1 rounded-sm" [style]="{'background-image':'url(cat.jfif)'}">
             </div>
-            <div *ngIf="product.image" class="2xl:h-80 md:h-60 min-h-30 w-full inline-block neptune-product-image flex-1 rounded-sm" [style]="{'background-image':'url('+product.image+')'}">
+            <div *ngIf="product.image_url != 'test'" class="2xl:h-80 md:h-60 min-h-30 w-full inline-block neptune-product-image flex-1 rounded-sm" [ngStyle]="{'background-image':'url('+getImagePath(product.image_url)+')'}">
             </div>
             <div class="flex-1 m-2 md:m-0 min-h-40 relative">
                 <div>

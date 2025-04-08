@@ -56,8 +56,10 @@ async function editProduct(id, product){
     const fields = []
     const params = []
     for (const [key, value] of Object.entries(product)) {
-        fields.push(`${key}=?`)
-        params.push(value)
+        if (key != "image_url") {
+            fields.push(`${key}=?`)
+            params.push(value)
+        }
     }
     const query = `UPDATE products SET ${fields.join(", ")} WHERE id=?`
     params.push(id)
@@ -91,6 +93,18 @@ async function getLatestImage(category) {
       console.error(error)
     }
 }
+async function patchPath(path,id) {
+  const query = 'update products set image_url = ? where id = ?'
+  const params = [path,id]
+  try {
+        const result = await db.query(query, params)
+        if (!result.affectedRows) throw new Error("A termék módosítása sikertelen!")
+        return { success: true }
+    } catch (error) {
+        console.error(error)
+    }
+}
+
 
 module.exports = {
     createProduct,
@@ -99,5 +113,6 @@ module.exports = {
     deleteProduct,
     editProduct,
     getBrand,
-    getLatestImage
+    getLatestImage,
+    patchPath
 }
