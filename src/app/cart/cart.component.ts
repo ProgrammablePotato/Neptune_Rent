@@ -14,9 +14,8 @@ export class CartComponent implements OnInit {
   constructor(private cartService: CartService, private activeRouter: ActivatedRoute) {}
 
   ngOnInit(): void {
-    this.cartId = this.activeRouter.snapshot.paramMap.get('id')
+    this.cartId = Number(this.activeRouter.snapshot.paramMap.get('id'))
     if (this.cartId) {
-      this.cartId = this.cartId
       this.loadCart(this.cartId)
     }
   }
@@ -30,5 +29,12 @@ export class CartComponent implements OnInit {
 
   calculateTotal(): void {
     this.totalPrice = this.cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0)
+  }
+
+  removeFromCart(productId: number): void {
+    this.cartService.removeItem(this.cartId, productId).subscribe(() => {
+      this.cartItems = this.cartItems.filter(item => item.product_id !== productId)
+      this.calculateTotal()
+    })
   }
 }

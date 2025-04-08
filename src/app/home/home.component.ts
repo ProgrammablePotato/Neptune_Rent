@@ -4,6 +4,8 @@ import { BaseService } from '../base.service';
 import { Router } from '@angular/router';
 import { SearchService } from '../search.service';
 import { AuthService } from '../auth.service';
+import { HttpClient } from '@angular/common/http';
+import { CartService } from '../cart.service';
 
 @Component({
   selector: 'app-home',
@@ -31,8 +33,9 @@ export class HomeComponent implements OnInit {
   searchTerm: string = ''
   brands:any[] = []
   loggedUser:any
+  sqlUserId: string = ''
 
-  constructor(private news:NewsService, private base:BaseService, private router:Router, private search:SearchService, private auth:AuthService){
+  constructor(private news:NewsService, private base:BaseService, private router:Router, private search:SearchService, private auth:AuthService, private cart:CartService){
     this.initCategoryCards()
     this.auth.getLoggedUser().subscribe((user) => {
       this.loggedUser = user
@@ -43,6 +46,13 @@ export class HomeComponent implements OnInit {
     this.base.currentPage = this.router.url
     this.getNewsNew()
     this.getProducts()
+    this.cartUserIdFixer()
+  }
+
+  cartUserIdFixer(){
+    this.cart.userId$.subscribe((id) => {
+      this.sqlUserId = id
+    })
   }
 
   // async getNews(){
