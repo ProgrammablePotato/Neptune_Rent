@@ -6,13 +6,13 @@ async function createProduct(product) {
     console.log(query, params)
 
     const result = await db.query(query, params);
-    let message = "Hiba a termék létrehozásánál!";
+    let message = "Hiba a termék létrehozásánál!"
 
     if (result.affectedRows) {
-        message = "A termék létrehozva!";
+        message = "A termék létrehozva!"
     }
 
-    return { message };
+    return { message }
 }
 
 async function getProduct(id){
@@ -82,21 +82,23 @@ async function getBrand(){
         console.error(error)
     }
 }
+
 async function getLatestImage(category) {
     const query = `SELECT image_url FROM products where category = ? ORDER BY id DESC LIMIT 1`
     const params = [category]
     try {
-      const row = db.query(query, params)
-      if (!row) throw new Error("A termék nem található!")
-      return row
+        const row = db.query(query, params)
+        if (!row) throw new Error("A termék nem található!")
+        return row
     } catch (error) {
-      console.error(error)
+        console.error(error)
     }
 }
+
 async function patchPath(path,id) {
-  const query = 'update products set image_url = ? where id = ?'
-  const params = [path,id]
-  try {
+    const query = 'update products set image_url = ? where id = ?'
+    const params = [path,id]
+    try {
         const result = await db.query(query, params)
         if (!result.affectedRows) throw new Error("A termék módosítása sikertelen!")
         return { success: true }

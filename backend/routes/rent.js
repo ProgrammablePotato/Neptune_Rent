@@ -22,7 +22,7 @@ router.get('/', async (req, res) => {
 
 router.patch('/:id', async (req, res) => {
     try {
-        const rent = await rentService.editRent(req.params.id, req.body)
+        const rent = await rentService.updateRent(req.params.id, req.body)
         res.json(rent)
     } catch (error) {
         res.status(500).json({ message: error.message })

@@ -16,7 +16,7 @@ async function buyProduct(details, user_id) {
         for (const detail of details) {
             const { product_id, quantity, price, ppu } = detail
             await db.query(`UPDATE products SET stock = stock - ? WHERE id=?`, [quantity, product_id])
-            await db.query(`INSERT INTO kotegelo (product_id, user_id, quantity, price, ppu) VALUES (?, ?, ?, ?, ?)`, [product_id, user_id, quantity, price, ppu])
+            await db.query(`INSERT INTO cart (product_id, user_id, quantity, price, ppu) VALUES (?, ?, ?, ?, ?)`, [product_id, user_id, quantity, price, ppu])
         }
         return { success: true, message: "A vásárlás sikeres!" }
     } catch (error) {
@@ -26,7 +26,7 @@ async function buyProduct(details, user_id) {
 }
 
 async function editBuy(id, detail) {
-    const [existingRow] = await db.query(`SELECT product_id, quantity FROM kotegelo WHERE id=?`, [id])
+    const [existingRow] = await db.query(`SELECT product_id, quantity FROM cart WHERE id=?`, [id])
     if (!existingRow) throw new Error("A vásárlás nem található!")
     const { product_id: oldProductId, quantity: oldQuantity } = existingRow;
     let quantityDiff = 0
@@ -65,7 +65,7 @@ async function editBuy(id, detail) {
         params.push(value)
     }
     if (fields.length === 0) return { success: false, message: "Nincs módosítandó adat!" }
-    const query = `UPDATE kotegelo SET ${fields.join(", ")} WHERE id=?`
+    const query = `UPDATE cart SET ${fields.join(", ")} WHERE id=?`
     params.push(id)
 
     try {
@@ -79,7 +79,7 @@ async function editBuy(id, detail) {
 }
 
 async function getBuyDetails(id){
-    const query = `select * from kotegelo where id=?`
+    const query = `select * from cart where id=?`
     const params = [id]
     console.log(query, params)
     try{
@@ -93,7 +93,7 @@ async function getBuyDetails(id){
 }
 
 async function getAllBuyers() {
-    const query = `select * from kotegelo`
+    const query = `select * from cart`
     try {
         const rows = await db.query(query)
         return rows
@@ -104,11 +104,11 @@ async function getAllBuyers() {
 
 async function deleteBuy(id) {
     try {
-        const [buyRow] = await db.query(`SELECT product_id, quantity FROM kotegelo WHERE id=?`, [id])
+        const [buyRow] = await db.query(`SELECT product_id, quantity FROM cart WHERE id=?`, [id])
         if (!buyRow) throw new Error("A vásárlás nem található!")
         const { product_id, quantity } = buyRow
         await db.query(`UPDATE products SET stock = stock + ? WHERE id=?`, [quantity, product_id])
-        const result = await db.query(`DELETE FROM kotegelo WHERE id=?`, [id])
+        const result = await db.query(`DELETE FROM cart WHERE id=?`, [id])
         if (!result.affectedRows) throw new Error("A vásárlás törlése sikertelen!")
         return { success: true, message: "A vásárlás törölve, a készlet frissítve." }
     } catch (error) {

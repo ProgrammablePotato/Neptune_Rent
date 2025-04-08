@@ -1,6 +1,5 @@
 const db = require("./db")
 const nodemailer = require("nodemailer")
-const dotenv = require("dotenv")
 const cron = require("node-cron")
 
 const transporter = nodemailer.createTransport({
@@ -8,8 +7,8 @@ const transporter = nodemailer.createTransport({
     port: 465,
     secure: true,
     auth: {
-      user: process.env.MAIL_USER, 
-      pass: process.env.MAIL_PASS,
+        user: process.env.MAIL_USER, 
+        pass: process.env.MAIL_PASS,
     }
 })
 
