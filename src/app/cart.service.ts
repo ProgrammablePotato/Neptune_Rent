@@ -15,22 +15,26 @@ export class CartService {
     })
   }
 
-  private cartApi = 'http://localhost:3000/cart/'
   private kotegeloApi = 'http://localhost:3000/buy/'
   private userApi = 'http://localhost:3000/users/firebase/'
 
   userId : string = ''
 
   getCart(id:number) {
-    return this.http.get(this.cartApi+'test/'+id)
+    return this.http.get(this.kotegeloApi+"/user/"+id)
   }
 
-  buyProduct(id:number, productId:any) {
-    return this.http.post(this.kotegeloApi + id, { productId }), this.addToCart(id, productId)
+  buyProduct(productId: number, data: any) {
+    return this.http.post(this.kotegeloApi, {
+      user_id: this.userId,
+      details: [
+        { product_id: productId, quantity: data.quantity }
+      ]
+    })
   }
 
   addToCart(id:number, productId:any) {
-    return this.http.post(this.cartApi + id, { productId })
+    return this.http.post(this.kotegeloApi + id, { productId })
   }
 
   getUserId(firebase_uid: string) {

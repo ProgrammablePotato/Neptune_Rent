@@ -117,10 +117,24 @@ async function deleteBuy(id) {
     }
 }
 
+async function getBuyerByUserId(id){
+    const query = `select * from cart where user_id=?`
+    const params = [id]
+    try{
+        const rows = await db.query(query, params)
+        if (!rows) throw new Error("A vásárlás nem található!")
+        return rows
+    }
+    catch(error){
+        console.error(error)
+    }
+}
+
 module.exports = {
     buyProduct,
     editBuy,
     getBuyDetails,
     deleteBuy,
-    getAllBuyers
+    getAllBuyers,
+    getBuyerByUserId
 }
