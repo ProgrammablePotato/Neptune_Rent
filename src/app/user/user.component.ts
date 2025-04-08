@@ -99,12 +99,11 @@ export class UserComponent {
         }
       })
     }
-    
   }
   selectCountry(code:string) {
     this.country = code
     this.getCountry(code)
-    dropdownCollapse('country')
+    this.dropdownCollapse('country')
   }
   filterCountry() {
     this.filteredCountries = []

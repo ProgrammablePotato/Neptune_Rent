@@ -10,7 +10,7 @@ import { Subscription } from 'rxjs';
   styleUrl: './navbar.component.css'
 })
 export class NavbarComponent {
-  menuVisibility = "visible"
+  menuVisibility = "hidden"
   loggedUser:any=null
   sub?:Subscription
   points:any = []

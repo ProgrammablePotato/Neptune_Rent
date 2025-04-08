@@ -1,9 +1,9 @@
-<div *ngIf="loggedUser" class="xl:w-3/4 xl:ml-auto xl:mr-auto bg-gray-800 flex rounded-lg mt-5">
-    <div class="flex-3 p-3">
+<div *ngIf="loggedUser" class="xl:w-3/4 xl:ml-auto xl:mr-auto bg-gray-800 md:flex rounded-lg mt-5">
+    <div class=" p-3">
         <img *ngIf="loggedUser.photoURL" [src]="loggedUser.photoURL" class="rounded-lg">
         <img *ngIf="!loggedUser.photoURL" src="cat.jfif" class="rounded-lg">
     </div>
-    <div class="flex-1 p-3 text-white">
+    <div class="w-full p-3 text-white">
 
         <span class="text-3xl">{{loggedUser.displayName}}</span>
         <hr class="mt-2 mb-2">
@@ -21,19 +21,19 @@
         </div>
 
         <div class="">
-          <div class="form-floating mb-2 mt-2 w-2/3 h-fit p-2">
-              <label for="dpnameInput">Change display name: </label>
-              <input [(ngModel)]="loggedUser.displayName" type="text" class="form-control rounded-md bg-slate-900 p-2 float-right  w-1/2" id="dpnameInput">
+          <div class="form-floating mb-2 mt-2 md:w-2/3 h-fit p-2">
+              <label for="dpnameInput" class="md:flex-1">Change display name: </label>
+              <input [(ngModel)]="loggedUser.displayName" type="text" class="md:flex-1 form-control rounded-md bg-slate-900 p-2 float-right  w-1/2" id="dpnameInput">
           </div>
-          <div class="form-floating mb-2 mt-2 w-2/3 h-fit p-2">
+          <div class="form-floating mb-2 mt-2 md:w-2/3 h-fit p-2">
               <label for="emailInput">Change email address: </label>
               <input [(ngModel)]="loggedUser.email" type="text" class="form-control rounded-md bg-slate-900 p-2 float-right  w-1/2" id="emailInput">
           </div>
-          <div class="form-floating mb-2 mt-2 w-2/3 h-fit p-2">
+          <div class="form-floating mb-2 mt-2 md:w-2/3 h-fit p-2">
               <label for="phoneInput">Change phone number: </label>
               <input [(ngModel)]="loggedUser.phoneNumber" type="text" class="form-control rounded-md bg-slate-900 p-2 float-right w-1/2" id="phoneInput">
           </div>
-          <div class="form-floating mb-2 mt-2 w-2/3 h-fit p-2">
+          <div class="form-floating mb-2 mt-2 md:w-2/3 h-fit p-2">
             <label for="passwordInput">Enter new password: </label>
             <div class="float-right flex w-1/2">
               <input [(ngModel)]="loggedUser.password" [type]="passwordVisibility" class="form-control rounded-l-md bg-slate-900 p-2 flex-3 w-full" id="passwordInput">
@@ -62,32 +62,32 @@
 
 <div class="xl:w-3/4 xl:ml-auto xl:mr-auto bg-gray-800 rounded-lg mt-5 text-lg text-white">
   <div class="m-4"><span>Provide the following data before purchase:</span></div>
-  <div class="flex">
+  <div class="md:flex">
     <div class="flex-1">
       <ul class="">
         <li class="flex m-2">
-          <label for="zipInput" class="flex-1 text-right p-2">Zip code: </label>
-          <input id="zipInput" type="text" [(ngModel)]="zip" placeholder="zip" class="flex-1 p-2 rounded-md bg-gray-500">
+          <label for="zipInput" class="md:flex-1 md:w-full w-1/3 text-right p-2">Zip code: </label>
+          <input id="zipInput" type="text" [(ngModel)]="zip" placeholder="zip" class="md:flex-1 p-2 md:w-full w-2/3 rounded-md bg-gray-500">
         </li>
         <li class="flex m-2">
-          <label for="nameInput" class="flex-1 text-right p-2">Name: </label>
-          <input id="nameInput" type="text" [(ngModel)]="name" placeholder="name" class="flex-1 p-2 rounded-md bg-gray-500">
+          <label for="nameInput" class="md:flex-1 md:w-full w-1/3 text-right p-2">Name: </label>
+          <input id="nameInput" type="text" [(ngModel)]="name" placeholder="name" class="md:flex-1 p-2 md:w-full w-2/3 rounded-md bg-gray-500">
         </li>
         <li class="flex m-2">
-          <label for="cityInput" class="flex-1 text-right p-2">City: </label>
-          <input id="cityInput" type="text" [(ngModel)]="city" placeholder="city" class="flex-1 p-2 rounded-md bg-gray-500">
+          <label for="cityInput" class="md:flex-1 md:w-full w-1/3 text-right p-2">City: </label>
+          <input id="cityInput" type="text" [(ngModel)]="city" placeholder="city" class="md:flex-1 p-2 md:w-full w-2/3 rounded-md bg-gray-500">
         </li>
         <li class="flex m-2">
-          <label for="addr1Input" class="flex-1 text-right p-2">Address line 1: </label>
-          <input id="addr1Input" type="text" [(ngModel)]="addr1" placeholder="address line 1" class="flex-1 p-2 rounded-md bg-gray-500">
+          <label for="addr1Input" class="md:flex-1 md:w-full w-1/3 text-right p-2">Address 1: </label>
+          <input id="addr1Input" type="text" [(ngModel)]="addr1" placeholder="address line 1" class="md:flex-1 p-2 md:w-full w-2/3 rounded-md bg-gray-500">
         </li>
         <li class="flex m-2">
-          <label for="addr2Input" class="flex-1 text-right p-2">Address line 2: </label>
-          <input id="addr2Input" type="text" [(ngModel)]="addr2" placeholder="address line 2" class="flex-1 p-2 rounded-md bg-gray-500">
+          <label for="addr2Input" class="md:flex-1 md:w-full w-1/3 text-right p-2">Address 2: </label>
+          <input id="addr2Input" type="text" [(ngModel)]="addr2" placeholder="address line 2" class="md:flex-1 p-2 md:w-full w-2/3 rounded-md bg-gray-500">
         </li>
-        <li class="flex m-2 justify-end">
-          <span class="p-2">{{countryDisplay}}</span>
-          <div class=" h-fit relative" (mouseleave)="dropdownCollapse('country')" (mouseenter)="dropdownExtend('country')" (click)="dropdownExtend('country')">
+        <li class="flex m-2">
+          <label class="flex-1 p-2 text-right">{{countryDisplay}}</label>
+          <div class="flex-1 h-fit relative" (mouseleave)="dropdownCollapse('country')" (mouseenter)="dropdownExtend('country')" (click)="dropdownExtend('country')">
             <button class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-2 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-md px-5 py-2.5 text-center inline-flex items-center" type="button">
               Select country
               <svg class="w-2.5 h-2.5 ms-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
@@ -105,8 +105,8 @@
           </div>
         </li>
         <li class="flex m-2">
-          <label for="nickInput" class="flex-1 text-right p-2">Nickname: </label>
-          <input id="nickInput" type="text" [(ngModel)]="nick" placeholder="nickname" class="flex-1 p-2 rounded-md bg-gray-500">
+          <label for="nickInput" class="md:flex-1 md:w-full w-1/3 text-right p-2">Nickname: </label>
+          <input id="nickInput" type="text" [(ngModel)]="nick" placeholder="nickname" class="md:flex-1 p-2 md:w-full w-2/3 rounded-md bg-gray-500">
         </li>
       </ul>
     </div>

@@ -1,15 +1,14 @@
 <div class="relative neptune-news-carousel xl:max-w-[80vw] mr-auto ml-auto mt-5 mb-5 h-[30vh] block">
     <div *ngFor="let news of categoryNews" class="absolute overflow-hidden h-full w-full">
-
         <img [src]="news.urlToImage" alt="" class="w-full -top-1/2 absolute">
-        <span class="m-2 bottom-0 bg-black bg-opacity-70 text-2xl rounded-lg text-white absolute p-3">{{news.title}}</span>
+        <span class="m-2 bottom-0 bg-black bg-opacity-70 text-2xl rounded-lg text-white absolute p-3 overflow-hidden line-clamp-1">{{news.title}}</span>
     </div>
 </div>
 
 <!-- Search and filter menu -->
 
 <div class="m-5 bg-gray-800 p-5 rounded-lg flex xl:max-w-[80vw] xl:ml-auto xl:mr-auto">
-    <div class="flex w-full float-right">
+    <div class="sm:flex w-full float-right">
         <div class="m-2">
             <p class="text-white text-xl mb-1">Search:</p><br>
             <input type="text" placeholder="Search products..." [(ngModel)]="searchTerm" (ngModelChange)="filterProducts()" class="bg-gray-600 p-2 rounded-lg text-white">
@@ -56,23 +55,25 @@
 <!-- Grid display of products -->
 
 <div class="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 rounded-lg xl:max-w-[80vw] xl:ml-auto xl:mr-auto">
-    <div *ngFor="let product of filteredProducts" class="p-3 m-1 rounded-lg dark:bg-gray-800 dark:border-gray-700 flex md:block">
-        <div *ngIf="!product.image_url || product.image_url == 'test'" class="2xl:h-80 md:h-60 min-h-30 w-full inline-block neptune-product-image flex-1 rounded-sm" [style]="{'background-image':'url(cat.jfif)'}">
-        </div>
-        <div *ngIf="product.image_url != 'test'" class="2xl:h-80 md:h-60 min-h-30 w-full inline-block neptune-product-image flex-1 rounded-sm" [ngStyle]="{'background-image':'url('+getImagePath(product.image_url)+')'}">
-        </div>
-        <div class="flex-1 m-2 md:m-0 min-h-40 relative">
-            <div>
-                <h5 class="mb-2 text-1xl font-bold tracking-tight text-gray-900 dark:text-white">{{product.name}}</h5>
+    <div *ngFor="let product of filteredProducts" class="p-3 m-1 rounded-lg dark:bg-gray-800 dark:border-gray-700 ">
+        <div class="flex md:block">
+            <div *ngIf="!product.image_url || product.image_url == 'test'" class="2xl:h-80 md:h-60 min-h-30 w-full inline-block neptune-product-image flex-1 rounded-sm" [style]="{'background-image':'url(cat.jfif)'}">
             </div>
-            <div>
-                <p class="mb-3 font-normal text-gray-700 dark:text-gray-400 text-base">{{product.description}}</p>
+            <div *ngIf="product.image_url != 'test'" class="2xl:h-80 md:h-60 min-h-30 w-full inline-block neptune-product-image flex-1 rounded-sm" [ngStyle]="{'background-image':'url('+getImagePath(product.image_url)+')'}">
             </div>
-            <div class="absolute bottom-0">
-                <p class="mb-3 font-normal text-gray-700 dark:text-gray-400 justify-end w-full">{{product.price}}$</p>
+            <div class="flex-1 m-2 md:m-0 min-h-40 relative">
+                <div>
+                    <h5 class="mb-2 text-1xl font-bold tracking-tight text-gray-900 dark:text-white">{{product.name}}</h5>
+                </div>
+                <div>
+                    <p class="mb-3 font-normal text-gray-700 dark:text-gray-400 text-base">{{product.description}}</p>
+                </div>
+                <div class="absolute bottom-0">
+                    <p class="mb-3 font-normal text-gray-700 dark:text-gray-400 justify-end w-full">{{product.price}}$</p>
+                </div>
             </div>
         </div>
-        <button routerLink="/details/{{product.category}}/{{product.id}}" class="mt-auto mb-auto inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-3 focus:outline-none focus:ring-blue-300">
+        <button routerLink="/details/{{product.category}}/{{product.id}}" class="m-2 w-1/3 justify-center float-right inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-3 focus:outline-none focus:ring-blue-300">
             More
             <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
