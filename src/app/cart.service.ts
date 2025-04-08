@@ -46,6 +46,7 @@ export class CartService {
     }
     this.http.get<{ id: string }>(this.userApi + firebase_uid).subscribe({
       next: (response) => {
+        this.userId = response.id
         this.userId$.next(response.id)
       },
       error: (error) => {
@@ -66,7 +67,7 @@ export class CartService {
     return this.http.get(`http://localhost:3000/review/byProdId/${productId}`)
   }
 
-  removeItem(cartId:number, productId: number) {
-    return this.http.delete(this.kotegeloApi + cartId + productId)
+  removeItem(productId: number) {
+    return this.http.delete(this.kotegeloApi + productId)
   }
 }
