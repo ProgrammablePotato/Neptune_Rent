@@ -5,12 +5,13 @@ const path = require('path')
 const fs = require('fs')
 const productsService = require("../services/products")
 
-router.post('/', upload.single('image'), (req, res) => {
+router.post('/:id', upload.single('image'), (req, res) => {
     if (!req.file) {
         return res.status(400).json({ message: 'Nincs fájl feltöltve.' })
     }
-    res.json({ imageUrl: `/uploads/${req.file.filename}` })
-    productsService.patchPath(`/uploads/${req.file.filename}`,req.id)
+    res.json({ imageUrl: `${req.file.filename}` })
+    console.log("IIIDÉÉÉÉ     ",req.params.id)
+    productsService.patchPath(`${req.file.filename}`,req.params.id)
 })
 
 router.get('/', (req, res) => {

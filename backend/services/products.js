@@ -56,8 +56,10 @@ async function editProduct(id, product){
     const fields = []
     const params = []
     for (const [key, value] of Object.entries(product)) {
-        fields.push(`${key}=?`)
-        params.push(value)
+        if (key != "image_url") {
+            fields.push(`${key}=?`)
+            params.push(value)
+        }
     }
     const query = `UPDATE products SET ${fields.join(", ")} WHERE id=?`
     params.push(id)

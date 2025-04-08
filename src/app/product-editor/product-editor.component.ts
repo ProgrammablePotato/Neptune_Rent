@@ -97,6 +97,7 @@ export class ProductEditorComponent {
       // const formData = new FormData()
       // formData.append('image', this.file)
       console.log("File", this.file)
+      console.log("Product",this.product)
       this.base.uploadImage(this.file,this.product.id).subscribe({
         next: (res: any) => {
           // console.log("formdata",formData)

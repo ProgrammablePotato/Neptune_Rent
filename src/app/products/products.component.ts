@@ -119,6 +119,6 @@ export class ProductsComponent implements OnInit {
     this.dropdownCollapse("price")
   }
   getImagePath(file:string) {
-    return file.substring(1)
+    return "uploads/"+file
   }
 }
