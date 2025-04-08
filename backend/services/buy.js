@@ -28,14 +28,14 @@ async function buyProduct(details, user_id) {
 async function editBuy(id, detail) {
     const [existingRow] = await db.query(`SELECT product_id, quantity FROM cart WHERE id=?`, [id])
     if (!existingRow) throw new Error("A vásárlás nem található!")
-    const { product_id: oldProductId, quantity: oldQuantity } = existingRow;
+    const { product_id: oldProductId, quantity: oldQuantity } = existingRow
     let quantityDiff = 0
     let newProductId = oldProductId
     if (detail.quantity !== undefined) {
         quantityDiff = detail.quantity - oldQuantity
     }
     if (detail.product_id !== undefined) {
-        newProductId = detail.product_id;
+        newProductId = detail.product_id
         await db.query(`UPDATE products SET stock = stock + ? WHERE id=?`, [oldQuantity, oldProductId])
         const [newProduct] = await db.query(`SELECT price, stock FROM products WHERE id=?`, [newProductId])
         if (!newProduct) throw new Error("Az új termék nem található!")
@@ -44,7 +44,7 @@ async function editBuy(id, detail) {
         }
         await db.query(`UPDATE products SET stock = stock - ? WHERE id=?`, [detail.quantity || oldQuantity, newProductId])
         detail.price = newProduct.price * (detail.quantity || oldQuantity)
-        detail.ppu = newProduct.price;
+        detail.ppu = newProduct.price
     } else {
         if (detail.quantity !== undefined) {
             const [stockRow] = await db.query(`SELECT stock, price FROM products WHERE id=?`, [oldProductId])
