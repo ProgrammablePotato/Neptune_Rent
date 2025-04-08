@@ -3,3 +3,4 @@ node_modules
 assets/
 ./services/cart.js
 ./routes/cart.js
+./uploads/*

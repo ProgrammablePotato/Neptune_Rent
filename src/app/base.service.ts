@@ -28,6 +28,7 @@ export class BaseService {
       }
     })
   }
+
   getProductsByCategory(cat: string): Promise<any[]> {
     return new Promise((resolve) => {
       if (this.products.length > 0) {
@@ -44,15 +45,18 @@ export class BaseService {
   getProductByCategoryAndId(cat: string, id: number) {
     return this.getProductsByCategory(cat).then((prods) => prods.find((prod) => prod.id === id))
   }
+
   addProduct(product:any) {
     const url = `${this.apiUrl}/products`
     return this.http.post(url,product)
   }
+
   editProduct(id:any,data:any) {
     const url = `${this.apiUrl}/products/${id}`
     console.log(url)
     return this.http.patch(url,data)
   }
+
   deleteProduct(id: number) {
     const url = `${this.apiUrl}/products/${id}`
     return this.http.delete(url).pipe(
@@ -61,6 +65,7 @@ export class BaseService {
       })
     )
   }
+
   roundPrices() {
     for (let x = 0; x < this.products.length; x++) {
       this.products[x].price = (Math.round(this.products[x].price*100))/100
@@ -73,6 +78,7 @@ export class BaseService {
       console.log("Users: ",this.users)
     })
   }
+
   deleteUser(uid:string) {
     return this.http.delete(`${this.apiUrl}/users/${uid}`)
   }
