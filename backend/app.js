@@ -1,7 +1,6 @@
 const express = require('express')
 const userRouter = require('./routes/users')
 const productsRouter = require('./routes/products')
-const cartRouter = require('./routes/cart')
 const rent = require('./routes/rent')
 const review = require('./routes/review')
 const buyRouter = require('./routes/buy')
@@ -26,8 +25,6 @@ app.use(cookieParser())
 app.use('/users', userRouter)
 
 app.use('/products', productsRouter)
-
-app.use('/cart', cartRouter)
 
 app.use('/rent', rent)
 
