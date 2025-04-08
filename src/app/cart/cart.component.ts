@@ -31,9 +31,9 @@ export class CartComponent implements OnInit {
     this.totalPrice = this.cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0)
   }
 
-  removeFromCart(productId: number): void {
-    this.cartService.removeItem(this.cartId, productId).subscribe(() => {
-      this.cartItems = this.cartItems.filter(item => item.product_id !== productId)
+  removeFromCart(cartItemId: number): void {
+    this.cartService.removeItem(cartItemId).subscribe(() => {
+      this.cartItems = this.cartItems.filter(item => item.id !== cartItemId)
       this.calculateTotal()
     })
   }

@@ -25,6 +25,16 @@ router.get('/', async (req, res) => {
     }
 })
 
+router.get('/user/:id', async (req, res) => {
+    try {
+        const result = await buyService.getBuyerByUserId(req.params.id)
+        res.json(result)
+    } catch (error) {
+        console.error(error)
+        res.status(500).json({ success: false, message: error.message })
+    }
+})
+
 router.patch('/:id', async (req, res) => {
     try {
         const result = await buyService.editBuy(req.params.id, req.body)
@@ -52,16 +62,6 @@ router.delete("/:id", async (req, res) => {
         res.json(response)
     } catch (error) {
         res.status(500).json({ error: error.message })
-    }
-})
-
-router.get('/user/:id', async (req, res) => {
-    try {
-        const result = await buyService.getBuyerByUserId(req.params.id)
-        res.json(result)
-    } catch (error) {
-        console.error(error)
-        res.status(500).json({ success: false, message: error.message })
     }
 })
 
