@@ -6,10 +6,12 @@
         <p>Mennyiség: {{ item.quantity }}</p>
         <p>Ár: {{ item.price | currency:'EUR' }}</p>
         <p>Összesen: {{ item.price * item.quantity | currency:'EUR' }}</p>
+        <button (click)="removeFromCart(item)" class="mt-2 bg-red-500 text-white px-4 py-2 rounded">Remove</button>
       </div>
       <div class="mt-4 text-xl font-bold">
         Végösszeg: {{ totalPrice | currency:'EUR' }}
       </div>
+      <!-- <button (click)="checkout()" class="mt-4 bg-blue-500 text-white px-4 py-2 rounded">Checkout</button> -->
     </div>
   
     <ng-template #emptyCart>
