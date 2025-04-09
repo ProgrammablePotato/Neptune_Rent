@@ -10,7 +10,7 @@ import { Subscription } from 'rxjs';
   styleUrl: './navbar.component.css'
 })
 export class NavbarComponent {
-  menuVisibility = "hidden"
+  navbarHidden = false
   loggedUser:any=null
   sub?:Subscription
   points:any = []
@@ -30,11 +30,12 @@ export class NavbarComponent {
         })
       }
     );
+    this.isSmall()
   }
-  
-  ngOnDestroy(): void {  
-    this.sub?.unsubscribe()   
-    
+
+  ngOnDestroy(): void {
+    this.sub?.unsubscribe()
+
   }
 
   logout(){
@@ -54,20 +55,21 @@ export class NavbarComponent {
     } return 'inactive-link'
   }
   hideShow() {
-    if (this.menuVisibility === "visible") {
-      this.menuVisibility = "hidden"
-    }
-    else {
-      this.menuVisibility = "visible"
-    }
+    var navbar = <HTMLDivElement>document.getElementById('neptune-navbar')
+    this.navbarHidden ? navbar.style.display = "none" : navbar.style.display = "block"
+  }
+  hideButton() {
+    this.navbarHidden = !this.navbarHidden
+    this.hideShow()
   }
   isSmall() {
     if (document.body.offsetWidth < 769) {
-      this.menuVisibility = "hidden"
+      this.navbarHidden = true
     }
     else {
-      this.menuVisibility = "visible"
+      this.navbarHidden = false
     }
+    this.hideShow()
   }
   setMenuWords() {
     this.points = [
