@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../auth.service';
-import { CountryProperty } from "country-codes-list";
 import * as countryCodes from "country-codes-list";
 import { dropdownCollapse, dropdownExtend } from '../app.component';
 import { BaseService } from '../base.service';
@@ -91,7 +90,7 @@ export class UserComponent {
   }
   getCountry(code:string) {
     if (code == "") {
-      this.countryDisplay = "Please select a country!"
+      this.countryDisplay = "Please select a country:"
     } else {
       this.countries.forEach(country => {
         if (country.countryCode == code) {

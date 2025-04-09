@@ -24,6 +24,7 @@ export class EditorMenuComponent {
       console.log("Editor products",this.products)
     })
   }
+
   startDelete(id:number) {
     this.id = id
     this.toggleModal(true)
@@ -39,16 +40,19 @@ export class EditorMenuComponent {
     this.products = this.products.filter(p => p.id !== id)
     this.toggleModal(false)
   }
+
   filterProducts() {
     this.filteredProducts = this.products.filter((product: any) => 
       product.name.toLowerCase().includes(this.searchTerm.toLowerCase())
     )
   }
+
   searchProducts() {
     this.search.getSearchWord().subscribe((res) => {
       this.searchTerm = res
     })
   }
+
   toggleModal(on:boolean) {
     var modal:any = document.getElementById("confirm-modal")
     if (on) {
@@ -57,6 +61,7 @@ export class EditorMenuComponent {
       modal.style.display = "none"
     }
   }
+
   addTestProduct() {
     let product = {
       name: "Test",
@@ -76,6 +81,7 @@ export class EditorMenuComponent {
       }
     )
   }
+
   getImagePath(file:string) {
     return "uploads/"+file
   }

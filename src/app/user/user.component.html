@@ -95,7 +95,7 @@
               </svg>
             </button>
             <div id="neptune-dropdown-country" class="z-10 rounded-lg w-max bg-gray-700 absolute text-md h-48 overflow-scroll overflow-x-hidden">
-              <input (input)="filterCountry()" [(ngModel)]="countryText" type="text" id="country" alt="country" class="bg-gray-700 hover:bg-slate-500 h-10 text-white p-2 w-full text-left border-none rounded-md sticky top-0"/>
+              <input (input)="filterCountry()" [(ngModel)]="countryText" type="text" id="country" autocomplete="false" alt="country" class="bg-gray-700 hover:bg-slate-500 h-10 text-white p-2 w-full text-left border-none rounded-md sticky top-0"/>
               <ul class="py-2 text-sm text-gray-700 dark:text-gray-200">
                   <li *ngFor="let country of filteredCountries">
                       <button (click)="selectCountry(country.countryCode)" class="bg-gray-700 hover:bg-slate-500 h-10 text-white p-2 w-full text-left">{{country.countryNameEn}} ({{country.countryCode}})</button>

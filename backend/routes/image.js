@@ -10,7 +10,6 @@ router.post('/:id', upload.single('image'), (req, res) => {
         return res.status(400).json({ message: 'Nincs fájl feltöltve.' })
     }
     res.json({ imageUrl: `${req.file.filename}` })
-    console.log("IIIDÉÉÉÉ     ",req.params.id)
     productsService.patchPath(`${req.file.filename}`,req.params.id)
 })
 
