@@ -12,8 +12,8 @@
       <p class="md:text-lg text-base">{{card.description}}</p>
     </div>
     <div class="flex-1 p-2 max-h-80 h-fit w-full">
-      <img *ngIf="card.image == 'test' || !card.image" src="cat.jfif" alt="" class="md:w-full max-h-72 h-auto m-auto">
-      <img *ngIf="card.image != 'test'" [src]="getImagePath(card.image)" alt="" class="md:w-full max-h-72 h-auto m-auto">
+      <img *ngIf="card.image == 'test' || !card.image" src="cat.jfif" alt="" class="md:w-fit h-fit max-h-72 m-auto">
+      <img *ngIf="card.image != 'test'" [src]="'uploads/'+card.image" alt="" class="md:w-fit h-fit max-h-72 m-auto">
     </div>
     <a href="" [routerLink]="getRoute(card.title)" class="absolute w-full h-full top-0 left-0 neptune-hover-inset-border"></a>
   </div>

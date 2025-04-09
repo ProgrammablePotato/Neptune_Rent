@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../auth.service';
 import { CountryProperty } from "country-codes-list";
 import * as countryCodes from "country-codes-list";
+import removeAccents from 'remove-accents';
 import { dropdownCollapse, dropdownExtend } from '../app.component';
 import { BaseService } from '../base.service';
 
@@ -56,7 +57,7 @@ export class UserComponent {
     )
   }
   getUserDetails() {
-    
+
   }
 
   saveChanges(){
@@ -107,14 +108,17 @@ export class UserComponent {
   }
   filterCountry() {
     this.filteredCountries = []
-    console.log(this.countryText)
+
     if (this.countryText == '' || this.countryText == null) {
       this.filteredCountries = this.countries
-    }
-    this.countries.forEach(country => {
-      if (country.countryNameEn.toLowerCase().includes(this.countryText)) {
-        this.filteredCountries.push(country)
+    } else {
+      this.countries.forEach(country => {
+        let name = country.countryNameEn.toLowerCase().trim()
+        name = removeAccents(name)
+        if (name.includes(this.countryText.trim().toLowerCase())) {
+          this.filteredCountries.push(country)
+        }
       }
-    })
+    )}
   }
 }
