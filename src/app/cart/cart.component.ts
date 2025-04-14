@@ -10,6 +10,7 @@ export class CartComponent implements OnInit {
   cartId: any
   cartItems: any[] = []
   totalPrice: number = 0
+  successMessage: boolean = false
 
   constructor(private cartService: CartService, private activeRouter: ActivatedRoute) {}
 
@@ -36,5 +37,12 @@ export class CartComponent implements OnInit {
       this.cartItems = this.cartItems.filter(item => item.id !== cartItemId)
       this.calculateTotal()
     })
+  }
+
+  checkout(){
+    this.successMessage = true
+    setTimeout(() => {
+      this.successMessage = false
+    }, 3000)
   }
 }
