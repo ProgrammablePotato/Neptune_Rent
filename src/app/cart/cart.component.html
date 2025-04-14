@@ -1,27 +1,36 @@
-<div class="container mx-auto p-4">
-    <h2 class="text-2xl font-bold mb-4">Kosár</h2>
-    <div *ngIf="cartItems.length > 0; else emptyCart">
-      <div *ngFor="let item of cartItems" class="border p-4 rounded-lg shadow-md mb-4">
-        <h3 class="text-lg font-semibold">{{ item.name }}</h3>
-        <p>Mennyiség: {{ item.quantity }}</p>
-        <p>Ár: {{ item.price | currency:'EUR' }}</p>
-        <p>Összesen: {{ item.price * item.quantity | currency:'EUR' }}</p>
-        <button (click)="removeFromCart(item.id)" class="mt-2 bg-red-500 text-white px-4 py-2 rounded">Remove</button>
+<div class="container mx-auto p-6">
+  <h2 class="text-3xl font-extrabold mb-8 text-center text-gray-800">Kosár</h2>
+
+  <div *ngIf="cartItems.length > 0; else emptyCart">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div *ngFor="let item of cartItems" class="border border-gray-200 p-6 rounded-2xl shadow-lg hover:shadow-2xl transition-shadow bg-white">
+        <h3 class="text-xl font-bold text-gray-800 mb-2">{{ item.name }}</h3>
+        <p class="text-gray-600 mb-1">Mennyiség: <span class="font-semibold">{{ item.quantity }}</span></p>
+        <p class="text-gray-600 mb-1">Ár: <span class="font-semibold">{{ item.price | currency:'EUR' }}</span></p>
+        <p class="text-gray-800 font-semibold mb-4">Összesen: {{ item.price * item.quantity | currency:'EUR' }}</p>
+        <button 
+          (click)="removeFromCart(item.id)" 
+          class="w-full bg-red-500 hover:bg-red-600 text-white font-semibold py-2 rounded-lg transition-colors">
+          Eltávolítás
+        </button>
       </div>
-      <div class="mt-4 text-xl font-bold">
-        Végösszeg: {{ totalPrice | currency:'EUR' }}
-      </div>
-      <button (click)="checkout()" class="mt-4 bg-blue-500 text-white px-4 py-2 rounded">Checkout</button>
     </div>
-  
-    <ng-template #emptyCart>
-      <p class="text-gray-500">A kosarad üres.</p>
-    </ng-template>
-</div>
-<div *ngIf="successMessage" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-  <div class="bg-white p-6 rounded-lg shadow-lg text-center">
-    <h2 class="text-2xl font-bold mb-4">Sikeres vásárlás!</h2>
-    <p class="text-gray-700">Köszönjük a rendelésedet. A szállítás részleteiről email-ben tájékoztatunk</p>
-    <button (click)="successMessage = false" class="mt-4 bg-green-500 text-white px-4 py-2 rounded">Bezár</button>
+
+    <div class="mt-10 text-center">
+      <div class="text-2xl font-extrabold text-gray-800 mb-4">
+        Végösszeg: <span class="text-green-600">{{ totalPrice | currency:'EUR' }}</span>
+      </div>
+      <button 
+        (click)="checkout()" 
+        class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-full shadow-md transition-all">
+        Fizetés
+      </button>
+    </div>
   </div>
+
+  <ng-template #emptyCart>
+    <div class="text-center text-gray-500 text-lg mt-10">
+      A kosarad üres
+    </div>
+  </ng-template>
 </div>

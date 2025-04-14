@@ -2,3 +2,37 @@
     height: auto;
     width: auto;
 }
+
+img {
+    object-fit: cover;
+    height: 100%;
+    width: 100%;
+}
+
+button {
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+button:hover {
+    background-color: #16a34a;
+    transform: translateY(-2px);
+}
+
+div.bg-gray-800 {
+    transition: transform 0.3s ease;
+}
+
+div.bg-gray-800:hover {
+    transform: scale(1.02);
+}
+
+p {
+    color: #fff;
+}
+
+@media (max-width: 768px) {
+    img {
+        width: 100%;
+        height: auto;
+    }
+}

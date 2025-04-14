@@ -1,44 +1,50 @@
-<div *ngIf="loading" class="inline-block ml-auto mr-auto bg-orange-700">Loading...</div>
+<div *ngIf="loading" class="inline-block ml-auto mr-auto bg-orange-700 p-2 rounded-lg text-white">Loading...</div>
+<div *ngIf="error" class="bg-red-700 text-white p-2 rounded-lg mt-2">{{ error }}</div>
 
-<div *ngIf="error" class="error-message">{{ error }}</div>
+<div *ngIf="!loading && product" class="dark:bg-gray-800 lg:max-w-[80vw] flex flex-col md:flex-row mt-10 mx-5 lg:mx-auto rounded-2xl min-h-fit shadow-lg overflow-hidden">
+  <div class="flex-1 p-5 relative">
+    <h1 class="text-white mb-5 text-2xl lg:text-5xl font-bold">{{ product.name }}</h1>
+    <hr class="border-gray-600 mb-5">
+    <p class="text-white text-xl mb-3"><span class="font-bold">Price:</span> ${{ product.price }}</p>
+    <p class="text-white text-lg bg-slate-700 rounded-xl p-5 mb-5">{{ product.description }}</p>
 
-
-<div *ngIf="!loading && product" class="dark:bg-gray-800 lg:max-w-[80vw] md:flex md:flex-row flex-col mt-10 mr-10 ml-10 rounded-xl min-h-fit lg:mr-auto lg:ml-auto">
-    <div class="flex-1 m-2 relative">
-        <h1 class="text-white m-2 lg:text-5xl text-2xl mb-5">{{ product.name }}</h1>
-        <hr>
-        <p class="text-white text-xl m-2"><span class="font-bold">Price: </span>${{ product.price }}</p>
-        <p class="text-white m-2 text-xl dark:bg-slate-700 rounded-lg p-5">{{ product.description }}</p>
-        <button (click)="addToCart()"class="text-xl text-white dark:bg-green-800 p-5 rounded-lg m-2 w-fit popup"><p class="block float-left">Add to cart</p>
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 block float-right ml-2">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25 5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" />
-            </svg>
-            <span class="popuptext " id="myPopup">Value must be between 1 and 99!</span>
-        </button>
-        <div>
-            <input id="cartAmount" [(ngModel)]="quantity" type="number" value="1" max="99" min="1" class="text-xl text-white dark:bg-green-600 p-5 rounded-lg m-2 w-1/10 text-center" />
-        </div>
+    <div class="flex flex-wrap items-center gap-4">
+      <input id="cartAmount" [(ngModel)]="quantity" type="number" min="1" max="99" class="text-xl text-white dark:bg-green-600 p-3 rounded-lg w-20 text-center" />
+      <button (click)="addToCart()" class="relative flex items-center gap-2 bg-green-700 hover:bg-green-800 text-white text-xl px-5 py-3 rounded-2xl transition-all popup">
+        Add to cart
+        <svg xmlns="http://www.w3.org/2000/svg" class="size-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25 5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" />
+        </svg>
+        <span class="popuptext" id="myPopup">Value must be between 1 and 99!</span>
+      </button>
     </div>
-    <div class="flex-1 m-5">
-        <img [src]="product.image" alt="" onerror="src='cat.jfif'" class="float-right w-full rounded-lg">
-    </div>
+  </div>
+
+  <div class="flex-1 m-5 flex justify-center items-center">
+    <img [src]="product.image" onerror="src='cat.jfif'" alt="Product image" class="rounded-xl max-h-96 w-full object-contain" />
+  </div>
 </div>
 
+<div *ngIf="!reviewSent" class="mt-10 mx-5 lg:mx-auto lg:max-w-[80vw]">
+  <h2 class="text-black text-xl font-bold mb-4">Add a Review</h2>
+  <textarea [(ngModel)]="reviewText" placeholder="Write your review..." class="w-full p-3 rounded-lg bg-gray-700 text-white mb-4"></textarea>
 
-<div *ngIf="!reviewSent" class="mt-10">
-    <h2 class="text-white text-xl font-bold mb-2">Add a Review</h2>
-    <textarea [(ngModel)]="reviewText" placeholder="Write your review..." class="w-full p-2 rounded mb-2 dark:bg-gray-700 text-white"></textarea>
-    <label class="text-white mr-2">Rating:</label>
-    <select [(ngModel)]="rating" class="dark:bg-gray-700 text-white p-1 rounded">
-        <option *ngFor="let r of [1,2,3,4,5]" [value]="r">{{ r }}</option>
+  <div class="flex items-center gap-4 mb-4">
+    <label class="text-black">Rating:</label>
+    <select [(ngModel)]="rating" class="bg-gray-700 text-white p-2 rounded-lg">
+      <option *ngFor="let r of [1,2,3,4,5]" [value]="r">{{ r }}</option>
     </select>
-    <button (click)="submitReview()" class="dark:bg-blue-700 text-white p-2 rounded ml-4">Submit Review</button>
+  </div>
+
+  <button (click)="submitReview()" class="bg-blue-700 hover:bg-blue-800 text-white px-6 py-3 rounded-2xl transition-all">Submit Review</button>
 </div>
-    <div *ngIf="reviewSent" class="text-green-500 mt-2">Köszönjük az értékelést!</div>
-    <div *ngIf="reviews.length > 0" class="mt-10">
-    <h2 class="text-white text-xl font-bold">Reviews:</h2>
-    <div *ngFor="let r of reviews" class="bg-gray-900 rounded p-4 my-2">
-        <p class="text-white italic">“{{ r.reviewText }}”</p>
-        <p class="text-yellow-400">Rating: {{ r.rating }}/5</p>
-    </div>
+
+<div *ngIf="reviewSent" class="text-green-500 text-center font-bold mt-5">Köszönjük az értékelést!</div>
+
+<div *ngIf="reviews.length > 0" class="mt-10 mx-5 lg:mx-auto lg:max-w-[80vw]">
+  <h2 class="text-white text-xl font-bold mb-4">Reviews:</h2>
+  <div *ngFor="let r of reviews" class="bg-gray-900 rounded-xl p-5 mb-4 shadow-md">
+    <p class="text-white italic mb-2">“{{ r.reviewText }}”</p>
+    <p class="text-yellow-400 font-semibold">Rating: {{ r.rating }}/5</p>
+  </div>
 </div>
