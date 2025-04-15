@@ -23,6 +23,8 @@ export class ProductDetailsComponent implements OnInit {
   reviews: any[] = []
   category: string | null = null
   successMessage: boolean = false
+  addSuccess: boolean = false
+  addError: boolean = false
 
   constructor(
     private activeRouter: ActivatedRoute, private http:HttpClient, private base: BaseService, 
@@ -77,9 +79,17 @@ export class ProductDetailsComponent implements OnInit {
     this.cart.buyProduct(this.product.id, { quantity: this.quantity }).subscribe({
       next: (response) => {
         console.log('Item added to cart:', response)
+        this.addSuccess = true
+        setTimeout(() => {
+          this.addSuccess = false
+        }, 3000)
       },
       error: (error) => {
         console.error('Error while adding item to cart:', error)
+        this.addError = true
+        setTimeout(() => {
+          this.addError = false
+        }, 3000)
       }
     })
   }
@@ -155,6 +165,10 @@ export class ProductDetailsComponent implements OnInit {
       },
       error: (err) => {
         console.error("Error:", err)
+        this.addError = true
+        setTimeout(() => {
+          this.addError = false
+        }, 3000)
       }
     })
   }
