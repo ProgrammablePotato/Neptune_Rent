@@ -35,13 +35,14 @@ export class UserComponent implements OnInit {
   userCountry:any
   countryText:string = ""
 
-  ngOnInit(): void{
+  ngOnInit() {
     this.getAdmin()
     this.auth.getLoggedUser().subscribe(
       {
         next: (res) => {
           this.loggedUser = res
           this.getUserDetails(res.uid)
+          this.countryList()
         },
         error: (error) => {
           console.error("Error q-q",error.message)
@@ -52,7 +53,7 @@ export class UserComponent implements OnInit {
 
   constructor(private auth:AuthService, private route: ActivatedRoute, private router:Router, private base:BaseService){
     this.countryList()
-    this.getCountry('')
+    this.getCountry(this.country)
   }
 
   getAdmin() {
@@ -118,7 +119,6 @@ export class UserComponent implements OnInit {
   }
   countryList() {
     this.countries = countryCodes.all()
-    console.log(this.countries)
     this.filteredCountries = this.countries
   }
   getCountry(code:string) {
@@ -128,6 +128,7 @@ export class UserComponent implements OnInit {
       this.countries.forEach(country => {
         if (country.countryCode == code) {
           this.countryDisplay = country.countryNameEn
+          this.userDetails.country = code
         }
       })
     }
@@ -139,7 +140,6 @@ export class UserComponent implements OnInit {
   }
   filterCountry() {
     this.filteredCountries = []
-
     if (this.countryText == '' || this.countryText == null) {
       this.filteredCountries = this.countries
     } else {

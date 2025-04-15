@@ -49,9 +49,9 @@ router.delete('/:id', async (req, res) => {
     }
 })
 
-router.get('/firebase/:uid', async (req, res) => {
+router.get('/firebase/:id', async (req, res) => {
     try {
-        const user = await userService.getUserByFirebaseUid(req.params.uid)
+        const user = await userService.getUserByFirebaseUid(req.params.id)
         res.json(user)
     } catch (error) {
         res.status(500).json({ message: error.message })
