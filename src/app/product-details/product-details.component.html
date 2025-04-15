@@ -17,6 +17,9 @@
         </svg>
         <span class="popuptext" id="myPopup">Value must be between 1 and 99!</span>
       </button>
+      <ng-container *ngIf="category !== 'accessories' && category !== 'services'">
+        <button (click)="rent()" class="bg-yellow-600 hover:bg-yellow-700 text-white px-5 py-3 rounded-2xl transition-all">Rent</button>
+      </ng-container>      
     </div>
   </div>
 

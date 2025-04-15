@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { BaseService } from '../base.service';
-import { from } from 'rxjs';
+import { BehaviorSubject, from } from 'rxjs';
 import { CartService } from '../cart.service';
 import { AuthService } from '../auth.service';
+import { RentService } from '../rent.service';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-product-details',
@@ -19,37 +21,45 @@ export class ProductDetailsComponent implements OnInit {
   rating: number = 0
   reviewSent: boolean = false
   reviews: any[] = []
+  category: string | null = null
 
   constructor(
-    private activeRouter: ActivatedRoute, private base: BaseService, private cart: CartService, private auth:AuthService) {}
+    private activeRouter: ActivatedRoute, private http:HttpClient, private base: BaseService, private cart: CartService, private auth:AuthService, private rentservice:RentService) {}
 
-  ngOnInit(): void {
-    const category = this.activeRouter.snapshot.paramMap.get('category')
-    const productId = Number(this.activeRouter.snapshot.paramMap.get('id'))
+    private userApi = 'http://localhost:3000/users/firebase/'
+      userId : any = ''
+      userId$ = new BehaviorSubject<string>('')
 
-    if (category && !isNaN(productId)) {
-      from(this.base.getProductByCategoryAndId(category, productId)).subscribe({
-        next: (data) => {
-          this.product = data
-          this.loading = false
-          this.base.roundPrices()
-        },
-        error: (error) => {
-          this.error = 'Hiba történt a termék betöltésekor!'
-          console.error(error)
-          this.loading = false
-        },
-        complete: () => {
-          console.log('Product loaded!')
-        }
-      })
-    } else {
-      this.error = 'Érvénytelen termékadat!'
-      this.loading = false
+    ngOnInit(): void {
+      this.categoryChecker()
+      this.loadReviews()
+      this.getUserId(this.auth.loggedUser?.uid)
     }
 
-    this.loadReviews()
-  }
+    categoryChecker(){
+      this.category = this.activeRouter.snapshot.paramMap.get('category')
+      const productId = Number(this.activeRouter.snapshot.paramMap.get('id'))
+      if (this.category && !isNaN(productId)) {
+        from(this.base.getProductByCategoryAndId(this.category, productId)).subscribe({
+          next: (data) => {
+            this.product = data
+            this.loading = false
+            this.base.roundPrices()
+          },
+          error: (error) => {
+            this.error = 'Error!'
+            console.error(error)
+            this.loading = false
+          },
+          complete: () => {
+            console.log('Product loaded!')
+          }
+        })
+      } else {
+        this.error = 'Invalid product data!'
+        this.loading = false
+      }
+    }
 
   loadReviews() {
     this.cart.getReviewsByProductId(this.product?.id).subscribe({
@@ -100,6 +110,7 @@ export class ProductDetailsComponent implements OnInit {
       console.warn('submitReview hívás nem történt meg, mert a userId nem volt elérhető.')
     }
   }
+
   rateProduct(rating:number) {
     for (let y = 1; y < 6; y++) {
       var star = document.getElementById("rate-star-"+(y))
@@ -110,5 +121,35 @@ export class ProductDetailsComponent implements OnInit {
       var star = document.getElementById("rate-star-"+(x))
       star?.setAttribute("fill","yellow")
     }
+  }
+
+  getUserId(firebase_uid: string) {
+    if (!firebase_uid) {
+      console.error('Firebase UID is undefined')
+      return
+    }
+    this.http.get<{ id: string }>(this.userApi + firebase_uid).subscribe({
+      next: (response) => {
+        this.userId = response.id
+        this.userId$.next(response.id)
+      },
+      error: (error) => {
+        console.error('Error fetching user ID:', error)
+      }
+    })
+  }
+
+  rent() {
+    const userId = this.userId
+    if (!userId || !this.product) return
+    const price = this.product.price
+    this.rentservice.rentProduct(userId, this.product.id, price).subscribe({
+      next: (res) => {
+        console.log("Successful rent:", res)
+      },
+      error: (err) => {
+        console.error("Error:", err)
+      }
+    })
   }
 }

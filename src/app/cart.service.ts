@@ -9,6 +9,10 @@ import { BehaviorSubject } from 'rxjs';
 export class CartService {
 
   constructor(private http: HttpClient, private auth: AuthService) {
+    this.getId()
+  }
+
+  getId(){
     this.auth.getLoggedUser().subscribe(user => {
       if (user?.uid) {
         this.getUserId(user.uid)
