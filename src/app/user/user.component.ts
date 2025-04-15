@@ -113,8 +113,7 @@ export class UserComponent {
     } else {
       this.countries.forEach(country => {
         let name = country.countryNameEn.toLowerCase().trim()
-        name = removeAccents(name)
-        if (name.includes(this.countryText.trim().toLowerCase())) {
+        if (name.includes(this.countryText.trim().toLowerCase()) || removeAccents(name).includes(this.countryText.trim().toLowerCase())) {
           this.filteredCountries.push(country)
         }
       }

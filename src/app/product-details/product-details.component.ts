@@ -16,7 +16,7 @@ export class ProductDetailsComponent implements OnInit {
   error: string | null = null
   quantity: number = 1
   reviewText: string = ''
-  rating: number = 5
+  rating: number = 0
   reviewSent: boolean = false
   reviews: any[] = []
 
@@ -55,6 +55,7 @@ export class ProductDetailsComponent implements OnInit {
     this.cart.getReviewsByProductId(this.product?.id).subscribe({
       next: (res) => {
         this.reviews = res as any[]
+        console.log("reviews loaded")
       },
       error: (err) => console.error(err)
     })
@@ -72,6 +73,10 @@ export class ProductDetailsComponent implements OnInit {
   }
 
   submitReview() {
+    if (this.rating == 0) {
+      alert("Please use the stars to rate the product!")
+      return
+    }
     const user_id = this.auth.loggedUser?.uid
     if (!user_id || !this.product) return
     const reviewRequest = this.cart.submitReview({
@@ -93,6 +98,17 @@ export class ProductDetailsComponent implements OnInit {
       })
     } else {
       console.warn('submitReview hívás nem történt meg, mert a userId nem volt elérhető.')
+    }
+  }
+  rateProduct(rating:number) {
+    for (let y = 1; y < 6; y++) {
+      var star = document.getElementById("rate-star-"+(y))
+      star?.setAttribute("fill","none")
+    }
+    this.rating = rating
+    for (let x = 1; x <= rating; x++) {
+      var star = document.getElementById("rate-star-"+(x))
+      star?.setAttribute("fill","yellow")
     }
   }
 }
