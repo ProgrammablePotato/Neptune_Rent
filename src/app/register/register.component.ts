@@ -45,7 +45,7 @@ export class RegisterComponent {
       }
     }
     else {
-      alert('Kérlek minden hibát javíts ki regisztráció előtt.');
+      alert('Please resolve all errors.');
     }
   }
 }

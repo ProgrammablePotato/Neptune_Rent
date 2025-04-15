@@ -48,7 +48,7 @@ export class ProductsComponent implements OnInit {
       this.categoryNews = news
       console.log("Filtered news: ", news)
     }).catch((error:any) => {
-      console.log("Nem jó")
+      console.log("Not good")
     })
   }
   filterProducts() {

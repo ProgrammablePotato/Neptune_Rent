@@ -66,7 +66,7 @@ export class HomeComponent implements OnInit {
     await this.news.getTechNews('all').then((news:any) => {
       this.allNews = news
     }).catch((error) => {
-      console.log("Nem jó")
+      console.log("Not good")
     })
   }
 

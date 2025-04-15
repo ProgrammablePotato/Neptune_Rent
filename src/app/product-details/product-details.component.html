@@ -19,7 +19,16 @@
       </button>
       <ng-container *ngIf="category !== 'accessories' && category !== 'services'">
         <button (click)="rent()" class="bg-yellow-600 hover:bg-yellow-700 text-white px-5 py-3 rounded-2xl transition-all">Rent</button>
-      </ng-container>      
+        <div *ngIf="successMessage" class="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div class="bg-white rounded-2xl shadow-xl p-8 max-w-sm w-full text-center">
+            <h3 class="text-2xl font-bold text-green-600 mb-4">Sikeres bérlés!</h3>
+            <p class="text-gray-700 mb-4">Szeretnénk tájékoztatni, hogy technikai okok miatt jelenleg csak egy hónapra lehet terméket bérelni, ami a termék érkezésétől kezdődik. A továbbiakról emailben kapsz tájékoztatást.</p>
+            <button (click)="successMessage = false" class="mt-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg">
+              Bezárás
+            </button>
+          </div>
+        </div>
+      </ng-container>
     </div>
   </div>
 

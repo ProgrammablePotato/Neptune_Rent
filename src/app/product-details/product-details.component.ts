@@ -22,13 +22,15 @@ export class ProductDetailsComponent implements OnInit {
   reviewSent: boolean = false
   reviews: any[] = []
   category: string | null = null
+  successMessage: boolean = false
 
   constructor(
-    private activeRouter: ActivatedRoute, private http:HttpClient, private base: BaseService, private cart: CartService, private auth:AuthService, private rentservice:RentService) {}
+    private activeRouter: ActivatedRoute, private http:HttpClient, private base: BaseService, 
+    private cart: CartService, private auth:AuthService, private rentservice:RentService) {}
 
     private userApi = 'http://localhost:3000/users/firebase/'
-      userId : any = ''
-      userId$ = new BehaviorSubject<string>('')
+    userId : any = ''
+    userId$ = new BehaviorSubject<string>('')
 
     ngOnInit(): void {
       this.categoryChecker()
@@ -74,10 +76,10 @@ export class ProductDetailsComponent implements OnInit {
   addToCart() {
     this.cart.buyProduct(this.product.id, { quantity: this.quantity }).subscribe({
       next: (response) => {
-        console.log('Termék hozzáadva a kosárhoz:', response)
+        console.log('Item added to cart:', response)
       },
       error: (error) => {
-        console.error('Hiba történt a termék hozzáadásakor:', error)
+        console.error('Error while adding item to cart:', error)
       }
     })
   }
@@ -103,11 +105,11 @@ export class ProductDetailsComponent implements OnInit {
           this.loadReviews()
         },
         error: (err) => {
-          console.error('Hiba az értékelés elküldésekor:', err)
+          console.error('Error while submitting review:', err)
         }
       })
     } else {
-      console.warn('submitReview hívás nem történt meg, mert a userId nem volt elérhető.')
+      console.warn('No UID found.')
     }
   }
 
@@ -146,6 +148,10 @@ export class ProductDetailsComponent implements OnInit {
     this.rentservice.rentProduct(userId, this.product.id, price).subscribe({
       next: (res) => {
         console.log("Successful rent:", res)
+        this.successMessage = true
+        setTimeout(() => {
+          this.successMessage = false
+        }, 4000)
       },
       error: (err) => {
         console.error("Error:", err)

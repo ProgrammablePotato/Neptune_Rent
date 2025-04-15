@@ -29,9 +29,7 @@ export class UserEditorComponent {
   }
 
   setCustomClaims(uid:any, claims:any){
-    this.auth.setUserClaims(uid, claims)?.subscribe(
-      ()=>console.log("Claims beállítás!")
-    )
+    this.auth.setUserClaims(uid, claims)?.subscribe()
   }
 
   change(uid:any){
