@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../auth.service';
 import * as countryCodes from "country-codes-list";
@@ -11,10 +11,12 @@ import { BaseService } from '../base.service';
   templateUrl: './user.component.html',
   styleUrl: './user.component.css'
 })
-export class UserComponent {
+export class UserComponent implements OnInit {
+  //html element controllers
   public dropdownCollapse = dropdownCollapse
   public dropdownExtend = dropdownExtend
-
+  //user data
+  loggedUser:any
   isUserAdmin: boolean = false
   passwordVisibility = "password"
   zip: string = ''
@@ -25,40 +27,70 @@ export class UserComponent {
   countryDisplay:string = ''
   name: string = ''
   nick: string = ''
+
+  userDetails:any
+  //country selector 
   countries:any[] = []
   filteredCountries:any[] = []
   userCountry:any
   countryText:string = ""
 
   ngOnInit(): void{
-    this.auth.getIsAdmin().subscribe((isAdmin) => {
-      this.isUserAdmin = isAdmin
-    })
+    this.getAdmin()
+    this.auth.getLoggedUser().subscribe(
+      {
+        next: (res) => {
+          this.loggedUser = res
+          this.getUserDetails(res.uid)
+        },
+        error: (error) => {
+          console.error("Error q-q",error.message)
+        }
+      }
+    )
   }
 
-  loggedUser:any
-
   constructor(private auth:AuthService, private route: ActivatedRoute, private router:Router, private base:BaseService){
-    this.auth.getLoggedUser().subscribe((user) => {
-      this.loggedUser = user
-    })
-    this.getUserDetails()
     this.countryList()
     this.getCountry('')
   }
 
+  getAdmin() {
+    this.auth.getIsAdmin().subscribe((admin) => {
+      this.isUserAdmin = admin
+    })
+  }
+
   saveUserDetails(){
+    let details = this.userDetails
     console.log(this.city, this.name, this.addr1, this.addr2, this.zip, this.country, this.loggedUser.email, this.loggedUser.phoneNumber, this.nick)
-    this.auth.addNewUser(this.loggedUser.uid, this.name, this.zip, this.city, this.addr1, this.addr2, this.country, this.loggedUser.email, this.loggedUser.phoneNumber, this.nick)?.subscribe(
+    this.auth.addNewUser(
+      details.firebase_uid,
+      details.name,
+      details.zipcode,
+      details.city,
+      details.addr1,
+      details.addr2,
+      details.country,
+      details.email,
+      details.phone,
+      details.nick)?.subscribe(
       (res) => {
         console.log("User data upload success")
       }
     )
   }
-  getUserDetails() {
-
+  getUserDetails(uid:string) {
+    this.userDetails = this.base.getUserDetails(uid)?.subscribe({
+      next: (res) => {
+        this.userDetails = res
+        console.log(this.userDetails)
+      },
+      error: (error) => {
+        console.error('Error fetching user ID:', error)
+      }
+    })
   }
-
   saveChanges(){
     this.auth.updateUser(this.loggedUser.displayName, this.loggedUser.phoneNumber, this.loggedUser.email, this.loggedUser.password)?.subscribe(
       (res) => {

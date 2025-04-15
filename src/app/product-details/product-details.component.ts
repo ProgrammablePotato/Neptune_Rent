@@ -22,13 +22,12 @@ export class ProductDetailsComponent implements OnInit {
   reviewSent: boolean = false
   reviews: any[] = []
   category: string | null = null
+  private userApi = 'http://localhost:3000/users/firebase/'
 
-  constructor(
-    private activeRouter: ActivatedRoute, private http:HttpClient, private base: BaseService, private cart: CartService, private auth:AuthService, private rentservice:RentService) {}
+  userId : any = ''
+  userId$ = new BehaviorSubject<string>('')
 
-    private userApi = 'http://localhost:3000/users/firebase/'
-      userId : any = ''
-      userId$ = new BehaviorSubject<string>('')
+  constructor(private activeRouter: ActivatedRoute, private http:HttpClient, private base: BaseService, private cart: CartService, private auth:AuthService, private rentservice:RentService) {}
 
     ngOnInit(): void {
       this.categoryChecker()
