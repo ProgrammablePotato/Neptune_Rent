@@ -4,7 +4,6 @@ import { BaseService } from '../base.service';
 import { Router } from '@angular/router';
 import { SearchService } from '../search.service';
 import { AuthService } from '../auth.service';
-import { HttpClient } from '@angular/common/http';
 import { CartService } from '../cart.service';
 
 @Component({
@@ -55,13 +54,6 @@ export class HomeComponent implements OnInit {
     })
   }
 
-  // async getNews(){
-  //   this.news.getTechNews().subscribe((data) => {
-  //     this.allNews = data.articles.slice(0, 5)
-  //     console.log(this.allNews)
-  //   })
-  // }
-
   async getNewsNew() {
     await this.news.getTechNews('all').then((news:any) => {
       this.allNews = news
@@ -99,18 +91,22 @@ export class HomeComponent implements OnInit {
     this.hideDropdown()
     console.log(this.filteredProducts)
   }
+
   resetFilter() {
     this.hideDropdown()
     this.filteredProducts = this.products
   }
+
   hideDropdown() {
     let dropdown = document.getElementById("dropdown")
     console.log(dropdown?.getAttribute("aria-hidden"))
     dropdown?.setAttribute("aria-hidden","false")
   }
+
   getNewsNumber(news:any) {
     return this.allNews.indexOf(news)
   }
+
   getBrandNames() {
     for (let i = 0; i < this.products.length; i++) {
       if (!this.brands.includes(this.products[i].brand)) {
@@ -118,6 +114,7 @@ export class HomeComponent implements OnInit {
       }
     }
   }
+
   initCategoryCards() {
     let right = true
     this.categories.forEach((category:string) => {
@@ -132,10 +129,8 @@ export class HomeComponent implements OnInit {
       this.cards.push(card)
     })
   }
+
   getRoute(cat:string) {
     return "../products/"+(cat.toLowerCase())
-  }
-  getImagePath(file:string) {
-    return "uploads/"+file
   }
 }
