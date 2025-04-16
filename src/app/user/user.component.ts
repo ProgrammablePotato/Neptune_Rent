@@ -12,50 +12,42 @@ import { BaseService } from '../base.service';
   styleUrl: './user.component.css'
 })
 export class UserComponent implements OnInit {
-  //html element controllers
   public dropdownCollapse = dropdownCollapse
   public dropdownExtend = dropdownExtend
-  //user data
   loggedUser:any
   isUserAdmin: boolean = false
   passwordVisibility = "password"
-  zip: string = ''
-  city: string = ''
-  addr1: string = ''
-  addr2: string = ''
+  userDetails:any
+
   country: string = ''
   countryDisplay:string = ''
-  name: string = ''
-  nick: string = ''
-
-  userDetails:any
-  //country selector 
   countries:any[] = []
   filteredCountries:any[] = []
-  userCountry:any
   countryText:string = ""
 
   ngOnInit() {
     this.getAdmin()
-    this.auth.getLoggedUser().subscribe(
-      {
-        next: (res) => {
-          this.loggedUser = res
-          this.getUserDetails(res.uid)
-          this.countryList()
-        },
-        error: (error) => {
-          console.error("Error q-q",error.message)
-        }
-      }
-    )
+    this.getLoggedUser()
+    this.countryList()
   }
 
   constructor(private auth:AuthService, private route: ActivatedRoute, private router:Router, private base:BaseService){
     this.countryList()
     this.getCountry(this.country)
   }
-
+  getLoggedUser() {
+    this.auth.getLoggedUser().subscribe(
+      {
+        next: (res) => {
+          this.loggedUser = res
+          this.getUserDetails(res.uid)
+        },
+        error: (error) => {
+          console.error("Error while getting the user's details!",error.message)
+        }
+      }
+    )
+  }
   getAdmin() {
     this.auth.getIsAdmin().subscribe((admin) => {
       this.isUserAdmin = admin
@@ -64,17 +56,16 @@ export class UserComponent implements OnInit {
 
   saveUserDetails(){
     let details = this.userDetails
-    console.log(this.city, this.name, this.addr1, this.addr2, this.zip, this.country, this.loggedUser.email, this.loggedUser.phoneNumber, this.nick)
     this.auth.addNewUser(
-      details.firebase_uid,
+      this.loggedUser.firebase_uid,
       details.name,
       details.zipcode,
       details.city,
       details.addr1,
       details.addr2,
       details.country,
-      details.email,
-      details.phone,
+      this.loggedUser.email,
+      this.loggedUser.phoneNumber,
       details.nick)?.subscribe(
       (res) => {
         console.log("User data upload success")
