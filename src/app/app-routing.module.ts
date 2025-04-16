@@ -16,6 +16,7 @@ import { UserEditorComponent } from './user-editor/user-editor.component';
 import { EditorMenuComponent } from './editor-menu/editor-menu.component';
 import { VerifymailComponent } from './verifymail/verifymail.component';
 import { ProductsComponent } from './products/products.component';
+import { cartGuard } from './cart.guard';
 
 const routes: Routes = [
   {path: 'home', component: HomeComponent},
@@ -23,7 +24,7 @@ const routes: Routes = [
   {path: 'login', component: LoginComponent},
   {path: 'register', component: RegisterComponent},
   {path: 'user', component: UserComponent, canActivate:[loggedUserGuard]},
-  {path: 'cart/:id', component: CartComponent, canActivate:[loggedUserGuard]},
+  {path: 'cart/:id', component: CartComponent, canActivate:[loggedUserGuard, cartGuard]},
   {path: 'admin', component: AdminComponent, canActivate:[adminGuard],
     children:[
     {path: 'editormenu', component: EditorMenuComponent, canActivate:[adminGuard]},
