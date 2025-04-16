@@ -152,7 +152,7 @@ export class AuthService {
       return null
   }
 
-  addNewUser(firebase_uid:string, name:string, zipcode:string, city:string, addr1:string, addr2:string, country:string, email:string, phone:string, nick:string){
+  addNewUser(firebase_uid:string, name:string='', zipcode:string='', city:string='', addr1:string='', addr2:string='', country:string='', email:string='', phone:string='', nick:string=''){
     if (this.loggedUser.accessToken)
       {
         firebase_uid=this.loggedUser.uid
