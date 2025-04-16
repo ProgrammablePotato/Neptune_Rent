@@ -48,4 +48,8 @@ export class RegisterComponent {
       alert('Please resolve all errors.');
     }
   }
+
+  loginWithGoogle(){
+    this.auth.loginWithGoogle()
+  }
 }
