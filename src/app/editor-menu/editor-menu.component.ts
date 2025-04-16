@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { BaseService } from '../base.service';
 import { ActivatedRoute } from '@angular/router';
 import { SearchService } from '../search.service';
@@ -8,11 +8,15 @@ import { SearchService } from '../search.service';
   templateUrl: './editor-menu.component.html',
   styleUrl: './editor-menu.component.css'
 })
-export class EditorMenuComponent {
+export class EditorMenuComponent implements OnInit {
   products:any[] = []
   filteredProducts:any = []
   searchTerm: string = ''
   public id = 0
+
+  ngOnInit(): void {
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
 
   constructor(private base:BaseService, private search:SearchService) {
     this.getProducts()

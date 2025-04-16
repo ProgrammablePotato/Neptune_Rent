@@ -26,6 +26,7 @@ export class UserComponent implements OnInit {
   countryText:string = ""
 
   ngOnInit() {
+    window.scrollTo({ top: 0, behavior: 'smooth' })
     this.getAdmin()
     this.getLoggedUser()
     this.countryList()

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../auth.service';
 
 @Component({
@@ -6,6 +6,8 @@ import { AuthService } from '../auth.service';
   templateUrl: './admin.component.html',
   styleUrl: './admin.component.css'
 })
-export class AdminComponent {
-  
+export class AdminComponent implements OnInit {
+  ngOnInit(): void {
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
 }

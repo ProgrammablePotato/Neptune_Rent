@@ -19,6 +19,7 @@ export class CartComponent implements OnInit {
     if (this.cartId) {
       this.loadCart(this.cartId)
     }
+    window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
   loadCart(id: number): void {

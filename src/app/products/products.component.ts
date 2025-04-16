@@ -32,7 +32,7 @@ export class ProductsComponent implements OnInit {
   constructor(private news:NewsService, private base:BaseService, private router:Router, private search:SearchService, private activated:ActivatedRoute){
     this.router.routeReuseStrategy.shouldReuseRoute = function () {
       return false;
-    };
+    }
 
   }
   ngOnInit() {
@@ -41,8 +41,10 @@ export class ProductsComponent implements OnInit {
     console.log("category",this.category)
     this.getNews()
     this.getProducts()
+    window.scrollTo({ top: 0, behavior: 'smooth' })
     console.log(this.products)
   }
+
   async getNews() {
     await this.news.getTechNews(this.category).then((news:any) => {
       this.categoryNews = news
@@ -51,16 +53,19 @@ export class ProductsComponent implements OnInit {
       console.log("Not good")
     })
   }
+
   filterProducts() {
     this.filteredProducts = this.products.filter((product: any) =>
       product.name.toLowerCase().includes(this.searchTerm.toLowerCase())
     )
   }
+
   searchProducts() {
     this.search.getSearchWord().subscribe((res) => {
       this.searchTerm = res
     })
   }
+
   async getProducts() {
     this.allProducts = await this.base.getProducts()
     this.base.roundPrices()
@@ -68,6 +73,7 @@ export class ProductsComponent implements OnInit {
     this.filteredProducts = this.products
     this.getBrandNames()
   }
+
   filterCategory() {
     this.allProducts.forEach((product:any) => {
       if (product.category == this.category) {
@@ -75,6 +81,7 @@ export class ProductsComponent implements OnInit {
       }
     })
   }
+
   filterBrand(brand:any) {
     if (brand == null) {
       this.filteredProducts = this.products
@@ -88,9 +95,11 @@ export class ProductsComponent implements OnInit {
     }
     dropdownCollapse('brand')
   }
+
   getNewsNumber(news:any) {
     return this.categoryNews.indexOf(news)
   }
+
   getBrandNames() {
     for (let i = 0; i < this.products.length; i++) {
       if (!this.brands.includes(this.products[i].brand)) {
@@ -99,10 +108,12 @@ export class ProductsComponent implements OnInit {
     }
     console.log("Brand names:"+this.brands)
   }
+
   redirectTo(uri: string) {
     this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
       this.router.navigate([uri])});
   }
+
   sortByPrice(ascending:boolean) {
     let sorted = this.filteredProducts
     for (let x = 0; x < sorted.length; x++) {
@@ -118,6 +129,7 @@ export class ProductsComponent implements OnInit {
     this.filteredProducts = sorted
     this.dropdownCollapse("price")
   }
+
   getImagePath(file:string) {
     return "uploads/"+file
   }

@@ -31,6 +31,11 @@ export class ProductEditorComponent {
   }
 
   ngOnInit() {
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+    this.categoryChecker()
+  }
+
+  categoryChecker(){
     const category = this.activeRouter.snapshot.paramMap.get('category')
     this.productId = Number(this.activeRouter.snapshot.paramMap.get('id'))
     if (category == "new") {

@@ -48,6 +48,7 @@ export class HomeComponent implements OnInit {
     this.getProducts()
     this.cartUserIdFixer()
     this.showError()
+    window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
   showError(){

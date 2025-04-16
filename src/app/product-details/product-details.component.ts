@@ -38,6 +38,7 @@ export class ProductDetailsComponent implements OnInit {
       this.categoryChecker()
       this.loadReviews()
       this.getUserId(this.auth.loggedUser?.uid)
+      window.scrollTo({ top: 0, behavior: 'smooth' })
     }
 
     categoryChecker(){

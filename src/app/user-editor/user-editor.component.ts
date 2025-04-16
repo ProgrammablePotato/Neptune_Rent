@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../auth.service';
 import { BaseService } from '../base.service';
 
@@ -7,10 +7,14 @@ import { BaseService } from '../base.service';
   templateUrl: './user-editor.component.html',
   styleUrl: './user-editor.component.css'
 })
-export class UserEditorComponent {
+export class UserEditorComponent implements OnInit{
   loggedUser:any
   users:any
   uid:string = ""
+
+  ngOnInit(): void {
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
 
   constructor(private auth:AuthService,private base:BaseService){
     this.auth.getLoggedUser().subscribe(
@@ -39,10 +43,12 @@ export class UserEditorComponent {
     console.log(tomb)
     this.auth.setUserClaims(uid,tomb[0].claims)?.subscribe()
   }
+
   startDeleteUser(uid:string) {
     this.uid = uid
     this.toggleModal(true)
   }
+
   deleteUser(uid:string) {
     this.base.deleteUser(uid).subscribe(
       {
@@ -52,6 +58,7 @@ export class UserEditorComponent {
     )
     this.toggleModal(false)
   }
+
   toggleModal(on:boolean) {
     var modal:any = document.getElementById("confirm-modal")
     if (on) {

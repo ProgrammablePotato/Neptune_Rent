@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, AbstractControlOptions, AbstractControl } from '@angular/forms';
 import { AuthService } from '../auth.service';
 import { Router } from '@angular/router';
@@ -8,10 +8,14 @@ import { Router } from '@angular/router';
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css'],
 })
-export class RegisterComponent {
+export class RegisterComponent implements OnInit{
 
   registerForm: FormGroup
   user: any
+
+  ngOnInit(): void {
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
 
   constructor(private fb: FormBuilder, private auth:AuthService, private router:Router) {
     const formOptions: AbstractControlOptions = { validators: this.passwordsMatch }
