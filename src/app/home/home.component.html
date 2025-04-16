@@ -10,6 +10,9 @@
 </div>
 
 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 px-6 py-4">
+  <div *ngIf="errorMessage" class="fixed top-6 left-1/2 -translate-x-1/2 bg-red-500 text-white px-4 py-2 rounded-md shadow-lg z-50 transition-all">
+    Please complete your <a routerLink="/user" style="text-decoration: underline;">profile</a> to purchase.
+  </div>
   <div
     class="neptune-card relative bg-gray-800 border border-gray-200 rounded-2xl shadow-lg hover:shadow-xl transition-shadow overflow-hidden group"
     *ngFor="let card of cards">

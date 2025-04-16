@@ -33,6 +33,7 @@ export class HomeComponent implements OnInit {
   brands:any[] = []
   loggedUser:any
   sqlUserId: string = ''
+  errorMessage: string = ''
 
   constructor(private news:NewsService, private base:BaseService, private router:Router, private search:SearchService, private auth:AuthService, private cart:CartService){
     this.initCategoryCards()
@@ -46,6 +47,18 @@ export class HomeComponent implements OnInit {
     this.getNewsNew()
     this.getProducts()
     this.cartUserIdFixer()
+    this.showError()
+  }
+
+  showError(){
+    this.cart.errorMessage.subscribe(msg => {
+      this.errorMessage = msg
+      if (msg) {
+        setTimeout(() => {
+          this.errorMessage = ''
+        }, 5000)
+      }
+    })
   }
 
   cartUserIdFixer(){
