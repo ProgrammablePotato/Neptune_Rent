@@ -45,7 +45,7 @@ export class CartService {
 
   getUserId(firebase_uid: string) {
     if (!firebase_uid) {
-      console.error('Firebase UID is undefined')
+      // console.error('Firebase UID is undefined')
       return
     }
     this.http.get<{ id: string }>(this.userApi + firebase_uid).subscribe({
@@ -54,7 +54,7 @@ export class CartService {
         this.userId$.next(response.id)
       },
       error: (error) => {
-        console.error('Error fetching user ID:', error)
+        // console.error('Error fetching user ID:', error)
       }
     })
   }

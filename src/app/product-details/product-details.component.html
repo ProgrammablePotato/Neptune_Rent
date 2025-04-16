@@ -18,11 +18,15 @@
       </div>
     </div>
 
+    <div *ngIf="!userId" class="fixed top-0 w-full bg-red-600 text-white text-center py-2 z-50">
+      Please fill your information in the <a routerLink="/user">user</a> page before purchasing anything!
+    </div>
+
     <div *ngIf="addError" class="fixed top-0 w-full bg-red-600 text-white text-center py-2 z-50">
       Something went wrong. Please try again later!
     </div>
 
-    <div class="flex flex-wrap items-center gap-4">
+    <div *ngIf="userId" class="flex flex-wrap items-center gap-4">
       <input id="cartAmount" [(ngModel)]="quantity" type="number" min="1" max="99" class="text-xl text-white dark:bg-green-600 p-3 rounded-lg w-20 text-center" />
       <button (click)="addToCart()" class="relative flex items-center gap-2 bg-green-700 hover:bg-green-800 text-white text-xl px-5 py-3 rounded-2xl transition-all popup">
         Add to cart

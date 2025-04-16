@@ -71,7 +71,11 @@ export class UserComponent implements OnInit {
         console.log("User data upload success")
       }
     )
+    this.router.navigate(['/login'])
+    this.auth.logout()
+    alert("Please login again!")
   }
+
   getUserDetails(uid:string) {
     this.userDetails = this.base.getUserDetails(uid)?.subscribe({
       next: (res) => {
@@ -83,6 +87,7 @@ export class UserComponent implements OnInit {
       }
     })
   }
+
   saveChanges(){
     this.auth.updateUser(this.loggedUser.displayName, this.loggedUser.phoneNumber, this.loggedUser.email, this.loggedUser.password)?.subscribe(
       (res) => {
@@ -108,10 +113,12 @@ export class UserComponent implements OnInit {
       this.passwordVisibility = "password"
     }
   }
+
   countryList() {
     this.countries = countryCodes.all()
     this.filteredCountries = this.countries
   }
+
   getCountry(code:string) {
     if (code == "") {
       this.countryDisplay = "Please select a country:"
@@ -124,11 +131,13 @@ export class UserComponent implements OnInit {
       })
     }
   }
+
   selectCountry(code:string) {
     this.country = code
     this.getCountry(code)
     this.dropdownCollapse('country')
   }
+
   filterCountry() {
     this.filteredCountries = []
     if (this.countryText == '' || this.countryText == null) {

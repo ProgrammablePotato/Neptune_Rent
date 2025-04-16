@@ -6,7 +6,21 @@ router.post("/", async (req, res) => {
     try {
         const { user_id, details } = req.body;
         if (!user_id || !Array.isArray(details)) {
-            return res.status(400).json({ error: "Hiányzó vagy hibás adatok!" })
+            return res.status(400).json({ error: `Error while posting buy!
+                {
+"user_id": "123",
+"details": [
+    {
+        "product_id": 1,
+        "quantity": 2
+    },
+        {
+            "product_id": 2,
+            "quantity": 1
+        }
+    ]
+}
+`})
         }
         const response = await buyService.buyProduct(details, user_id)
         res.json(response)
@@ -41,7 +55,7 @@ router.patch('/:id', async (req, res) => {
         res.json(result)
     } catch (error) {
         console.error(error)
-        res.status(500).json({ success: false, message: error.message })
+res.status(500).json({ success: false, message: error.message })
     }
 })
 

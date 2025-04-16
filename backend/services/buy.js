@@ -2,13 +2,13 @@ const db = require("./db")
 
 async function buyProduct(details, user_id) {
     if (!Array.isArray(details) || details.length === 0) {
-        throw new Error("Nincs megadva termék!")
+        throw new Error("No product found!")
     }
     for (const detail of details) {
         const { product_id, quantity } = detail
         const [stockRow] = await db.query(`SELECT stock, price FROM products WHERE id=?`, [product_id])
-        if (!stockRow) throw new Error(`A termék (ID: ${product_id}) nem található!`)
-        if (stockRow.stock < quantity) throw new Error(`Nincs elég készleten a termékből (ID: ${product_id})!`)
+        if (!stockRow) throw new Error(`Prod with ID: (ID: ${product_id}) not found!`)
+        if (stockRow.stock < quantity) throw new Error(`Not enough in stock (ID: ${product_id})!`)
         detail.price = stockRow.price * quantity
         detail.ppu = stockRow.price
     }
@@ -18,10 +18,10 @@ async function buyProduct(details, user_id) {
             await db.query(`UPDATE products SET stock = stock - ? WHERE id=?`, [quantity, product_id])
             await db.query(`INSERT INTO cart (product_id, user_id, quantity, price, ppu) VALUES (?, ?, ?, ?, ?)`, [product_id, user_id, quantity, price, ppu])
         }
-        return { success: true, message: "A vásárlás sikeres!" }
+        return { success: true, message: "Successfull purchase!" }
     } catch (error) {
         console.error(error)
-        throw new Error("A vásárlás sikertelen!")
+        throw new Error("Error while purchase!")
     }
 }
 
