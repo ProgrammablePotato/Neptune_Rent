@@ -50,7 +50,7 @@ export class UserEditorComponent implements OnInit{
   }
 
   deleteUser(uid:string) {
-    this.auth.deleteUser(uid).subscribe(
+    this.auth.deleteUser(uid,this.auth.loggedUser.claims)?.subscribe(
       {
         next: (res) => {
           console.log("User deleted succesfully!",res)

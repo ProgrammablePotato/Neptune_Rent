@@ -166,8 +166,17 @@ export class AuthService {
   getUserId(firebaseUid: string): Observable<{ id: number }> {
     return this.http.post<{ id: number }>(`${this.sqlApi}`, { details: 'id', firebase_uid: firebaseUid });
   }
-  deleteUser(uid:string) {
-    return this.http.delete(`${this.fireApi}deleteUser/${uid}`)
+  deleteUser(uid:string,claims:any) {
+    if (this.loggedUser.accessToken)
+      {
+        let body={
+          claims:claims,
+          uid:uid
+        }
+        const headers= new HttpHeaders().set('Authorization',this.loggedUser.accessToken)
+        return this.http.delete(`${this.fireApi}deleteUser/${uid}`,{ headers,body })
+      }
+    return null
   }
 
   deleteSelfUser() {

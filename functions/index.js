@@ -136,7 +136,14 @@ app.patch("/updateUser", verifyToken, async (req, res) => {
 
 app.delete("/deleteUser/:uid",verifyToken,verifyAdmin,(req,res)=>{
   let {uid}= req.params
-  if (!uid || !req.user.admin) uid = req.user.uid
+  if (!uid) {
+    res.json({message:"You must provide a Firebase UID to delete a user!"})
+    return
+  }
+  if (!req.user.admin) {
+    res.json({message:"You must be an admin to delete users!"})
+    return
+  }
   admin.auth().deleteUser(uid).then(
     res.json({message:"User deleted from Firebase!"})
   ).catch ((error) => {
