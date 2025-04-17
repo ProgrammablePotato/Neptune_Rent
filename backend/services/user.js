@@ -64,8 +64,8 @@ async function deleteUser(id) {
     try {
         const [row] = await db.query(checkQuery, checkParams)
         if (row.rentalCount > 0) throw new Error("A felhasználónak aktív bérlése van, nem törölhető!")
-        
-        const query = `DELETE FROM users WHERE id=?`
+
+        const query = `DELETE FROM users WHERE firebase_uid=?`
         const params = [id]
         console.log(query, params)
         const result = await db.query(query, params)

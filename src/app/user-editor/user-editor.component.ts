@@ -50,10 +50,20 @@ export class UserEditorComponent implements OnInit{
   }
 
   deleteUser(uid:string) {
+    this.auth.deleteUser(uid).subscribe(
+      {
+        next: (res) => {
+          console.log("User deleted succesfully!",res)
+        },
+        error: (error) => console.error(error)
+      }
+    )
     this.base.deleteUser(uid).subscribe(
       {
-        next: () => {console.log("User deleted")},
-        error: (error) => {console.log("Error while dleeting the user!")} 
+        next: () => {
+          console.log("User deleted")
+        },
+        error: (error) => {console.log("Error while dleeting the user!")}
       }
     )
     this.toggleModal(false)

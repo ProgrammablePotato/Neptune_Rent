@@ -5,6 +5,7 @@ const cors = require("cors");
 const admin =require("firebase-admin")
 
 var serviceAccount = require("./neptune-rent-firebase-adminsdk-sgxzh-7e101fa8dd.json");
+const { error } = require("firebase-functions/logger");
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
@@ -131,6 +132,16 @@ app.patch("/updateUser", verifyToken, async (req, res) => {
     console.error("Hiba a felhasználói adatok frissítésekor:", error)
     res.status(500).json({ message: "Hiba történt a felhasználói adatok frissítésekor!",error:error })
   }
+})
+
+app.delete("/deleteUser/:uid",verifyToken,verifyAdmin,(req,res)=>{
+  let {uid}= req.params
+  if (!uid || !req.user.admin) uid = req.user.uid
+  admin.auth().deleteUser(uid).then(
+    res.json({message:"User deleted from Firebase!"})
+  ).catch ((error) => {
+    console.log("Error while deleting user from Firebase!",error.message)
+  })
 })
 
 exports.api = onRequest(app);
