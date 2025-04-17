@@ -25,6 +25,7 @@ export class ProductDetailsComponent implements OnInit {
   successMessage: boolean = false
   addSuccess: boolean = false
   addError: boolean = false
+  loggedUser: any = null
 
   constructor(
     private activeRouter: ActivatedRoute, private http:HttpClient, private base: BaseService, 

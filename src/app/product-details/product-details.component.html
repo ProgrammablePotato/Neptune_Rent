@@ -18,8 +18,12 @@
       </div>
     </div>
 
-    <div *ngIf="!userId" class="fixed top-0 w-full bg-red-600 text-white text-center py-2 z-50">
+    <div *ngIf="!userId && loggedUser" class="fixed top-0 w-full bg-red-600 text-white text-center py-2 z-50">
       Please fill your information in the <a routerLink="/user" style="text-decoration: underline;">user</a> page before purchasing anything!
+    </div>
+
+    <div *ngIf="!loggedUser" class="fixed top-0 w-full bg-red-600 text-white text-center py-2 z-50">
+      Please <a routerLink="/login" style="text-decoration: underline;">login</a> or <a routerLink="/register" style="text-decoration: underline;">register</a> to purchase items.
     </div>
 
     <div *ngIf="addError" class="fixed top-0 w-full bg-red-600 text-white text-center py-2 z-50">
