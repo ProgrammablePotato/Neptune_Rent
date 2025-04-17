@@ -31,11 +31,16 @@ export class ProductsComponent implements OnInit {
   currentBrand:string = "All brands"
   currentPriceFiltering:string = "Sort by price"
 
+  currentNews = 0
+
   constructor(private news:NewsService, private base:BaseService, private router:Router, private search:SearchService, private activated:ActivatedRoute){
     this.router.routeReuseStrategy.shouldReuseRoute = function () {
       return false;
     }
+    this.activeNews = this.categoryNews[0]
+    this.carouselHandler()
   }
+
   ngOnInit() {
     this.base.currentPage = this.router.url
     this.category = String(this.activated.snapshot.paramMap.get('category'))
@@ -139,5 +144,15 @@ export class ProductsComponent implements OnInit {
 
   getImagePath(file:string) {
     return "uploads/"+file
+  }
+  carouselHandler() {
+    setInterval(() => {
+      this.currentNews++
+      if (this.currentNews > this.categoryNews.length) {
+        this.currentNews = 0
+      }
+      console.log(this.currentNews)
+      this.activeNews = this.categoryNews[this.currentNews]
+    }, 5000);
   }
 }
