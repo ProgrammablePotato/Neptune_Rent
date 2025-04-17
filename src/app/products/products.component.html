@@ -13,9 +13,9 @@
             <p class="text-white text-xl mb-1">Search:</p><br>
             <input type="text" placeholder="Search products..." [(ngModel)]="searchTerm" (ngModelChange)="filterProducts()" class="bg-gray-600 p-2 rounded-lg text-white">
         </div>
-        <div class="m-2 h-fit relative" (mouseleave)="dropdownCollapse('brand')" (mouseenter)="dropdownExtend('brand')" (click)="dropdownExtend('brand')">
+        <div *ngIf="brands.length > 1" class="m-2 h-fit relative" (mouseleave)="dropdownCollapse('brand')" (mouseenter)="dropdownExtend('brand')" (click)="dropdownExtend('brand')">
             <button class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-2 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-md px-5 py-2.5 text-center inline-flex items-center " type="button">
-                Brands
+                {{currentBrand}}
                 <svg class="w-2.5 h-2.5 ms-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
                 </svg>
@@ -33,7 +33,7 @@
         </div>
         <div class="m-2 h-fit relative" (mouseleave)="dropdownCollapse('price')" (mouseenter)="dropdownExtend('price')" (click)="dropdownExtend('price')">
             <button class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-2 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-md px-5 py-2.5 text-center inline-flex items-center w-fit" type="button">
-                Sort by price
+                {{currentPriceFiltering}}
                 <svg class="w-2.5 h-2.5 ms-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
                 </svg>

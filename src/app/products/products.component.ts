@@ -28,12 +28,13 @@ export class ProductsComponent implements OnInit {
   category:string = ''
   searchTerm: string = ''
   brands:any[] = []
+  currentBrand:string = "All brands"
+  currentPriceFiltering:string = "Sort by price"
 
   constructor(private news:NewsService, private base:BaseService, private router:Router, private search:SearchService, private activated:ActivatedRoute){
     this.router.routeReuseStrategy.shouldReuseRoute = function () {
       return false;
     }
-
   }
   ngOnInit() {
     this.base.currentPage = this.router.url
@@ -84,8 +85,10 @@ export class ProductsComponent implements OnInit {
 
   filterBrand(brand:any) {
     if (brand == null) {
+      this.currentBrand = "All brands"
       this.filteredProducts = this.products
     } else {
+      this.currentBrand = "Brand: "+brand
       this.filteredProducts = []
       this.products.forEach((element:any) => {
         if (element.brand == brand) {
@@ -125,7 +128,11 @@ export class ProductsComponent implements OnInit {
         }
       }
     }
-    if (!ascending) sorted.reverse()
+    this.currentPriceFiltering = "Smallest price first"
+    if (!ascending) {
+      this.currentPriceFiltering = "Highest price first"
+      sorted.reverse()
+    }
     this.filteredProducts = sorted
     this.dropdownCollapse("price")
   }
