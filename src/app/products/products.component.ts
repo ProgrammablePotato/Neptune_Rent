@@ -16,7 +16,7 @@ import { filter } from 'rxjs';
 export class ProductsComponent implements OnInit {
   public dropdownCollapse = dropdownCollapse
   public dropdownExtend = dropdownExtend
-  activeNews:any
+  activeNews:any = null
   nextNews:any
 
   categoryNews:any = []
@@ -37,8 +37,6 @@ export class ProductsComponent implements OnInit {
     this.router.routeReuseStrategy.shouldReuseRoute = function () {
       return false;
     }
-    this.activeNews = this.categoryNews[0]
-    this.carouselHandler()
   }
 
   ngOnInit() {
@@ -55,6 +53,8 @@ export class ProductsComponent implements OnInit {
     await this.news.getTechNews(this.category).then((news:any) => {
       this.categoryNews = news
       console.log("Filtered news: ", news)
+      this.activeNews = this.categoryNews[0]
+      this.carouselHandler()
     }).catch((error:any) => {
       console.log("Not good")
     })
@@ -147,12 +147,23 @@ export class ProductsComponent implements OnInit {
   }
   carouselHandler() {
     setInterval(() => {
+        this.carouselStep(true)
+    }, 5000);
+  }
+  carouselStep(forward:boolean) {
+    if (forward) {
       this.currentNews++
-      if (this.currentNews > this.categoryNews.length) {
+      if (this.currentNews > this.categoryNews.length-1) {
         this.currentNews = 0
       }
-      console.log(this.currentNews)
-      this.activeNews = this.categoryNews[this.currentNews]
-    }, 5000);
+    }
+    else {
+      this.currentNews--
+      if (this.currentNews < 0) {
+        this.currentNews = this.categoryNews.length-1
+      }
+    }
+    
+    this.activeNews = this.categoryNews[this.currentNews]
   }
 }
