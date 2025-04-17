@@ -91,7 +91,14 @@ export class AuthService {
   }
 
   loginUser(email: string, password: string) {
-    return this.auth.signInWithEmailAndPassword(email, password)
+    return this.auth.signInWithEmailAndPassword(email, password).then((userCredential) => {
+      if (userCredential.user?.emailVerified) {
+        return userCredential
+      } else {
+        this.logout()
+        return alert('Email not verified. Please verify your email before logging in.')
+      }
+    })
   }
 
   logout() {
