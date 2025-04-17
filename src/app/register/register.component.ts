@@ -34,22 +34,22 @@ export class RegisterComponent implements OnInit{
     const password = group.get('password')?.value;
     const passwordAgain = group.get('passwordAgain')?.value;
   
-    return password === passwordAgain ? null : { passwordMismatch: true };
+    return password === passwordAgain ? null : { passwordMismatch: true }
   }
 
   onSubmit() {
     if (this.registerForm.valid) {
       try {
-        this.auth.registerUser(this.registerForm.value.email, this.registerForm.value.password);
-        console.log('Form:', this.registerForm.value);
-        this.registerForm.reset();
-        this.router.navigate(['/home']);
+        this.auth.registerUser(this.registerForm.value.email, this.registerForm.value.password)
+        console.log('Form:', this.registerForm.value)
+        this.registerForm.reset()
+        this.router.navigate(['/home'])
       } catch (error) {
-        console.error('Error:', error);
+        console.error('Error:', error)
       }
     }
     else {
-      alert('Please resolve all errors.');
+      alert('Please resolve all errors.')
     }
   }
 
