@@ -30,7 +30,9 @@ export class CartComponent implements OnInit {
   }
 
   calculateTotal(): void {
-    this.totalPrice = this.cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0)
+    this.cartItems.forEach((item:any) => {
+      this.totalPrice += item.price * item.quantity
+    })
   }
 
   removeFromCart(cartItemId: number): void {

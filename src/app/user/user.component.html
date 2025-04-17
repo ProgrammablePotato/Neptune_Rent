@@ -7,7 +7,7 @@
 
         <span class="text-3xl">{{loggedUser.displayName}}</span>
         <hr class="mt-2 mb-2">
-        <button class="m-2 ml-0 p-2 bg-yellow-500 text-yellow-950 font-bold rounded-lg w-fit" routerLink="/cart/{{loggedUser?.uid}}">
+        <button class="m-2 ml-0 p-2 bg-yellow-500 text-yellow-950 font-bold rounded-lg w-fit" routerLink="/cart/{{userDetails.id}}">
           <div class="flex">
             <span>Go to cart</span>
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 ml-2">
@@ -96,10 +96,10 @@
             </div>
           </div>
         </li>
-        <li class="flex m-2">
+        <!-- <li class="flex m-2">
           <label for="nickInput" class="md:flex-1 md:w-full w-1/3 text-right p-2">Nickname: </label>
           <input id="nickInput" type="text" [(ngModel)]="userDetails.nick" placeholder="nickname" class="md:flex-1 p-2 md:w-full w-2/3 rounded-md bg-gray-500">
-        </li>
+        </li> -->
       </ul>
     </div>
     <div class="flex-1">
