@@ -146,8 +146,11 @@ export class ProductsComponent implements OnInit {
     return "uploads/"+file
   }
   carouselHandler() {
+    
     setInterval(() => {
-        this.carouselStep(true)
+        if (this.activeNews != null) {
+      this.carouselStep(true)
+    }
     }, 5000);
   }
   carouselStep(forward:boolean) {
