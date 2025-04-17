@@ -5,6 +5,7 @@ import * as countryCodes from "country-codes-list";
 import removeAccents from 'remove-accents';
 import { dropdownCollapse, dropdownExtend } from '../app.component';
 import { BaseService } from '../base.service';
+import { Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-user',
@@ -18,6 +19,7 @@ export class UserComponent implements OnInit {
   isUserAdmin: boolean = false
   passwordVisibility = "password"
   userDetails:any
+  newPassword = null
 
   country: string = ''
   countryDisplay:string = ''
@@ -56,6 +58,12 @@ export class UserComponent implements OnInit {
   }
 
   saveUserDetails(){
+    // if (!this.validatePassword()) {
+    //   if (this.loggedUser.password.trim() == '') {
+    //     this.loggedUser.password == null
+    //   }
+    //   return
+    // }
     this.saveCredentials()
     let details = this.userDetails
     this.auth.addNewUser(
@@ -91,6 +99,9 @@ export class UserComponent implements OnInit {
   }
 
   saveCredentials(){
+    if (Validators.email(this.loggedUser.email) != null) {
+      return
+    }
     this.auth.updateUser(this.loggedUser.displayName, this.loggedUser.phoneNumber, this.loggedUser.email, this.loggedUser.password)?.subscribe(
       (res) => {
         if(this.loggedUser.email != this.loggedUser.email){
@@ -152,5 +163,17 @@ export class UserComponent implements OnInit {
         }
       }
     )}
+  }
+
+  validatePassword() {
+    if (this.loggedUser.password.trim() == '' || this.loggedUser.password.trim().length < 6) {
+      alert("Please provide a password consisting of lower- and uppercase letters and numbers, with at least 6 characters in it!")
+      return false
+    }
+    else if (/[^\w]+/.test(this.loggedUser.password.trim())) {
+      alert("The password can only contain lower- and uppercase letters, as well as digits!")
+      return false
+    }
+    return true
   }
 }
