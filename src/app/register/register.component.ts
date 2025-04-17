@@ -30,10 +30,9 @@ export class RegisterComponent implements OnInit{
   }
 
   passwordsMatch(control: AbstractControl): { [key: string]: boolean } | null {
-    const group = control as FormGroup;
-    const password = group.get('password')?.value;
-    const passwordAgain = group.get('passwordAgain')?.value;
-  
+    const group = control as FormGroup
+    const password = group.get('password')?.value
+    const passwordAgain = group.get('passwordAgain')?.value
     return password === passwordAgain ? null : { passwordMismatch: true }
   }
 
