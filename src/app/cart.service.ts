@@ -44,24 +44,24 @@ export class CartService {
     return this.http.post(this.kotegeloApi + id, { productId })
   }
 
-getUserId(firebase_uid: string) {
-  if (!firebase_uid) {
-    return
-  }
-  this.http.get<{ id: string }>(this.userApi + firebase_uid).subscribe({
-    next: (response) => {
-      this.userId = response.id
-      this.userId$.next(response.id)
-    },
-    error: (error) => {
-      if (error.status === 500) {
-        this.errorMessage.next('Please complete your profile.')
-      } else {
-        console.error('Error fetching user ID:', error)
-      }
+  getUserId(firebase_uid: string) {
+    if (!firebase_uid) {
+      return
     }
-  })
-}
+    this.http.get<{ id: string }>(this.userApi + firebase_uid).subscribe({
+      next: (response) => {
+        this.userId = response.id
+        this.userId$.next(response.id)
+      },
+      error: (error) => {
+        if (error.status === 500) {
+          this.errorMessage.next('Please complete your profile.')
+        } else {
+          console.error('Error fetching user ID:', error)
+        }
+      }
+    })
+  }
 
   submitReview(data: { product_id: number, user_id: string, rating: number, reviewText: string }) {
     if (!this.userId) {

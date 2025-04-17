@@ -64,7 +64,7 @@
             <p class="text-white text-xl m-2">
                 <span class="font-bold">Stock: </span>
                 <ng-container *ngIf="editingField !== 'stock'; else inputStock">
-                    ${{ product.stock }}
+                    {{ product.stock }}
                 </ng-container>
                 <ng-template #inputStock>
                     <input [(ngModel)]="product.stock" class="bg-gray-600 text-white rounded-md p-2 text-xl" type="number"/>

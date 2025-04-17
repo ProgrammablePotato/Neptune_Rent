@@ -38,7 +38,11 @@ export class ProductDetailsComponent implements OnInit {
     ngOnInit(): void {
       this.categoryChecker()
       this.loadReviews()
-      this.getUserId(this.auth.loggedUser?.uid)
+      setTimeout(() => {
+        if (this.auth.loggedUser?.uid) {
+          this.getUserId(this.auth.loggedUser.uid)
+        }
+      }, 200)
       window.scrollTo({ top: 0, behavior: 'smooth' })
     }
 
@@ -139,8 +143,7 @@ export class ProductDetailsComponent implements OnInit {
 
   getUserId(firebase_uid: string) {
     if (!firebase_uid) {
-      console.error('Firebase UID is undefined')
-      return
+      return console.error('No Firebase UID found.')
     }
     this.http.get<{ id: string }>(this.userApi + firebase_uid).subscribe({
       next: (response) => {
