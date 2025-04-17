@@ -56,6 +56,7 @@ export class UserComponent implements OnInit {
   }
 
   saveUserDetails(){
+    this.saveCredentials()
     let details = this.userDetails
     this.auth.addNewUser(
       this.loggedUser.firebase_uid,
@@ -67,7 +68,7 @@ export class UserComponent implements OnInit {
       details.country,
       this.loggedUser.email,
       this.loggedUser.phoneNumber,
-      details.nick)?.subscribe(
+      /*details.nick*/"")?.subscribe(
       (res) => {
         console.log("User data upload success")
       }
@@ -89,7 +90,7 @@ export class UserComponent implements OnInit {
     })
   }
 
-  saveChanges(){
+  saveCredentials(){
     this.auth.updateUser(this.loggedUser.displayName, this.loggedUser.phoneNumber, this.loggedUser.email, this.loggedUser.password)?.subscribe(
       (res) => {
         if(this.loggedUser.email != this.loggedUser.email){
