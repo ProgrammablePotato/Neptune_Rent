@@ -14,7 +14,7 @@ require('dotenv').config()
 const app = express()
 const port = process.env.PORT
 app.use(cors(
-    {origin:["http://127.0.0.1:4200", "https://127.0.0.1:4200"],
+    {origin:["http://localhost:4200", "https://localhost:4200", "http://192.168.1.247:4200"],
     credentials:true  
 }))
 
@@ -44,4 +44,4 @@ app.get('/', (req, res) => {
     res.json({message:"Ok"})
 })
 
-app.listen(port, () => {console.log("Fut itt: http://127.0.0.1:" + port)})
+app.listen(port, () => {console.log("Fut itt: http://localhost:" + port)})

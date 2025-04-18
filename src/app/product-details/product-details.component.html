@@ -63,7 +63,7 @@
 <div class="mt-10 mx-5 lg:mx-auto lg:max-w-[80vw]">
   <div>
     <h2 class="text-black text-xl font-bold mb-4">Add a Review</h2>
-    <textarea [(ngModel)]="reviewText" placeholder="Write your review..." class="w-full p-3 rounded-lg bg-gray-700 text-white mb-4"></textarea>
+    <textarea maxlength="250" [(ngModel)]="reviewText" placeholder="Write your review. Max 250 character." class="w-full p-3 rounded-lg bg-gray-700 text-white mb-4"></textarea>
   </div>
 
   <div class="flex items-center gap-4 mb-4 bg-gray-800 p-5 w-fit rounded-lg">
