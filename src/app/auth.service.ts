@@ -18,7 +18,7 @@ export class AuthService {
   private loggedUserSub= new BehaviorSubject<boolean>(false)
 
   fireApi = 'http://127.0.0.1:5001/neptune-rent/us-central1/api/'
-  sqlApi = 'http://127.0.0.1:3000/users/'
+  sqlApi = 'http:/192.168.1.247:3000/users/'
 
   constructor(private auth:AngularFireAuth, private router:Router, private http:HttpClient) {
     this.authFunction()

@@ -20,8 +20,8 @@ export class CartService {
     })
   }
 
-  private kotegeloApi = 'http://127.0.0.1:3000/buy/'
-  private userApi = 'http://127.0.0.1:3000/users/firebase/'
+  private kotegeloApi = 'http://192.168.1.247:3000/buy/'
+  private userApi = 'http://192.168.1.247:3000/users/firebase/'
 
   userId : string = ''
   userId$ = new BehaviorSubject<string>('')
