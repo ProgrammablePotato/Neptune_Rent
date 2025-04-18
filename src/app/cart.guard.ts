@@ -8,7 +8,7 @@ export const cartGuard: CanActivateFn = (route, state) => {
   const auth = inject(AuthService)
   const router = inject(Router)
   const http = inject(HttpClient)
-  const userApi = 'http://localhost:3000/users/firebase/'
+  const userApi = 'http://127.0.0.1:3000/users/firebase/'
   let userId : any = ''
   const userId$ = new BehaviorSubject<string>('')
   const firebase_uid = auth.loggedUser?.uid

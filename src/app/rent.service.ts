@@ -6,7 +6,7 @@ import { Injectable } from '@angular/core';
 })
 export class RentService {
 
-  private rentApi = 'http://localhost:3000/rent/'
+  private rentApi = 'http://127.0.0.1:3000/rent/'
 
   constructor(private http:HttpClient) { }
 

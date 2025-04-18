@@ -31,7 +31,7 @@ export class ProductDetailsComponent implements OnInit {
     private activeRouter: ActivatedRoute, private http:HttpClient, private base: BaseService, 
     private cart: CartService, private auth:AuthService, private rentservice:RentService) {}
 
-    private userApi = 'http://localhost:3000/users/firebase/'
+    private userApi = 'http://127.0.0.1:3000/users/firebase/'
     userId : any = ''
     userId$ = new BehaviorSubject<string>('')
 

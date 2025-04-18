@@ -1,7 +1,7 @@
 <div *ngIf="loggedUser" class="xl:w-3/4 xl:ml-auto xl:mr-auto bg-gray-800 md:flex rounded-lg mt-5">
-    <div class=" p-3">
-        <img *ngIf="loggedUser.photoURL" [src]="loggedUser.photoURL" class="rounded-lg">
-        <img *ngIf="!loggedUser.photoURL" src="cat.jfif" class="rounded-lg">
+    <div class="w-1/3 p-3">
+        <img *ngIf="loggedUser.photoURL" [src]="loggedUser.photoURL" class="rounded-lg ">
+        <img *ngIf="!loggedUser.photoURL" src="icon-5359554_640.webp" class="rounded-lg">
     </div>
     <div class="w-full p-3 text-white">
 
@@ -49,10 +49,29 @@
 </div>
 
 <div class="xl:w-3/4 xl:ml-auto xl:mr-auto bg-gray-800 rounded-lg mt-5 text-lg text-white">
-  <div class="m-4"><span>Provide the following data before purchase:</span></div>
+  <div class="m-4"><span class="block p-4 font-bold text-xl">Provide the following data before purchasing anything</span></div>
   <div class="md:flex">
     <div class="flex-1">
       <ul class="">
+        <li class="flex m-2">
+          <label class="md:flex-1 md:w-full w-1/3 text-right p-2">{{countryDisplay}}</label>
+          <div class="flex-1 h-fit relative" (mouseleave)="dropdownCollapse('country')" (mouseenter)="dropdownExtend('country')" (click)="dropdownExtend('country')">
+            <button class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-2 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-md px-5 py-2.5 text-center inline-flex items-center" type="button">
+              Select country
+              <svg class="w-2.5 h-2.5 ms-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
+              </svg>
+            </button>
+            <div id="neptune-dropdown-country" class="z-10 rounded-lg w-max bg-gray-700 absolute text-md h-48 overflow-scroll overflow-x-hidden">
+              <input (input)="filterCountry()" [(ngModel)]="countryText" placeholder="Search for a country here..." type="text" id="country" autocomplete="false" alt="country" class="bg-gray-700 hover:bg-slate-500 h-10 text-white p-2 w-full text-left border-none rounded-md sticky top-0"/>
+              <ul class="py-2 text-sm text-gray-700 dark:text-gray-200">
+                  <li *ngFor="let country of filteredCountries">
+                      <button (click)="selectCountry(country.countryCode)" class="bg-gray-700 hover:bg-slate-500 h-10 text-white p-2 w-full text-left">{{country.countryNameEn}} ({{country.countryCode}})</button>
+                  </li>
+              </ul>
+            </div>
+          </div>
+        </li>
         <li class="flex m-2">
           <label for="zipInput" class="md:flex-1 md:w-full w-1/3 text-right p-2">Zip code: </label>
           <input id="zipInput" type="text" [(ngModel)]="userDetails.zipcode" placeholder="zip" class="md:flex-1 p-2 md:w-full w-2/3 rounded-md bg-gray-500">
@@ -73,33 +92,15 @@
           <label for="addr2Input" class="md:flex-1 md:w-full w-1/3 text-right p-2">Address 2: </label>
           <input id="addr2Input" type="text" [(ngModel)]="userDetails.addr2" placeholder="address line 2" class="md:flex-1 p-2 md:w-full w-2/3 rounded-md bg-gray-500">
         </li>
-        <li class="flex m-2">
-          <label class="md:flex-1 md:w-full w-1/3 text-right p-2">{{countryDisplay}}</label>
-          <div class="flex-1 h-fit relative" (mouseleave)="dropdownCollapse('country')" (mouseenter)="dropdownExtend('country')" (click)="dropdownExtend('country')">
-            <button class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-2 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-md px-5 py-2.5 text-center inline-flex items-center" type="button">
-              Select country
-              <svg class="w-2.5 h-2.5 ms-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
-              </svg>
-            </button>
-            <div id="neptune-dropdown-country" class="z-10 rounded-lg w-max bg-gray-700 absolute text-md h-48 overflow-scroll overflow-x-hidden">
-              <input (input)="filterCountry()" [(ngModel)]="countryText" placeholder="Search for a country here..." type="text" id="country" autocomplete="false" alt="country" class="bg-gray-700 hover:bg-slate-500 h-10 text-white p-2 w-full text-left border-none rounded-md sticky top-0"/>
-              <ul class="py-2 text-sm text-gray-700 dark:text-gray-200">
-                  <li *ngFor="let country of filteredCountries">
-                      <button (click)="selectCountry(country.countryCode)" class="bg-gray-700 hover:bg-slate-500 h-10 text-white p-2 w-full text-left">{{country.countryNameEn}} ({{country.countryCode}})</button>
-                  </li>
-              </ul>
-            </div>
-          </div>
-        </li>
+        
         <!-- <li class="flex m-2">
           <label for="nickInput" class="md:flex-1 md:w-full w-1/3 text-right p-2">Nickname: </label>
           <input id="nickInput" type="text" [(ngModel)]="userDetails.nick" placeholder="nickname" class="md:flex-1 p-2 md:w-full w-2/3 rounded-md bg-gray-500">
         </li> -->
       </ul>
     </div>
-    <div class="flex-1">
-      <button (click)="saveUserDetails()" class="mr-auto ml-auto flex h-10 bg-green-700 p-2 rounded-lg text-md">Save changes</button>
+    <div class="flex-1 p-3">
+      <button (click)="saveUserDetails()" class="mr-auto ml-auto flex bg-green-700 p-4 rounded-lg text-md">Save changes</button>
     </div>
   </div>
 </div>
