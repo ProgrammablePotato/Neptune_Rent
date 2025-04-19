@@ -20,6 +20,7 @@ export class UserComponent implements OnInit {
   passwordVisibility = "password"
   userDetails:any
   newPassword = null
+  isDropdownOpen = false
 
   country: string = ''
   countryDisplay:string = ''
@@ -144,24 +145,32 @@ export class UserComponent implements OnInit {
     }
   }
 
+  toggleDropdown(type: string) {
+    if (type === 'country') {
+      this.isDropdownOpen = !this.isDropdownOpen
+      if (this.isDropdownOpen) {
+        this.filteredCountries = [...this.countries]
+        this.countryText = ''
+      }
+    }
+  }
+
   selectCountry(code:string) {
     this.country = code
     this.getCountry(code)
-    this.dropdownCollapse('country')
+    this.isDropdownOpen = false
   }
 
   filterCountry() {
-    this.filteredCountries = []
-    if (this.countryText == '' || this.countryText == null) {
-      this.filteredCountries = this.countries
-    } else {
-      this.countries.forEach(country => {
-        let name = country.countryNameEn.toLowerCase().trim()
-        if (name.includes(this.countryText.trim().toLowerCase()) || removeAccents(name).includes(this.countryText.trim().toLowerCase())) {
-          this.filteredCountries.push(country)
-        }
-      }
-    )}
+    if (!this.countryText) {
+      this.filteredCountries = [...this.countries]
+      return
+    }
+    const searchText = this.countryText.toLowerCase().trim()
+    this.filteredCountries = this.countries.filter(country => 
+      country.countryNameEn.toLowerCase().includes(searchText) ||
+      removeAccents(country.countryNameEn.toLowerCase()).includes(searchText)
+    )
   }
 
   validatePassword() {

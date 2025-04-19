@@ -92,9 +92,7 @@
       <div class="country-dropdown">
         <button 
           class="dropdown-button"
-          (mouseleave)="dropdownCollapse('country')" 
-          (mouseenter)="dropdownExtend('country')" 
-          (click)="dropdownExtend('country')">
+          (click)="toggleDropdown('country')">
           <span>Select country</span>
           <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
@@ -102,7 +100,8 @@
         </button>
         <div 
           id="neptune-dropdown-country" 
-          class="dropdown-menu">
+          class="dropdown-menu"
+          [class.show]="isDropdownOpen">
           <input 
             (input)="filterCountry()" 
             [(ngModel)]="countryText" 

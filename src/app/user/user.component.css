@@ -151,6 +151,7 @@
 
 .country-dropdown {
   position: relative;
+  width: 100%;
 }
 
 .dropdown-button {
@@ -185,6 +186,11 @@
   z-index: 10;
   max-height: 300px;
   overflow-y: auto;
+  display: none;
+}
+
+.dropdown-menu.show {
+  display: block;
 }
 
 .search-input {
@@ -195,6 +201,9 @@
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   color: #fff;
   border-radius: 0.5rem 0.5rem 0 0;
+  position: sticky;
+  top: 0;
+  z-index: 11;
 }
 
 .country-list {
@@ -207,6 +216,8 @@
   padding: 0.75rem 1rem;
   cursor: pointer;
   transition: all 0.3s ease;
+  position: relative;
+  z-index: 10;
 }
 
 .country-item:hover {
