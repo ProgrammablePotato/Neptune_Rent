@@ -22,11 +22,14 @@ async function addRent(rent) {
         console.error(error)
         throw error
     }
-    const startDate = new Date()
-    const expiresDate = new Date()
-    expiresDate.setMonth(startDate.getMonth() + 1)
     const query = `INSERT INTO rent (user_id, product_id, start_date, expires, price) VALUES (?,?,?,?,?)`
-    const params = [rent.user_id, rent.product_id, startDate, expiresDate, rent.price]
+    const params = [
+        rent.user_id, 
+        rent.product_id, 
+        new Date(rent.start_date).toISOString().slice(0, 19).replace('T', ' '),
+        new Date(rent.expires).toISOString().slice(0, 19).replace('T', ' '),
+        rent.price
+    ]
     console.log(query, params)
     try {
         const row = await db.query(query, params)
@@ -97,17 +100,26 @@ async function updateRent(id, rent) {
     const fields = []
     const params = []
     for (const [key, value] of Object.entries(rent)) {
-        fields.push(`${key}=?`)
-        params.push(value)
+        if (key === 'start_date' || key === 'expires') {
+            fields.push(`${key}=?`)
+            params.push(value)
+        } else if (key === 'price') {
+            fields.push(`${key}=?`)
+            params.push(parseFloat(value))
+        }
     }
     const query = `UPDATE rent SET ${fields.join(", ")} WHERE id=?`
     params.push(id)
+    console.log('SQL Query:', query)
+    console.log('SQL Params:', params)
+    
     try {
         const result = await db.query(query, params)
+        console.log('Update result:', result)
         if (!result.affectedRows) throw new Error("A kölcsönzés módosítása sikertelen!")
         return { success: true }
     } catch (error) {
-        console.error(error)
+        console.error('Update error:', error)
         throw error
     }
 }
@@ -129,9 +141,9 @@ async function notifyUser() {
             SELECT r.id, r.user_id, r.product_id, r.expires, u.email 
             FROM rent r
             JOIN users u ON r.user_id = u.id
-            WHERE DATEDIFF(r.expires, CURDATE()) IN (7, 3, 2, 1);
-        `;
-        const rentals = await db.query(query);
+            WHERE DATEDIFF(r.expires, CURDATE()) IN (7, 3, 2, 1)
+        `
+        const rentals = await db.query(query)
 
         if (!rentals.length) {
             console.log("Nincs értesítésre váró bérlés.")

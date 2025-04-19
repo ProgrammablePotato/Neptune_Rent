@@ -31,7 +31,7 @@
         </button>
         <ng-container *ngIf="category !== 'accessories' && category !== 'services'">
           <button 
-            (click)="rent()" 
+            (click)="openRentalModal()" 
             class="rent-button text-white px-6 py-3 rounded-xl"
           >
             Rent
@@ -116,7 +116,7 @@
   <div *ngIf="successMessage" class="modal-overlay fixed inset-0 flex items-center justify-center z-50">
     <div class="modal-content p-8 rounded-xl max-w-md w-full text-center">
       <h3 class="text-2xl font-bold text-green-400 mb-4">Rent successful!</h3>
-      <p class="text-gray-300 mb-6">We would like to inform you that due to technical reasons, you can currently only rent a product for one month, which starts from the arrival of the product. You will receive further information by email.</p>
+      <p class="text-gray-300 mb-6">You will receive further information via email.</p>
       <button 
         (click)="successMessage = false" 
         class="action-button text-white px-6 py-3 rounded-xl"
@@ -140,5 +140,63 @@
 
   <div *ngIf="reviewSent" class="text-green-400 text-center font-bold mt-6">
     Thank you for your review!
+  </div>
+
+  <div *ngIf="showRentalModal" class="modal-overlay fixed inset-0 flex items-center justify-center z-50">
+    <div class="modal-content p-8 rounded-xl max-w-md w-full">
+      <h3 class="text-2xl font-bold text-white mb-6">Rent this product</h3>
+      
+      <div class="mb-6">
+        <label class="block text-white mb-2">Start Date:</label>
+        <input 
+          type="date" 
+          [(ngModel)]="startDate" 
+          (ngModelChange)="onDateChange()"
+          [min]="today"
+          class="w-full p-3 rounded-lg bg-gray-700 text-white"
+        >
+      </div>
+
+      <div class="mb-6">
+        <label class="block text-white mb-2">End Date:</label>
+        <input 
+          type="date" 
+          [(ngModel)]="endDate" 
+          (ngModelChange)="onDateChange()"
+          [min]="startDate"
+          class="w-full p-3 rounded-lg bg-gray-700 text-white"
+        >
+      </div>
+
+      <div class="mb-6">
+        <div class="flex justify-between text-white mb-2">
+          <span>Rental Price:</span>
+          <span>${{rentalPrice}}</span>
+        </div>
+        <div class="flex justify-between text-white mb-2">
+          <span>Deposit (Refundable):</span>
+          <span>${{deposit}}</span>
+        </div>
+        <div class="flex justify-between text-white font-bold text-xl">
+          <span>Total Price:</span>
+          <span>${{totalPrice}}</span>
+        </div>
+      </div>
+
+      <div class="flex gap-4">
+        <button 
+          (click)="rent()" 
+          class="flex-1 action-button text-white px-6 py-3 rounded-xl"
+        >
+          Confirm Rent
+        </button>
+        <button 
+          (click)="showRentalModal = false" 
+          class="flex-1 bg-gray-600 text-white px-6 py-3 rounded-xl hover:bg-gray-700"
+        >
+          Cancel
+        </button>
+      </div>
+    </div>
   </div>
 </div>

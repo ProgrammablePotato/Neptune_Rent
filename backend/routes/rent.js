@@ -53,7 +53,7 @@ router.get('/byId/:id', async (req, res) => {
 
 router.get('/byUserId/:id', async (req, res) => {
     try {
-        const rent = await berles.getRentByUserId(req.params.id)
+        const rent = await rentService.getRentByUserId(req.params.id)
         if (rent.length === 0) {
             return res.json({ message: 'Nincs bérlés' })
         }

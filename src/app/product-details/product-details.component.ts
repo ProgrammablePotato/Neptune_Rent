@@ -26,10 +26,21 @@ export class ProductDetailsComponent implements OnInit {
   addSuccess: boolean = false
   addError: boolean = false
   loggedUser: any = null
+  showRentalModal: boolean = false
+  today: string = new Date().toISOString().split('T')[0]
+  startDate: string = this.today
+  endDate: string = new Date(new Date().getTime() + 30 * 24 * 60 * 60 * 1000).toISOString().split('T')[0]
+  rentalPrice: number = 0
+  deposit: number = 0
+  totalPrice: number = 0
 
   constructor(
     private activeRouter: ActivatedRoute, private http:HttpClient, private base: BaseService, 
-    private cart: CartService, private auth:AuthService, private rentservice:RentService) {}
+    private cart: CartService, private auth:AuthService, private rentservice:RentService) {
+    const today = new Date()
+    const nextMonth = new Date(today.getTime() + 30 * 24 * 60 * 60 * 1000)
+    this.endDate = nextMonth.toISOString().split('T')[0]
+  }
 
     private userApi = 'http://127.0.0.1:3000/users/firebase/'
     userId : any = ''
@@ -167,14 +178,48 @@ export class ProductDetailsComponent implements OnInit {
     })
   }
 
+  calculateRentalPrice() {
+    const start = new Date(this.startDate)
+    const end = new Date(this.endDate)
+    const days = Math.ceil((end.getTime() - start.getTime()) / (1000 * 60 * 60 * 24))
+    this.rentalPrice = Math.round((this.product.price * 0.1) * days)
+    this.deposit = this.product.price
+    this.totalPrice = this.rentalPrice + this.deposit
+  }
+
+  onDateChange() {
+    if (this.startDate && this.endDate) {
+      const start = new Date(this.startDate)
+      const end = new Date(this.endDate)
+      
+      if (start > end) {
+        this.endDate = new Date(start.setMonth(start.getMonth() + 1)).toISOString().split('T')[0]
+      }
+      this.calculateRentalPrice()
+    }
+  }
+
   rent() {
-    const userId = this.userId
-    if (!userId || !this.product) return
-    const price = this.product.price
-    this.rentservice.rentProduct(userId, this.product.id, price).subscribe({
+    if (!this.userId || !this.product) return
+    
+    const rentalData = {
+      user_id: this.userId,
+      product_id: this.product.id,
+      start_date: new Date(this.startDate),
+      expires: new Date(this.endDate),
+      price: this.totalPrice
+    }
+
+    if (!rentalData.price) {
+      console.error('Missing price value')
+      return
+    }
+
+    this.rentservice.rentProduct(rentalData).subscribe({
       next: (res) => {
         console.log("Successful rent:", res)
         this.successMessage = true
+        this.showRentalModal = false
         setTimeout(() => {
           this.successMessage = false
         }, 4000)
@@ -187,5 +232,10 @@ export class ProductDetailsComponent implements OnInit {
         }, 3000)
       }
     })
+  }
+
+  openRentalModal() {
+    this.showRentalModal = true
+    this.calculateRentalPrice()
   }
 }

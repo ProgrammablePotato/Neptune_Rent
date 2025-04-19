@@ -6,6 +6,9 @@ import removeAccents from 'remove-accents';
 import { dropdownCollapse, dropdownExtend } from '../app.component';
 import { BaseService } from '../base.service';
 import { Validators } from '@angular/forms';
+import { RentService } from '../rent.service';
+import { BehaviorSubject } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-user',
@@ -25,12 +28,23 @@ export class UserComponent implements OnInit {
   isEasterEggActive = false
   showToast = false
   isToastHiding = false
+  activeRentals: any[] = []
+  userId : string = ''
+  userId$ = new BehaviorSubject<string>('')
 
   country: string = ''
   countryDisplay:string = ''
   countries:any[] = []
   filteredCountries:any[] = []
   countryText:string = ""
+
+  private userApi = 'http://localhost:3000/users/firebase/'
+
+  isModalOpen = false
+  selectedRental: any = null
+  editedRental: any = null
+
+  today = new Date()
 
   ngOnInit() {
     window.scrollTo({ top: 0, behavior: 'smooth' })
@@ -39,23 +53,40 @@ export class UserComponent implements OnInit {
     this.countryList()
   }
 
-  constructor(private auth:AuthService, private route: ActivatedRoute, private router:Router, private base:BaseService){
+  constructor(private auth:AuthService, private http:HttpClient, private router:Router, private base:BaseService, private rentService: RentService){
     this.countryList()
     this.getCountry(this.country)
   }
-  getLoggedUser() {
-    this.auth.getLoggedUser().subscribe(
-      {
-        next: (res) => {
-          this.loggedUser = res
-          this.getUserDetails(res.uid)
-        },
-        error: (error) => {
-          console.error("Error while getting the user's details!",error.message)
-        }
+
+  getUserId(firebase_uid: string) {
+    if (!firebase_uid) {
+      return
+    }
+    this.http.get<{ id: string }>(this.userApi + firebase_uid).subscribe({
+      next: (response) => {
+        this.userId = response.id
+        this.userId$.next(response.id)
+        this.getActiveRentals()
+      },
+      error: (error) => {
+        console.error('Error fetching user ID:', error)
       }
-    )
+    })
   }
+
+  getLoggedUser() {
+    this.auth.getLoggedUser().subscribe({
+      next: (res) => {
+        this.loggedUser = res
+        this.getUserDetails(res.uid)
+        this.getUserId(res.uid)
+      },
+      error: (error) => {
+        console.error("Error while getting the user's details!", error.message)
+      }
+    })
+  }
+
   getAdmin() {
     this.auth.getIsAdmin().subscribe((admin) => {
       this.isUserAdmin = admin
@@ -234,5 +265,128 @@ export class UserComponent implements OnInit {
       this.showToast = false
       this.isToastHiding = false
     }, 300)
+  }
+
+  getActiveRentals() {
+    if (!this.userId) {
+      console.log('No user ID available yet')
+      return
+    }
+
+    this.rentService.getRentByUserId(this.userId).subscribe({
+      next: (rentals: any) => {
+        if (rentals && Array.isArray(rentals)) {
+          this.activeRentals = rentals.filter((rental: any) => {
+            const expires = new Date(rental.expires)
+            return expires > new Date()
+          })
+        } else {
+          this.activeRentals = []
+        }
+      },
+      error: (error) => {
+        console.error('Error fetching rentals:', error)
+        this.activeRentals = []
+      }
+    })
+  }
+
+  formatPrice(price: number): string {
+    return price.toFixed(2)
+  }
+
+  formatDate(date: string): string {
+    return new Date(date).toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric'
+    })
+  }
+
+  isRentalExpiring(expires: string): boolean {
+    const expirationDate = new Date(expires)
+    const now = new Date()
+    const daysUntilExpiration = Math.ceil((expirationDate.getTime() - now.getTime()) / (1000 * 60 * 60 * 24))
+    return daysUntilExpiration <= 3
+  }
+
+  openRentalModal(rental: any) {
+    this.selectedRental = rental
+    this.editedRental = { ...rental }
+    this.isModalOpen = true
+  }
+
+  closeRentalModal() {
+    this.isModalOpen = false
+    this.selectedRental = null
+    this.editedRental = null
+  }
+
+  async deleteRental() {
+    if (!this.selectedRental) return
+    
+    try {
+      await this.rentService.deleteRental(this.selectedRental.id)
+      this.activeRentals = this.activeRentals.filter(r => r.id !== this.selectedRental.id)
+      this.closeRentalModal()
+    } catch (error) {
+      console.error('Error deleting rental:', error)
+    }
+  }
+
+  onDateChange(field: 'expires', event: any) {
+    const date = new Date(event.target.value)
+    const now = new Date()
+    const startDate = new Date(this.selectedRental.start_date)
+    
+    if (date < now) {
+      alert('You cannot provide a past date!')
+      this.editedRental.expires = this.selectedRental.expires
+      return
+    }
+
+    if (date < startDate) {
+      alert('The end date cannot be earlier than the start date!')
+      this.editedRental.expires = this.selectedRental.expires
+      return
+    }
+
+    this.editedRental.expires = date
+  }
+
+  async updateRental() {
+    if (!this.editedRental) return
+    
+    try {
+      const now = new Date()
+      const startDate = new Date(this.selectedRental.start_date)
+      const endDate = new Date(this.editedRental.expires)
+
+      if (endDate < now) {
+        alert('You cannot provide a past date!')
+        return
+      }
+
+      if (endDate < startDate) {
+        alert('The end date cannot be earlier than the start date!')
+        return
+      }
+
+      const rentalData = {
+        start_date: startDate.toISOString().slice(0, 19).replace('T', ' '),
+        expires: endDate.toISOString().slice(0, 19).replace('T', ' '),
+        price: parseFloat(this.editedRental.price).toFixed(2)
+      }
+
+      const updatedRental = await this.rentService.updateRental(
+        this.editedRental.id,
+        rentalData
+      )
+      
+      this.getActiveRentals()
+      this.closeRentalModal()
+    } catch (error) {
+      console.error('Error updating rental:', error)
+    }
   }
 }

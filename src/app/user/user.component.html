@@ -175,6 +175,26 @@
     </button>
   </div>
 
+  <div class="form-section" *ngIf="activeRentals.length > 0">
+    <h3 class="section-title">Active Rentals</h3>
+    <div class="rentals-grid">
+      <div *ngFor="let rental of activeRentals" class="rental-card" (click)="openRentalModal(rental)">
+        <div class="rental-header">
+          <h4 class="rental-title">{{rental.name}}</h4>
+          <span class="rental-status" [class.expiring]="isRentalExpiring(rental.expires)">
+            Expires: {{formatDate(rental.expires)}}
+          </span>
+        </div>
+        <div class="rental-details">
+          <p class="rental-price">Price: ${{formatPrice(rental.price)}}</p>
+          <p class="rental-dates">
+            From: {{formatDate(rental.start_date)}} to {{formatDate(rental.expires)}}
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <div class="toast-container" *ngIf="showToast">
     <div class="toast" [class.hide]="isToastHiding">
       <div class="toast-icon">🔔</div>
@@ -182,7 +202,46 @@
         <div class="toast-title">Important Notice</div>
         <div class="toast-message">Please login again to apply your changes!</div>
       </div>
-      <button class="toast-close" (click)="hideToast()">×</button>
+      <button class="toast-close" (click)="hideToast()">x</button>
+    </div>
+  </div>
+
+  <div class="modal-overlay" *ngIf="selectedRental" [class.show]="isModalOpen">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">Edit Rental</h3>
+        <button class="modal-close" (click)="closeRentalModal()">×</button>
+      </div>
+      
+      <div class="modal-body">
+        <div class="modal-section">
+          <h4>{{selectedRental.name}}</h4>
+          <div class="modal-dates">
+            <div class="date-group">
+              <label>Start Date</label>
+              <input 
+                type="date" 
+                [value]="selectedRental.start_date | date:'yyyy-MM-dd'"
+                readonly
+                disabled>
+            </div>
+            <div class="date-group">
+              <label>End Date</label>
+              <input 
+                type="date" 
+                [(ngModel)]="selectedRental.expires" 
+                [value]="selectedRental.expires | date:'yyyy-MM-dd'"
+                [min]="today | date:'yyyy-MM-dd'"
+                (change)="onDateChange('expires', $event)">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button class="modal-button delete" (click)="deleteRental()">Delete Rental</button>
+        <button class="modal-button save" (click)="updateRental()">Save Changes</button>
+      </div>
     </div>
   </div>
 </div>
