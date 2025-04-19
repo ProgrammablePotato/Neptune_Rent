@@ -1,8 +1,8 @@
-<nav class="bg-white border-gray-200 dark:bg-gray-900 m-2 rounded-lg">
-  <div class="flex flex-wrap items-center justify-between mx-auto p-4 w-full" (window:resize)=isSmall()>
-    <a routerLink="home" class="flex items-center space-x-3 rtl:space-x-reverse float-left">
-        <img src="logo.png" class="h-8" alt="NeptuneLogo" />
-        <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">Neptune Rent</span>
+<nav class="bg-white border-gray-200 dark:bg-gray-900 m-2 rounded-lg shadow-sm">
+  <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4" (window:resize)="isSmall()">
+    <a routerLink="home" class="flex items-center space-x-3 rtl:space-x-reverse hover:opacity-90 transition-opacity">
+      <img src="logo.png" class="h-8" alt="NeptuneLogo" />
+      <span class="self-center text-2xl font-bold whitespace-nowrap dark:text-white">Neptune Rent</span>
     </a>
     <button type="button" (click)="hideButton()" class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600">
       <span class="sr-only">Menu</span>
@@ -10,22 +10,32 @@
         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h15M1 7h15M1 13h15"/>
       </svg>
     </button>
-    <div class="w-full md:block md:w-auto h-fit" id="neptune-navbar">
-      <ul class=" font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
-        <li *ngFor="let point of getPoints()">
-          <a [ngClass]="isCurrent(point.path)" [routerLink]="point.path" (click)="setCurrentPage(point.path)">{{point.name}}</a>
+    <div class="w-full md:block md:w-auto" id="neptune-navbar">
+      <ul class="font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-2 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
+        <li *ngFor="let point of getPoints()" class="relative group">
+          <a [ngClass]="isCurrent(point.path)" [routerLink]="point.path" (click)="setCurrentPage(point.path)" class="block py-2 px-3">
+            {{point.name}}
+          </a>
         </li>
-        <li *ngIf="!loggedUser">
-          <a [ngClass]="isCurrent('login')" routerLink="login" (click)="setCurrentPage('login')">{{points[7].name}}</a>
+        <li *ngIf="!loggedUser" class="relative group">
+          <a [ngClass]="isCurrent('login')" routerLink="login" (click)="setCurrentPage('login')" class="block py-2 px-3">
+            {{points[7].name}}
+          </a>
         </li>
-        <li *ngIf="loggedUser">
-          <a [ngClass]="isCurrent('user')"  routerLink="user" (click)="setCurrentPage('user')">{{points[8].name}}</a>
+        <li *ngIf="loggedUser" class="relative group">
+          <a [ngClass]="isCurrent('user')" routerLink="user" (click)="setCurrentPage('user')" class="block py-2 px-3">
+            {{points[8].name}}
+          </a>
         </li>
-        <li *ngIf="loggedUser && isAdmin">
-          <a [ngClass]="isCurrent('admin')" (click)="setCurrentPage('admin')" routerLink="admin">Admin</a>
+        <li *ngIf="loggedUser && isAdmin" class="relative group">
+          <a [ngClass]="isCurrent('admin')" (click)="setCurrentPage('admin')" routerLink="admin" class="block py-2 px-3">
+            Admin
+          </a>
         </li>
-        <li *ngIf="loggedUser">
-          <a [ngClass]="isCurrent('logout')"  routerLink="login" (click)="logout()">{{points[9].name}}</a>
+        <li *ngIf="loggedUser" class="relative group">
+          <a [ngClass]="isCurrent('logout')" routerLink="login" (click)="logout()" class="block py-2 px-3">
+            {{points[9].name}}
+          </a>
         </li>
       </ul>
     </div>

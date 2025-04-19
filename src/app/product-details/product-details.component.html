@@ -1,98 +1,144 @@
-<div *ngIf="loading" class="inline-block ml-auto mr-auto bg-orange-700 p-2 rounded-lg text-white">Loading...</div>
-<div *ngIf="error" class="bg-red-700 text-white p-2 rounded-lg mt-2">{{ error }}</div>
+<div class="min-h-screen bg-gray-900 p-4 md:p-6 lg:p-8">
+  <div *ngIf="loading" class="fixed top-4 left-1/2 -translate-x-1/2 bg-orange-600 text-white px-6 py-3 rounded-lg shadow-lg">
+    Loading...
+  </div>
+  <div *ngIf="error" class="error-message fixed top-4 left-1/2 -translate-x-1/2 text-white px-6 py-3 rounded-lg">
+    {{ error }}
+  </div>
+  <div *ngIf="!loading && product" class="product-details-container flex flex-col md:flex-row gap-8 p-6 md:p-8 max-w-6xl mx-auto">
+    <div class="flex-1">
+      <h1 class="product-title text-3xl md:text-5xl font-bold mb-6">{{ product.name }}</h1>
+      <hr class="border-gray-600 mb-6">
+      <p class="product-price text-2xl mb-6">${{ product.price }}</p>
+      <p class="product-description text-lg p-6 rounded-xl mb-8">{{ product.description }}</p>
+      <div *ngIf="userId" class="flex flex-wrap items-center gap-4">
+        <input 
+          id="cartAmount" 
+          [(ngModel)]="quantity" 
+          type="number" 
+          min="1" 
+          max="99" 
+          class="quantity-input w-20 p-3 rounded-lg text-center"
+        />
+        <button 
+          (click)="addToCart()" 
+          class="action-button flex items-center gap-2 text-white px-6 py-3 rounded-xl"
+        >
+          Add to cart
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25 5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" />
+          </svg>
+        </button>
+        <ng-container *ngIf="category !== 'accessories' && category !== 'services'">
+          <button 
+            (click)="rent()" 
+            class="rent-button text-white px-6 py-3 rounded-xl"
+          >
+            Rent
+          </button>
+        </ng-container>
+      </div>
+    </div>
+    <div class="flex-1 flex justify-center items-center">
+      <img 
+        *ngIf="product.image == 'test' || !product.image" 
+        src="cat.jfif" 
+        alt="{{product.name}}"
+        class="product-image w-full h-64 md:h-80 object-cover"
+      >
+      <img 
+        *ngIf="product.image != 'test'" 
+        [src]="'uploads/' + product.image" 
+        alt="{{product.name}}"
+        class="product-image w-full h-64 md:h-80 object-cover"
+      >
+    </div>
+  </div>
+  <div class="review-section p-6 md:p-8 rounded-xl max-w-6xl mx-auto mt-8">
+    <h2 class="text-white text-2xl font-bold mb-6">Add a Review</h2>
+    <textarea 
+      maxlength="250" 
+      [(ngModel)]="reviewText" 
+      placeholder="Write your review. Max 250 characters." 
+      class="review-textarea w-full p-4 rounded-lg mb-6 h-32"
+    ></textarea>
 
-<div *ngIf="!loading && product" class="dark:bg-gray-800 lg:max-w-[80vw] flex flex-col md:flex-row mt-10 mx-5 lg:mx-auto rounded-2xl min-h-fit shadow-lg overflow-hidden">
-  <div class="flex-1 p-5 relative">
-    <h1 class="text-white mb-5 text-2xl lg:text-5xl font-bold">{{ product.name }}</h1>
-    <hr class="border-gray-600 mb-5">
-    <p class="text-white text-xl mb-3"><span class="font-bold">Price:</span> ${{ product.price }}</p>
-    <p class="text-white text-lg bg-slate-700 rounded-xl p-5 mb-5">{{ product.description }}</p>
-
-    <div *ngIf="addSuccess" class="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div class="bg-white rounded-2xl shadow-xl p-8 max-w-sm w-full text-center">
-        <h3 class="text-2xl font-bold text-green-600 mb-4">Item successfully added to cart!</h3>
-        <p class="text-gray-700 mb-4">Check your cart or continue the shopping.</p>
-        <button (click)="addSuccess = false" class="mt-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg">
-          Bezárás
+    <div class="flex items-center gap-4 mb-6">
+      <label class="text-white font-bold text-xl">Rating:</label>
+      <div class="rating-stars flex gap-2">
+        <button *ngFor="let key of [1,2,3,4,5]" (click)="rateProduct(key)">
+          <svg 
+            id="rate-star-{{key}}" 
+            xmlns="http://www.w3.org/2000/svg" 
+            fill="none" 
+            viewBox="0 0 24 24" 
+            stroke-width="1.5" 
+            stroke="currentColor" 
+            class="w-8 h-8 text-yellow-400"
+          >
+            <path stroke-linecap="round" stroke-linejoin="round" d="M11.48 3.499a.562.562 0 0 1 1.04 0l2.125 5.111a.563.563 0 0 0 .475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 0 0-.182.557l1.285 5.385a.562.562 0 0 1-.84.61l-4.725-2.885a.562.562 0 0 0-.586 0L6.982 20.54a.562.562 0 0 1-.84-.61l1.285-5.386a.562.562 0 0 0-.182-.557l-4.204-3.602a.562.562 0 0 1 .321-.988l5.518-.442a.563.563 0 0 0 .475-.345L11.48 3.5Z" />
+          </svg>
         </button>
       </div>
     </div>
 
-    <div *ngIf="!userId && loggedUser" class="fixed top-0 w-full bg-red-600 text-white text-center py-2 z-50">
-      Please fill your information in the <a routerLink="/user" style="text-decoration: underline;">user</a> page before purchasing anything!
-    </div>
+    <button 
+      (click)="submitReview()" 
+      class="action-button text-white px-6 py-3 rounded-xl"
+    >
+      Submit Review
+    </button>
+  </div>
 
-    <div *ngIf="!(userId$ | async) && !loggedUser" class="fixed top-0 w-full bg-red-600 text-white text-center py-2 z-50">
-      Please <a routerLink="/login" style="text-decoration: underline;">login</a> or <a routerLink="/register" style="text-decoration: underline;">register</a> to purchase items.
+  <div *ngIf="reviews.length > 0" class="max-w-6xl mx-auto mt-8">
+    <h2 class="text-white text-2xl font-bold mb-6">Reviews</h2>
+    <div class="grid gap-4">
+      <div *ngFor="let r of reviews" class="review-card p-6 rounded-xl">
+        <p class="text-white italic mb-4">"{{ r.reviewText }}"</p>
+        <p class="text-yellow-400 font-semibold">Rating: {{ r.rating }}/5</p>
+      </div>
     </div>
+  </div>
 
-    <div *ngIf="addError" class="fixed top-0 w-full bg-red-600 text-white text-center py-2 z-50">
-      Something went wrong. Please try again later!
-    </div>
-
-    <div *ngIf="userId" class="flex flex-wrap items-center gap-4">
-      <input id="cartAmount" [(ngModel)]="quantity" type="number" min="1" max="99" class="text-xl text-white dark:bg-green-600 p-3 rounded-lg w-20 text-center" />
-      <button (click)="addToCart()" class="relative flex items-center gap-2 bg-green-700 hover:bg-green-800 text-white text-xl px-5 py-3 rounded-2xl transition-all popup">
-        Add to cart
-        <svg xmlns="http://www.w3.org/2000/svg" class="size-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25 5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" />
-        </svg>
-        <span class="popuptext" id="myPopup">Value must be between 1 and 99!</span>
+  <div *ngIf="addSuccess" class="modal-overlay fixed inset-0 flex items-center justify-center z-50">
+    <div class="modal-content p-8 rounded-xl max-w-md w-full text-center">
+      <h3 class="text-2xl font-bold text-green-400 mb-4">Item successfully added to cart!</h3>
+      <p class="text-gray-300 mb-6">Check your cart or continue shopping.</p>
+      <button 
+        (click)="addSuccess = false" 
+        class="action-button text-white px-6 py-3 rounded-xl"
+      >
+        Close
       </button>
-      <ng-container *ngIf="category !== 'accessories' && category !== 'services'">
-        <button (click)="rent()" class="bg-yellow-600 hover:bg-yellow-700 text-white px-5 py-3 rounded-2xl transition-all">Rent</button>
-        <div *ngIf="successMessage" class="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div class="bg-white rounded-2xl shadow-xl p-8 max-w-sm w-full text-center">
-            <h3 class="text-2xl font-bold text-green-600 mb-4">Rent successfull!</h3>
-            <p class="text-gray-700 mb-4">We would like to inform you that due to technical reasons, you can currently only rent a product for one month, which starts from the arrival of the product. You will receive further information by email.</p>
-            <button (click)="successMessage = false" class="mt-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg">
-              Close
-            </button>
-          </div>
-        </div>
-      </ng-container>
     </div>
   </div>
 
-  <div class="flex-1 m-5 flex justify-center items-center">
-    <img *ngIf="product.image == 'test' || !product.image" src="cat.jfif" alt="" class="rounded-lg object-cover w-full h-48 lg:h-56">
-    <img *ngIf="product.image != 'test'" [src]="'uploads/' + product.image" alt="" class="rounded-lg object-cover w-full h-48  lg:h-56">
-  </div>
-</div>
-
-<div class="mt-10 mx-5 lg:mx-auto lg:max-w-[80vw]">
-  <div>
-    <h2 class="text-black text-xl font-bold mb-4">Add a Review</h2>
-    <textarea maxlength="250" [(ngModel)]="reviewText" placeholder="Write your review. Max 250 character." class="w-full p-3 rounded-lg bg-gray-700 text-white mb-4"></textarea>
-  </div>
-
-  <div class="flex items-center gap-4 mb-4 bg-gray-800 p-5 w-fit rounded-lg">
-    <label class="text-white font-bold text-xl">Rating:</label>
-    <!-- <select [(ngModel)]="rating" class="bg-gray-700 text-white p-2 rounded-lg">
-      <option *ngFor="let r of [1,2,3,4,5]" [value]="r">{{ r }}</option>
-    </select> -->
-    <div class="flex">
-      <ul class="flex flex-row">
-        <li *ngFor="let key of [1,2,3,4,5]">
-          <button (click)="rateProduct(key)">
-            <svg id="rate-star-{{key}}" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="yellow" class="size-6">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M11.48 3.499a.562.562 0 0 1 1.04 0l2.125 5.111a.563.563 0 0 0 .475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 0 0-.182.557l1.285 5.385a.562.562 0 0 1-.84.61l-4.725-2.885a.562.562 0 0 0-.586 0L6.982 20.54a.562.562 0 0 1-.84-.61l1.285-5.386a.562.562 0 0 0-.182-.557l-4.204-3.602a.562.562 0 0 1 .321-.988l5.518-.442a.563.563 0 0 0 .475-.345L11.48 3.5Z" />
-            </svg>
-          </button>
-        </li>
-      </ul>
+  <div *ngIf="successMessage" class="modal-overlay fixed inset-0 flex items-center justify-center z-50">
+    <div class="modal-content p-8 rounded-xl max-w-md w-full text-center">
+      <h3 class="text-2xl font-bold text-green-400 mb-4">Rent successful!</h3>
+      <p class="text-gray-300 mb-6">We would like to inform you that due to technical reasons, you can currently only rent a product for one month, which starts from the arrival of the product. You will receive further information by email.</p>
+      <button 
+        (click)="successMessage = false" 
+        class="action-button text-white px-6 py-3 rounded-xl"
+      >
+        Close
+      </button>
     </div>
   </div>
 
-  <button (click)="submitReview()" class="bg-blue-700 hover:bg-blue-800 text-white px-6 py-3 rounded-2xl transition-all">Submit Review</button>
-</div>
+  <div *ngIf="!userId && loggedUser" class="error-message fixed top-0 w-full text-white text-center py-3 z-50">
+    Please fill your information in the <a routerLink="/user" class="underline">user</a> page before purchasing anything!
+  </div>
 
-<div *ngIf="reviewSent" class="text-green-500 text-center font-bold mt-5">Thank you for your review!</div>
+  <div *ngIf="!(userId$ | async) && !loggedUser" class="error-message fixed top-0 w-full text-white text-center py-3 z-50">
+    Please <a routerLink="/login" class="underline">login</a> or <a routerLink="/register" class="underline">register</a> to purchase items.
+  </div>
 
-<div *ngIf="reviews.length > 0" class="mt-10 mx-5 lg:mx-auto lg:max-w-[80vw]">
-  <h2 class="text-white text-xl font-bold mb-4">Reviews:</h2>
-  <div *ngFor="let r of reviews" class="bg-gray-900 rounded-xl p-5 mb-4 shadow-md">
-    <p class="text-white italic mb-2">“{{ r.reviewText }}”</p>
-    <p class="text-yellow-400 font-semibold">Rating: {{ r.rating }}/5</p>
+  <div *ngIf="addError" class="error-message fixed top-0 w-full text-white text-center py-3 z-50">
+    Something went wrong. Please try again later!
+  </div>
+
+  <div *ngIf="reviewSent" class="text-green-400 text-center font-bold mt-6">
+    Thank you for your review!
   </div>
 </div>

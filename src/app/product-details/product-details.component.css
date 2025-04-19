@@ -1,38 +1,217 @@
+.product-details-container {
+  background: linear-gradient(145deg, #1f2937, #111827);
+  border-radius: 1rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.product-details-container:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+}
+
+.product-image {
+  transition: all 0.3s ease;
+  filter: brightness(0.9);
+  border-radius: 0.75rem;
+  overflow: hidden;
+}
+
+.product-details-container:hover .product-image {
+  filter: brightness(1);
+  transform: scale(1.02);
+}
+
+.product-title {
+  color: #f3f4f6;
+  transition: all 0.3s ease;
+}
+
+.product-price {
+  color: #60a5fa;
+  font-weight: 600;
+}
+
+.product-description {
+  background: rgba(55, 65, 81, 0.5);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+}
+
+.product-description:hover {
+  background: rgba(55, 65, 81, 0.7);
+  border-color: rgba(59, 130, 246, 0.5);
+}
+
+.quantity-input {
+  background: rgba(75, 85, 99, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+  color: #f3f4f6;
+}
+
+.quantity-input:focus {
+  background: rgba(75, 85, 99, 0.7);
+  border-color: rgba(59, 130, 246, 0.5);
+  outline: none;
+}
+
+.action-button {
+  background: linear-gradient(145deg, #1d4ed8, #1e40af);
+  transition: all 0.3s ease;
+}
+
+.action-button:hover {
+  background: linear-gradient(145deg, #1e40af, #1e3a8a);
+  transform: translateY(-2px);
+}
+
+.rent-button {
+  background: linear-gradient(145deg, #d97706, #b45309);
+  transition: all 0.3s ease;
+}
+
+.rent-button:hover {
+  background: linear-gradient(145deg, #b45309, #92400e);
+  transform: translateY(-2px);
+}
+
+.review-section {
+  background: rgba(55, 65, 81, 0.5);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+}
+
+.review-section:hover {
+  background: rgba(55, 65, 81, 0.7);
+  border-color: rgba(59, 130, 246, 0.5);
+}
+
+.review-textarea {
+  background: rgba(75, 85, 99, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+  color: #f3f4f6;
+}
+
+.review-textarea:focus {
+  background: rgba(75, 85, 99, 0.7);
+  border-color: rgba(59, 130, 246, 0.5);
+  outline: none;
+}
+
+.rating-stars {
+  transition: all 0.3s ease;
+}
+
+.rating-stars:hover {
+  transform: scale(1.05);
+}
+
+.review-card {
+  background: rgba(55, 65, 81, 0.5);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+}
+
+.review-card:hover {
+  transform: translateY(-2px);
+  background: rgba(55, 65, 81, 0.7);
+  border-color: rgba(59, 130, 246, 0.5);
+}
+
+.modal-overlay {
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(8px);
+}
+
+.modal-content {
+  background: linear-gradient(145deg, #1f2937, #111827);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  animation: modalSlideIn 0.3s ease-out;
+}
+
+@keyframes modalSlideIn {
+  from {
+    transform: translateY(-20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.error-message {
+  background: linear-gradient(145deg, #dc2626, #b91c1c);
+  animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateY(-10px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
 input[type=number]::-webkit-inner-spin-button,
 input[type=number]::-webkit-outer-spin-button {
-    opacity: 1;
-    padding: 0.5rem;
+  opacity: 1;
+  padding: 0.5rem;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 0.25rem;
 }
 
 .popup {
-    position: relative;
-    display: inline-block;
-    cursor: pointer;
-    user-select: none;
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+  user-select: none;
 }
 
 .popup .popuptext {
-    visibility: hidden;
-    width: 200px;
-    background-color: #f33;
-    color: #fff;
-    text-align: center;
-    border-radius: 8px;
-    padding: 8px;
-    position: absolute;
-    z-index: 1;
-    bottom: 125%;
-    left: 50%;
-    transform: translateX(-50%);
+  visibility: hidden;
+  width: 200px;
+  background: linear-gradient(145deg, #dc2626, #b91c1c);
+  color: #fff;
+  text-align: center;
+  border-radius: 0.5rem;
+  padding: 0.75rem;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  transform: translateX(-50%);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  animation: fadeIn 0.3s ease-out;
 }
 
 .popup .popuptext::after {
-    content: "";
-    position: absolute;
-    top: 100%;
-    left: 50%;
-    transform: translateX(-50%);
-    border-width: 5px;
-    border-style: solid;
-    border-color: #f33 transparent transparent transparent;
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border-width: 8px;
+  border-style: solid;
+  border-color: #dc2626 transparent transparent transparent;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -10px);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
 }

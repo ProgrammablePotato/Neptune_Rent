@@ -1,1 +1,148 @@
 @import "../app.component.css";
+
+.neptune-news-carousel {
+  transition: all 0.3s ease;
+  background: linear-gradient(145deg, #1f2937, #111827);
+  border-radius: 1rem;
+  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.neptune-news-carousel:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+}
+
+.neptune-news-carousel img {
+  transition: all 0.3s ease;
+  filter: brightness(0.8);
+}
+
+.neptune-news-carousel:hover img {
+  filter: brightness(0.9);
+  transform: scale(1.02);
+}
+
+.neptune-news-carousel button {
+  transition: all 0.3s ease;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.neptune-news-carousel button:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.search-container {
+  background: linear-gradient(145deg, #1f2937, #111827);
+  border-radius: 1rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.search-container:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+}
+
+.search-input {
+  background: rgba(75, 85, 99, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+}
+
+.search-input:focus {
+  background: rgba(75, 85, 99, 0.7);
+  border-color: rgba(59, 130, 246, 0.5);
+  outline: none;
+}
+
+.filter-button {
+  background: linear-gradient(145deg, #1d4ed8, #1e40af);
+  transition: all 0.3s ease;
+}
+
+.filter-button:hover {
+  background: linear-gradient(145deg, #1e40af, #1e3a8a);
+  transform: translateY(-2px);
+}
+
+.dropdown-menu {
+  background: rgba(55, 65, 81, 0.95);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.dropdown-item {
+  transition: all 0.2s ease;
+}
+
+.dropdown-item:hover {
+  background: rgba(59, 130, 246, 0.2);
+}
+
+.product-card {
+  background: linear-gradient(145deg, #1f2937, #111827);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+}
+
+.product-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  border-color: rgba(59, 130, 246, 0.5);
+}
+
+.product-image {
+  transition: all 0.3s ease;
+  filter: brightness(0.9);
+}
+
+.product-card:hover .product-image {
+  filter: brightness(1);
+  transform: scale(1.02);
+}
+
+.product-title {
+  color: #f3f4f6;
+  transition: all 0.3s ease;
+}
+
+.product-card:hover .product-title {
+  color: #60a5fa;
+}
+
+.product-description {
+  color: #9ca3af;
+}
+
+.product-price {
+  color: #f3f4f6;
+  font-weight: 600;
+}
+
+.more-button {
+  background: linear-gradient(145deg, #1d4ed8, #1e40af);
+  transition: all 0.3s ease;
+}
+
+.more-button:hover {
+  background: linear-gradient(145deg, #1e40af, #1e3a8a);
+  transform: translateY(-2px);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.product-grid {
+  animation: fadeIn 0.5s ease-out;
+}

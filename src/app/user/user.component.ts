@@ -81,8 +81,7 @@ export class UserComponent implements OnInit {
         console.log("User data upload success")
       }
     )
-    this.router.navigate(['/login'])
-    this.auth.logout()
+    // this.auth.logout()
     alert("Please login again!")
   }
 

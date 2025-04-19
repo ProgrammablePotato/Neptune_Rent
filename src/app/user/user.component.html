@@ -1,106 +1,180 @@
-<div *ngIf="loggedUser" class="xl:w-3/4 xl:ml-auto xl:mr-auto bg-gray-800 md:flex rounded-lg mt-5">
-    <div class="w-1/3 p-3">
-        <img *ngIf="loggedUser.photoURL" [src]="loggedUser.photoURL" class="rounded-lg ">
-        <img *ngIf="!loggedUser.photoURL" src="icon-5359554_640.webp" class="rounded-lg">
+<div class="user-container">
+  <div *ngIf="loggedUser" class="profile-section">
+    <div class="flex flex-col items-center">
+      <img 
+        *ngIf="loggedUser.photoURL" 
+        [src]="loggedUser.photoURL" 
+        class="profile-image"
+        alt="Profile picture">
+      <img 
+        *ngIf="!loggedUser.photoURL" 
+        src="icon-5359554_640.webp" 
+        class="profile-image"
+        alt="Default profile picture">
+      
+      <h2 class="profile-name">{{loggedUser.displayName}}</h2>
+      
+      <hr class="profile-divider">
+      
+      <button 
+        class="cart-button" 
+        routerLink="/cart/{{userDetails.id}}">
+        <span>Go to cart</span>
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
+        </svg>
+      </button>
     </div>
-    <div class="w-full p-3 text-white">
+  </div>
 
-        <span class="text-3xl">{{loggedUser.displayName}}</span>
-        <hr class="mt-2 mb-2">
-        <button class="m-2 ml-0 p-2 bg-yellow-500 text-yellow-950 font-bold rounded-lg w-fit" routerLink="/cart/{{userDetails.id}}">
-          <div class="flex">
-            <span>Go to cart</span>
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 ml-2">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
-            </svg>
-          </div>
+  <div class="form-section">
+    <h3 class="section-title">Account Settings</h3>
+    
+    <div class="form-group">
+      <label for="dpnameInput" class="form-label">Display Name</label>
+      <input 
+        [(ngModel)]="loggedUser.displayName" 
+        type="text" 
+        class="form-input" 
+        id="dpnameInput"
+        placeholder="Enter your display name">
+    </div>
+
+    <div class="form-group">
+      <label for="emailInput" class="form-label">Email Address</label>
+      <input 
+        [(ngModel)]="loggedUser.email" 
+        type="email" 
+        class="form-input" 
+        id="emailInput"
+        placeholder="Enter your email">
+    </div>
+
+    <div class="form-group">
+      <label for="phoneInput" class="form-label">Phone Number</label>
+      <input 
+        [(ngModel)]="loggedUser.phoneNumber" 
+        type="tel" 
+        class="form-input" 
+        id="phoneInput"
+        placeholder="Enter your phone number">
+    </div>
+
+    <div class="form-group">
+      <label for="passwordInput" class="form-label">Password</label>
+      <div class="password-container">
+        <input 
+          [(ngModel)]="loggedUser.password" 
+          [type]="passwordVisibility" 
+          class="form-input password-input" 
+          id="passwordInput"
+          placeholder="Enter new password">
+        <button 
+          (click)="changeVisibility()" 
+          class="visibility-button">
+          <svg *ngIf="passwordVisibility == 'password'" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z" />
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+          </svg>
+          <svg *ngIf="passwordVisibility == 'text'" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M3.98 8.223A10.477 10.477 0 0 0 1.934 12C3.226 16.338 7.244 19.5 12 19.5c.993 0 1.953-.138 2.863-.395M6.228 6.228A10.451 10.451 0 0 1 12 4.5c4.756 0 8.773 3.162 10.065 7.498a10.522 10.522 0 0 1-4.293 5.774M6.228 6.228 3 3m3.228 3.228 3.65 3.65m7.894 7.894L21 21m-3.228-3.228-3.65-3.65m0 0a3 3 0 1 0-4.243-4.243m4.242 4.242L9.88 9.88" />
+          </svg>
         </button>
+      </div>
+    </div>
+  </div>
 
-        <div class="">
-          <div class="form-floating mb-2 mt-2 md:w-2/3 h-fit p-2">
-              <label for="dpnameInput" class="md:flex-1">Change display name: </label>
-              <input [(ngModel)]="loggedUser.displayName" type="text" class="md:flex-1 form-control rounded-md bg-slate-900 p-2 float-right  w-1/2" id="dpnameInput">
-          </div>
-          <div class="form-floating mb-2 mt-2 md:w-2/3 h-fit p-2">
-              <label for="emailInput">Change email address: </label>
-              <input [(ngModel)]="loggedUser.email" type="text" class="form-control rounded-md bg-slate-900 p-2 float-right  w-1/2" id="emailInput">
-          </div>
-          <div class="form-floating mb-2 mt-2 md:w-2/3 h-fit p-2">
-              <label for="phoneInput">Change phone number: </label>
-              <input [(ngModel)]="loggedUser.phoneNumber" type="text" class="form-control rounded-md bg-slate-900 p-2 float-right w-1/2" id="phoneInput">
-          </div>
-          <div class="form-floating mb-2 mt-2 md:w-2/3 h-fit p-2">
-            <label for="passwordInput">Enter new password: </label>
-            <div class="float-right flex w-1/2">
-              <input [(ngModel)]="loggedUser.password" [type]="passwordVisibility" class="form-control rounded-l-md bg-slate-900 p-2 flex-3 w-full" id="passwordInput">
-              <button (click)="changeVisibility()" class="bg-blue-500 p-2 rounded-r-md float-right">
-                <svg *ngIf="passwordVisibility == 'password'" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6  flex-1">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z" />
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
-                </svg>
-                <svg *ngIf="passwordVisibility == 'text'" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 flex-1">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M3.98 8.223A10.477 10.477 0 0 0 1.934 12C3.226 16.338 7.244 19.5 12 19.5c.993 0 1.953-.138 2.863-.395M6.228 6.228A10.451 10.451 0 0 1 12 4.5c4.756 0 8.773 3.162 10.065 7.498a10.522 10.522 0 0 1-4.293 5.774M6.228 6.228 3 3m3.228 3.228 3.65 3.65m7.894 7.894L21 21m-3.228-3.228-3.65-3.65m0 0a3 3 0 1 0-4.243-4.243m4.242 4.242L9.88 9.88" />
-                </svg>
-              </button>
-            </div>
-          </div>
+  <div class="form-section">
+    <h3 class="section-title">Shipping Information</h3>
+    
+    <div class="form-group">
+      <label class="form-label">{{countryDisplay}}</label>
+      <div class="country-dropdown">
+        <button 
+          class="dropdown-button"
+          (mouseleave)="dropdownCollapse('country')" 
+          (mouseenter)="dropdownExtend('country')" 
+          (click)="dropdownExtend('country')">
+          <span>Select country</span>
+          <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
+          </svg>
+        </button>
+        <div 
+          id="neptune-dropdown-country" 
+          class="dropdown-menu">
+          <input 
+            (input)="filterCountry()" 
+            [(ngModel)]="countryText" 
+            placeholder="Search for a country..." 
+            type="text" 
+            class="search-input">
+          <ul class="country-list">
+            <li 
+              *ngFor="let country of filteredCountries"
+              (click)="selectCountry(country.countryCode)"
+              class="country-item">
+              {{country.countryNameEn}} ({{country.countryCode}})
+            </li>
+          </ul>
         </div>
+      </div>
     </div>
-</div>
 
-<div class="xl:w-3/4 xl:ml-auto xl:mr-auto bg-gray-800 rounded-lg mt-5 text-lg text-white">
-  <div class="m-4"><span class="block p-4 font-bold text-xl">Provide the following data before purchasing anything</span></div>
-  <div class="md:flex">
-    <div class="flex-1">
-      <ul class="">
-        <li class="flex m-2">
-          <label class="md:flex-1 md:w-full w-1/3 text-right p-2">{{countryDisplay}}</label>
-          <div class="flex-1 h-fit relative" (mouseleave)="dropdownCollapse('country')" (mouseenter)="dropdownExtend('country')" (click)="dropdownExtend('country')">
-            <button class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-2 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-md px-5 py-2.5 text-center inline-flex items-center" type="button">
-              Select country
-              <svg class="w-2.5 h-2.5 ms-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
-              </svg>
-            </button>
-            <div id="neptune-dropdown-country" class="z-10 rounded-lg w-max bg-gray-700 absolute text-md h-48 overflow-scroll overflow-x-hidden">
-              <input (input)="filterCountry()" [(ngModel)]="countryText" placeholder="Search for a country here..." type="text" id="country" autocomplete="false" alt="country" class="bg-gray-700 hover:bg-slate-500 h-10 text-white p-2 w-full text-left border-none rounded-md sticky top-0"/>
-              <ul class="py-2 text-sm text-gray-700 dark:text-gray-200">
-                  <li *ngFor="let country of filteredCountries">
-                      <button (click)="selectCountry(country.countryCode)" class="bg-gray-700 hover:bg-slate-500 h-10 text-white p-2 w-full text-left">{{country.countryNameEn}} ({{country.countryCode}})</button>
-                  </li>
-              </ul>
-            </div>
-          </div>
-        </li>
-        <li class="flex m-2">
-          <label for="zipInput" class="md:flex-1 md:w-full w-1/3 text-right p-2">Zip code: </label>
-          <input id="zipInput" type="text" [(ngModel)]="userDetails.zipcode" placeholder="zip" class="md:flex-1 p-2 md:w-full w-2/3 rounded-md bg-gray-500">
-        </li>
-        <li class="flex m-2">
-          <label for="nameInput" class="md:flex-1 md:w-full w-1/3 text-right p-2">Name: </label>
-          <input id="nameInput" type="text" [(ngModel)]="userDetails.name" placeholder="name" class="md:flex-1 p-2 md:w-full w-2/3 rounded-md bg-gray-500">
-        </li>
-        <li class="flex m-2">
-          <label for="cityInput" class="md:flex-1 md:w-full w-1/3 text-right p-2">City: </label>
-          <input id="cityInput" type="text" [(ngModel)]="userDetails.city" placeholder="city" class="md:flex-1 p-2 md:w-full w-2/3 rounded-md bg-gray-500">
-        </li>
-        <li class="flex m-2">
-          <label for="addr1Input" class="md:flex-1 md:w-full w-1/3 text-right p-2">Address 1: </label>
-          <input id="addr1Input" type="text" [(ngModel)]="userDetails.addr1" placeholder="address line 1" class="md:flex-1 p-2 md:w-full w-2/3 rounded-md bg-gray-500">
-        </li>
-        <li class="flex m-2">
-          <label for="addr2Input" class="md:flex-1 md:w-full w-1/3 text-right p-2">Address 2: </label>
-          <input id="addr2Input" type="text" [(ngModel)]="userDetails.addr2" placeholder="address line 2" class="md:flex-1 p-2 md:w-full w-2/3 rounded-md bg-gray-500">
-        </li>
-        
-        <!-- <li class="flex m-2">
-          <label for="nickInput" class="md:flex-1 md:w-full w-1/3 text-right p-2">Nickname: </label>
-          <input id="nickInput" type="text" [(ngModel)]="userDetails.nick" placeholder="nickname" class="md:flex-1 p-2 md:w-full w-2/3 rounded-md bg-gray-500">
-        </li> -->
-      </ul>
+    <div class="form-group">
+      <label for="zipInput" class="form-label">Zip Code</label>
+      <input 
+        id="zipInput" 
+        type="text" 
+        [(ngModel)]="userDetails.zipcode" 
+        class="form-input"
+        placeholder="Enter your zip code">
     </div>
-    <div class="flex-1 p-3">
-      <button (click)="saveUserDetails()" class="mr-auto ml-auto flex bg-green-700 p-4 rounded-lg text-md">Save changes</button>
+
+    <div class="form-group">
+      <label for="nameInput" class="form-label">Full Name</label>
+      <input 
+        id="nameInput" 
+        type="text" 
+        [(ngModel)]="userDetails.name" 
+        class="form-input"
+        placeholder="Enter your full name">
     </div>
+
+    <div class="form-group">
+      <label for="cityInput" class="form-label">City</label>
+      <input 
+        id="cityInput" 
+        type="text" 
+        [(ngModel)]="userDetails.city" 
+        class="form-input"
+        placeholder="Enter your city">
+    </div>
+
+    <div class="form-group">
+      <label for="addr1Input" class="form-label">Address Line 1</label>
+      <input 
+        id="addr1Input" 
+        type="text" 
+        [(ngModel)]="userDetails.addr1" 
+        class="form-input"
+        placeholder="Enter your address">
+    </div>
+
+    <div class="form-group">
+      <label for="addr2Input" class="form-label">Address Line 2</label>
+      <input 
+        id="addr2Input" 
+        type="text" 
+        [(ngModel)]="userDetails.addr2" 
+        class="form-input"
+        placeholder="Enter additional address information">
+    </div>
+
+    <button 
+      (click)="saveUserDetails()" 
+      class="save-button">
+      Save Changes
+    </button>
   </div>
 </div>

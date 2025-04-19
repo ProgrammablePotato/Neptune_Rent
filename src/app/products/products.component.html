@@ -1,89 +1,113 @@
-<div *ngIf="activeNews != null" class="relative neptune-news-carousel xl:max-w-[80vw] mr-auto ml-auto mt-5 mb-5 h-[30vh] block">
-    <div class="absolute overflow-hidden h-full w-full">
-        <img [src]="activeNews.urlToImage" alt="" class="w-full -top-1/2 absolute">
-        <span class="m-2 bottom-0 bg-black bg-opacity-70 text-2xl rounded-lg text-white absolute p-3 overflow-hidden line-clamp-1">{{activeNews.title}}</span>
+<div class="min-h-screen bg-gray-900 p-4 md:p-6 lg:p-8">
+  <div *ngIf="activeNews != null" class="neptune-news-carousel relative max-w-6xl mx-auto mb-8 h-[30vh]">
+    <div class="absolute inset-0 overflow-hidden">
+      <img [src]="activeNews.urlToImage" alt="News image" class="absolute inset-0 w-full h-full object-cover">
+      <div class="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/80 to-transparent">
+        <h3 class="text-xl md:text-2xl font-bold text-white line-clamp-2">{{activeNews.title}}</h3>
+      </div>
     </div>
-    <button class="absolute w-20 bg-white bg-opacity-20 left-0 block h-full" (click)="carouselStep(false)">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="black" class="size-12 m-auto">
-            <path stroke-linecap="round" stroke-linejoin="round" d="m11.25 9-3 3m0 0 3 3m-3-3h7.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-        </svg>
+    <button class="absolute left-0 top-0 bottom-0 w-12 flex items-center justify-center" (click)="carouselStep(false)">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-white">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+      </svg>
     </button>
-    <button class="absolute w-20 bg-white bg-opacity-20 right-0 block h-full " (click)="carouselStep(true)">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="black" class="size-12 m-auto">
-            <path stroke-linecap="round" stroke-linejoin="round" d="m12.75 15 3-3m0 0-3-3m3 3h-7.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-        </svg>
+    <button class="absolute right-0 top-0 bottom-0 w-12 flex items-center justify-center" (click)="carouselStep(true)">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-white">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+      </svg>
     </button>
-</div>
+  </div>
 
-<div class="m-5 bg-gray-800 p-5 rounded-lg flex xl:max-w-[80vw] xl:ml-auto xl:mr-auto">
-    <div class="sm:flex w-full float-right">
-        <div class="m-2">
-            <p class="text-white text-xl mb-1">Search:</p><br>
-            <input type="text" placeholder="Search products..." [(ngModel)]="searchTerm" (ngModelChange)="filterProducts()" class="bg-gray-600 p-2 rounded-lg text-white">
-        </div>
-        <div *ngIf="brands.length > 1" class="m-2 h-fit relative" (mouseleave)="dropdownCollapse('brand')" (mouseenter)="dropdownExtend('brand')" (click)="dropdownExtend('brand')">
-            <button class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-2 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-md px-5 py-2.5 text-center inline-flex items-center " type="button">
-                {{currentBrand}}
-                <svg class="w-2.5 h-2.5 ms-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
-                </svg>
-            </button>
-            <div id="neptune-dropdown-brand" class="z-10 rounded-lg w-44 bg-gray-700 absolute text-md">
-                <ul class="py-2 text-sm text-gray-700 dark:text-gray-200">
-                    <li>
-                        <button (click)="filterBrand(null)" class="bg-gray-700 hover:bg-slate-500 h-10 text-white p-2 w-full text-left">All</button>
-                    </li>
-                    <li *ngFor="let brand of brands">
-                        <button (click)="filterBrand(brand)" class="bg-gray-700 hover:bg-slate-500 h-10 text-white p-2 w-full text-left">{{brand}}</button>
-                    </li>
-                </ul>
-            </div>
-        </div>
-        <div class="m-2 h-fit relative" (mouseleave)="dropdownCollapse('price')" (mouseenter)="dropdownExtend('price')" (click)="dropdownExtend('price')">
-            <button class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-2 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-md px-5 py-2.5 text-center inline-flex items-center w-fit" type="button">
-                {{currentPriceFiltering}}
-                <svg class="w-2.5 h-2.5 ms-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
-                </svg>
-            </button>
-            <div id="neptune-dropdown-price" class="z-10 rounded-lg w-44 bg-gray-700 absolute text-md">
-                <ul class="py-2 text-sm text-gray-700 dark:text-gray-200">
-                    <li>
-                        <button (click)="sortByPrice(true)" class="bg-gray-700 hover:bg-slate-500 h-10 text-white p-2 w-full text-left">Smallest first</button>
-                    </li>
-                    <li>
-                        <button (click)="sortByPrice(false)" class="bg-gray-700 hover:bg-slate-500 h-10 text-white p-2 w-full text-left">Highest first</button>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 rounded-lg xl:max-w-[80vw] xl:ml-auto xl:mr-auto">
-    <div *ngFor="let product of filteredProducts" class="p-3 m-1 rounded-lg dark:bg-gray-800 dark:border-gray-700 ">
-        <div class="flex md:block">
-            <div *ngIf="!product.image_url || product.image_url == 'test'" class="2xl:h-80 md:h-60 min-h-30 w-full inline-block neptune-product-image flex-1 rounded-sm" [style]="{'background-image':'url(cat.jfif)'}">
-            </div>
-            <div *ngIf="product.image_url != 'test'" class="2xl:h-80 md:h-60 min-h-30 w-full inline-block neptune-product-image flex-1 rounded-sm" [ngStyle]="{'background-image':'url('+getImagePath(product.image_url)+')'}">
-            </div>
-            <div class="flex-1 m-2 md:m-0 min-h-40 relative">
-                <div>
-                    <h5 class="mb-2 text-1xl font-bold tracking-tight text-gray-900 dark:text-white">{{product.name}}</h5>
-                </div>
-                <div>
-                    <p class="mb-3 font-normal text-gray-700 dark:text-gray-400 text-base">{{product.description}}</p>
-                </div>
-                <div class="absolute bottom-0">
-                    <p class="mb-3 font-normal text-gray-700 dark:text-gray-400 justify-end w-full">{{product.price}}$</p>
-                </div>
-            </div>
-        </div>
-        <button routerLink="/details/{{product.category}}/{{product.id}}" class="m-2 w-1/3 justify-center float-right inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-3 focus:outline-none focus:ring-blue-300">
-            More
-            <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
-                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
-            </svg>
+  <div class="search-container max-w-6xl mx-auto p-6 mb-8">
+    <div class="flex flex-col sm:flex-row gap-4">
+      <div class="flex-1">
+        <label class="block text-white text-lg mb-2">Search:</label>
+        <input 
+          type="text" 
+          placeholder="Search products..." 
+          [(ngModel)]="searchTerm" 
+          (ngModelChange)="filterProducts()" 
+          class="search-input w-full p-3 rounded-lg text-white"
+        >
+      </div>
+      
+      <div *ngIf="brands.length > 1" class="relative" (mouseleave)="dropdownCollapse('brand')" (mouseenter)="dropdownExtend('brand')" (click)="dropdownExtend('brand')">
+        <button class="filter-button text-white font-medium rounded-lg px-5 py-3 text-center inline-flex items-center">
+          {{currentBrand}}
+          <svg class="w-4 h-4 ml-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
+          </svg>
         </button>
+        <div id="neptune-dropdown-brand" class="dropdown-menu absolute mt-2 w-48">
+          <ul class="py-2">
+            <li>
+              <button (click)="filterBrand(null)" class="dropdown-item w-full text-left px-4 py-2 text-white hover:bg-blue-500/20">
+                All Brands
+              </button>
+            </li>
+            <li *ngFor="let brand of brands">
+              <button (click)="filterBrand(brand)" class="dropdown-item w-full text-left px-4 py-2 text-white hover:bg-blue-500/20">
+                {{brand}}
+              </button>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="relative" (mouseleave)="dropdownCollapse('price')" (mouseenter)="dropdownExtend('price')" (click)="dropdownExtend('price')">
+        <button class="filter-button text-white font-medium rounded-lg px-5 py-3 text-center inline-flex items-center">
+          {{currentPriceFiltering}}
+          <svg class="w-4 h-4 ml-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
+          </svg>
+        </button>
+        <div id="neptune-dropdown-price" class="dropdown-menu absolute mt-2 w-48">
+          <ul class="py-2">
+            <li>
+              <button (click)="sortByPrice(true)" class="dropdown-item w-full text-left px-4 py-2 text-white hover:bg-blue-500/20">
+                Price: Low to High
+              </button>
+            </li>
+            <li>
+              <button (click)="sortByPrice(false)" class="dropdown-item w-full text-left px-4 py-2 text-white hover:bg-blue-500/20">
+                Price: High to Low
+              </button>
+            </li>
+          </ul>
+        </div>
+      </div>
     </div>
+  </div>
+
+  <div class="product-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 max-w-6xl mx-auto">
+    <div *ngFor="let product of filteredProducts" class="product-card rounded-xl p-4">
+      <div class="flex flex-col h-full">
+        <div class="relative overflow-hidden rounded-lg mb-4 h-48">
+          <div *ngIf="!product.image_url || product.image_url == 'test'" 
+               class="product-image w-full h-full bg-cover bg-center" 
+               [style.background-image]="'url(cat.jfif)'">
+          </div>
+          <div *ngIf="product.image_url != 'test'" 
+               class="product-image w-full h-full bg-cover bg-center" 
+               [style.background-image]="'url('+getImagePath(product.image_url)+')'">
+          </div>
+        </div>
+        
+        <div class="flex-1">
+          <h3 class="product-title text-xl font-bold mb-2">{{product.name}}</h3>
+          <p class="product-description text-sm mb-4 line-clamp-2">{{product.description}}</p>
+          <div class="flex items-center justify-between">
+            <span class="product-price text-lg">{{product.price}}$</span>
+            <button routerLink="/details/{{product.category}}/{{product.id}}" 
+                    class="more-button inline-flex items-center px-4 py-2 rounded-lg text-white">
+              More
+              <svg class="w-4 h-4 ml-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
