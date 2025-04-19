@@ -37,7 +37,6 @@ export class ProductDetailsComponent implements OnInit {
 
     ngOnInit(): void {
       this.categoryChecker()
-      this.loadReviews()
       setTimeout(() => {
         if (this.auth.loggedUser?.uid) {
           this.getUserId(this.auth.loggedUser.uid)
@@ -55,6 +54,7 @@ export class ProductDetailsComponent implements OnInit {
             this.product = data
             this.loading = false
             this.base.roundPrices()
+            this.loadReviews()
           },
           error: (error) => {
             this.error = 'Error!'
