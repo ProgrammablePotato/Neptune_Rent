@@ -21,6 +21,10 @@ export class UserComponent implements OnInit {
   userDetails:any
   newPassword = null
   isDropdownOpen = false
+  clickCount = 0
+  isEasterEggActive = false
+  showToast = false
+  isToastHiding = false
 
   country: string = ''
   countryDisplay:string = ''
@@ -59,12 +63,6 @@ export class UserComponent implements OnInit {
   }
 
   saveUserDetails(){
-    // if (!this.validatePassword()) {
-    //   if (this.loggedUser.password.trim() == '') {
-    //     this.loggedUser.password == null
-    //   }
-    //   return
-    // }
     this.saveCredentials()
     let details = this.userDetails
     this.auth.addNewUser(
@@ -77,13 +75,12 @@ export class UserComponent implements OnInit {
       details.country,
       this.loggedUser.email,
       this.loggedUser.phoneNumber,
-      /*details.nick*/"")?.subscribe(
+      "")?.subscribe(
       (res) => {
         console.log("User data upload success")
+        this.showToastNotification()
       }
     )
-    // this.auth.logout()
-    alert("Please login again!")
   }
 
   getUserDetails(uid:string) {
@@ -183,5 +180,59 @@ export class UserComponent implements OnInit {
       return false
     }
     return true
+  }
+
+  handleProfileClick() {
+    this.clickCount++
+    if (this.clickCount >= 5 && !this.isEasterEggActive) {
+      this.isEasterEggActive = true
+      this.activateEasterEgg()
+    }
+  }
+
+  activateEasterEgg() {
+    const profileSection = document.querySelector('.profile-section')
+    if (profileSection) {
+      profileSection.classList.add('rainbow-effect')
+      this.addFloatingEmojis()
+      setTimeout(() => {
+        this.isEasterEggActive = false
+        this.clickCount = 0
+        profileSection.classList.remove('rainbow-effect')
+      }, 10000)
+    }
+  }
+
+  addFloatingEmojis() {
+    const emojis = ['🎉', '✨', '🌟', '🎊', '🎈']
+    const container = document.querySelector('.profile-section')
+    if (container) {
+      for (let i = 0; i < 20; i++) {
+        const emoji = document.createElement('div')
+        emoji.textContent = emojis[Math.floor(Math.random() * emojis.length)]
+        emoji.style.position = 'absolute'
+        emoji.style.left = Math.random() * 100 + '%'
+        emoji.style.top = Math.random() * 100 + '%'
+        emoji.style.fontSize = Math.random() * 20 + 20 + 'px'
+        emoji.style.animation = `float ${Math.random() * 3 + 2}s ease-in-out infinite`
+        container.appendChild(emoji)
+      }
+    }
+  }
+
+  showToastNotification() {
+    this.showToast = true
+    this.isToastHiding = false
+    setTimeout(() => {
+      this.hideToast()
+    }, 5000)
+  }
+
+  hideToast() {
+    this.isToastHiding = true
+    setTimeout(() => {
+      this.showToast = false
+      this.isToastHiding = false
+    }, 300)
   }
 }

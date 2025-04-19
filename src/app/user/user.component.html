@@ -5,12 +5,14 @@
         *ngIf="loggedUser.photoURL" 
         [src]="loggedUser.photoURL" 
         class="profile-image"
-        alt="Profile picture">
+        alt="Profile picture"
+        (click)="handleProfileClick()">
       <img 
         *ngIf="!loggedUser.photoURL" 
         src="icon-5359554_640.webp" 
         class="profile-image"
-        alt="Default profile picture">
+        alt="Default profile picture"
+        (click)="handleProfileClick()">
       
       <h2 class="profile-name">{{loggedUser.displayName}}</h2>
       
@@ -175,5 +177,16 @@
       class="save-button">
       Save Changes
     </button>
+  </div>
+
+  <div class="toast-container" *ngIf="showToast">
+    <div class="toast" [class.hide]="isToastHiding">
+      <div class="toast-icon">🔔</div>
+      <div class="toast-content">
+        <div class="toast-title">Important Notice</div>
+        <div class="toast-message">Please login again to apply your changes!</div>
+      </div>
+      <button class="toast-close" (click)="hideToast()">×</button>
+    </div>
   </div>
 </div>
