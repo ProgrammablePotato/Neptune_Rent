@@ -1,21 +1,22 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AuthService } from '../auth.service';
-import { Router } from '@angular/router';
+import { Router, NavigationEnd } from '@angular/router';
 import { BaseService } from '../base.service';
-import { Subscription } from 'rxjs';
+import { Subscription, filter } from 'rxjs';
 
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.css'
 })
-export class NavbarComponent {
+export class NavbarComponent implements OnInit, OnDestroy {
   navbarHidden = false
   loggedUser:any=null
   sub?:Subscription
   points:any = []
   public words:any
   isAdmin:boolean=false
+  private routerSubscription?: Subscription
 
   constructor(private auth:AuthService, private router:Router, public base:BaseService){
     this.setMenuWords()
@@ -31,6 +32,12 @@ export class NavbarComponent {
       }
     )
     this.isSmall()
+
+    this.routerSubscription = this.router.events.pipe(
+      filter(event => event instanceof NavigationEnd)
+    ).subscribe(() => {
+      this.currentPathFix()
+    })
   }
 
   currentPathFix(){
@@ -40,16 +47,17 @@ export class NavbarComponent {
 
   ngOnDestroy(): void {
     this.sub?.unsubscribe()
+    this.routerSubscription?.unsubscribe()
   }
 
   logout(){
-    console.log("Kilép")
     if (this.loggedUser) this.auth.logout()
   }
 
   setCurrentPage(page:string) {
     this.base.currentPage = "/"+page
   }
+
   isCurrent(path: string): string {
     const fullPath = '/' + path
     if (this.base.currentPage === fullPath) {
@@ -57,14 +65,17 @@ export class NavbarComponent {
     }
     return 'inactive-link'
   }
+
   hideShow() {
     var navbar = <HTMLDivElement>document.getElementById('neptune-navbar')
     this.navbarHidden ? navbar.style.display = "none" : navbar.style.display = "block"
   }
+
   hideButton() {
     this.navbarHidden = !this.navbarHidden
     this.hideShow()
   }
+
   isSmall() {
     if (document.body.offsetWidth < 769) {
       this.navbarHidden = true
@@ -74,6 +85,7 @@ export class NavbarComponent {
     }
     this.hideShow()
   }
+
   setMenuWords() {
     this.points = [
       {path:"home",name:"Home"},
@@ -88,6 +100,7 @@ export class NavbarComponent {
       {path:"logout",name:"Log Out"},
     ]
   }
+
   getPoints() {
     return this.points.slice(0,7)
   }

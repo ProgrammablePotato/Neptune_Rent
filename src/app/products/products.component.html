@@ -80,7 +80,7 @@
   </div>
 
   <div class="product-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 max-w-6xl mx-auto">
-    <div *ngFor="let product of filteredProducts" class="product-card rounded-xl p-4">
+    <div *ngFor="let product of filteredProducts" class="product-card fade-in rounded-xl p-4">
       <div class="flex flex-col h-full">
         <div class="relative overflow-hidden rounded-lg mb-4 h-48">
           <div *ngIf="!product.image_url || product.image_url == 'test'" 

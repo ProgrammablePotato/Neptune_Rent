@@ -13,6 +13,8 @@ export class LoginComponent implements OnInit{
   email!:string
   password!:string
   user: any
+  loginError: string = ''
+  successMessage: string = ''
 
   ngOnInit(): void {
     window.scrollTo({ top: 0, behavior: 'smooth' })
@@ -30,10 +32,17 @@ export class LoginComponent implements OnInit{
 
   login() {
     if (!this.email || !this.password) {
-      console.error("Nincs megadva e-mail vagy jelszó!")
+      this.loginError = "Please enter both email and password"
       return;
     }
-    this.auth.loginUser(this.email, this.password)
+    this.loginError = ''
+    this.auth.loginUser(this.email, this.password).catch(error => {
+      if (error.code === 'auth/email-not-verified') {
+        this.loginError = "Please verify your email address first"
+      } else {
+        this.loginError = "Invalid email or password"
+      }
+    })
   }
 
   loginWithGoogle() {
@@ -44,6 +53,15 @@ export class LoginComponent implements OnInit{
 
   forgotPassword(){
     this.auth.forgotPassword(this.email)
+  }
+
+  resendVerificationEmail() {
+    this.auth.resendVerificationEmail()
+    this.successMessage = "Verification email has been sent! Please check your inbox."
+    this.loginError = ''
+    setTimeout(() => {
+      this.successMessage = ''
+    }, 5000)
   }
 
 }

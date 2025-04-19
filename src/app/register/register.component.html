@@ -1,83 +1,94 @@
-<main class="w-full max-w-[100vw] flex mt-36 flex-col gap-10 justify-center items-center py-12">
-    <div class="flex flex-col gap-6">
-        <img class="mx-auto h-10 w-auto" src="logo.png" alt="NeptuneLogo">
+<div class="register-container">
+  <div class="register-box">
+    <img class="logo" src="logo.png" alt="NeptuneLogo">
+    
+    <h1 class="register-title">Register to Neptune Rent!</h1>
+    
+    <p class="register-subtitle">
+      Already have an account? 
+      <a class="login-link" routerLink="/login">Login here!</a>
+    </p>
 
-        <h2 class="logintext text-center text-3xl font-bold tracking-tight">Register to Neptune Rent!</h2>
-        
-        <h3 class="logintext text-center text-lg font-normal tracking-tight">Already have account?
-          <a class="group transition-all duration-300 ease-in-out" routerLink="/login">
-            <span class="bg-left-bottom bg-gradient-to-r from-blue-900 to-gray-950 bg-[length:0%_2px] bg-no-repeat group-hover:bg-[length:100%_2px] transition-all duration-500 ease-out font-bold">
-                Login here!
-            </span>
-          </a>
-        </h3>
-    </div>
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="flex flex-col gap-4">
+      <div *ngIf="registerForm.errors?.['passwordMismatch']" class="error-message">
+        Passwords do not match.
+      </div>
 
-      <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="sm:mx-auto sm:w-full sm:max-w-sm flex flex-col gap-3">
-        <div>
-          <input
-            formControlName="email"
-            placeholder="Email address"
-            id="email"
-            type="email"
-            autocomplete="email"
-            required
-            class="input-filed w-full py-1.5 peer outline-none ring px-4 h-12 ring-blue-500 duration-500 focus:ring-2 relative placeholder:duration-300 placeholder:absolute focus:placeholder:pt-10 text-xs shadow-xl shadow-gray-400/20 focus:shadow-none focus:rounded-md focus:ring-blue-500 placeholder:text-gray-400"
-          />
-          <span
-            class="duration-500 opacity-0 mb-2 peer-focus:opacity-100 text-gray-500 text-xs -translate-y-12 peer-focus:translate-y-0"
-            >Email Address</span
-          >
-          <p *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.touched" class="text-red-500 text-sm">
-            Please enter a valid email address.
-          </p>
-        </div>
-        <div>
-          <input
-            formControlName="password"
-            placeholder="Password"
-            id="password"
-            type="password"
-            autocomplete="password"
-            required
-            class="w-full py-1.5 peer outline-none ring px-4 h-12 border-0 ring-blue-500 duration-500 focus:ring-2 relative placeholder:duration-300 placeholder:absolute focus:placeholder:pt-10 text-xs shadow-xl shadow-gray-400/20 focus:shadow-none focus:rounded-md focus:ring-blue-500 placeholder:text-gray-400"
-          />
-          <span
-            class="duration-500 opacity-0 mb-2 peer-focus:opacity-100 text-gray-500 text-xs -translate-y-12 peer-focus:translate-y-0"
-            >Password</span
-          >
-          <p *ngIf="registerForm.get('password')?.invalid && registerForm.get('password')?.touched" class="text-red-500 text-sm">
-            Password must be at least 6 characters.
-          </p>
-        </div>
+      <div class="input-group">
+        <input
+          formControlName="email"
+          id="email"
+          type="email"
+          autocomplete="email"
+          required
+          class="input-field"
+          placeholder=" "
+        />
+        <label for="email" class="input-label">Email Address</label>
+        <p *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.touched" class="text-red-500 text-sm mt-1">
+          Please enter a valid email address.
+        </p>
+      </div>
 
-        <div>
-          <input
-            formControlName="passwordAgain"
-            placeholder="Password again"
-            id="passwordagain"
-            type="password"
-            autocomplete="password"
-            required
-            class="w-full py-1.5 peer outline-none ring px-4 h-12 border-0 ring-blue-500 duration-500 focus:ring-2 relative placeholder:duration-300 placeholder:absolute focus:placeholder:pt-10 text-xs shadow-xl shadow-gray-400/20 focus:shadow-none focus:rounded-md focus:ring-blue-500 placeholder:text-gray-400"
-          />
-          <span
-            class="duration-500 opacity-0 mb-2 peer-focus:opacity-100 text-gray-500 text-xs -translate-y-12 peer-focus:translate-y-0"
-            >Password again</span
-          >
-          <p *ngIf="registerForm.errors?.['passwordMismatch'] && registerForm.get('passwordAgain')?.touched" class="text-red-500 text-sm">
-            Passwords do not match.
-          </p>
-        </div>
-        <button
-          type="submit"
-          class="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-        >
-          Register
-        </button>
-        <button (click)="loginWithGoogle()" type="button" class="flex items-center justify-center gap-2 w-full rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition">
-          <svg width="24px" height="24px" viewBox="-3 0 262 262" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" stroke="#CCCCCC" stroke-width="25.676"></g><g id="SVGRepo_iconCarrier"><path d="M255.878 133.451c0-10.734-.871-18.567-2.756-26.69H130.55v48.448h71.947c-1.45 12.04-9.283 30.172-26.69 42.356l-.244 1.622 38.755 30.023 2.685.268c24.659-22.774 38.875-56.282 38.875-96.027" fill="#4285F4"></path><path d="M130.55 261.1c35.248 0 64.839-11.605 86.453-31.622l-41.196-31.913c-11.024 7.688-25.82 13.055-45.257 13.055-34.523 0-63.824-22.773-74.269-54.25l-1.531.13-40.298 31.187-.527 1.465C35.393 231.798 79.49 261.1 130.55 261.1" fill="#34A853"></path><path d="M56.281 156.37c-2.756-8.123-4.351-16.827-4.351-25.82 0-8.994 1.595-17.697 4.206-25.82l-.073-1.73L15.26 71.312l-1.335.635C5.077 89.644 0 109.517 0 130.55s5.077 40.905 13.925 58.602l42.356-32.782" fill="#FBBC05"></path><path d="M130.55 50.479c24.514 0 41.05 10.589 50.479 19.438l36.844-35.974C195.245 12.91 165.798 0 130.55 0 79.49 0 35.393 29.301 13.925 71.947l42.211 32.783c10.59-31.477 39.891-54.251 74.414-54.251" fill="#EB4335"></path></g></svg>
-          Continue with Google
+      <div class="input-group">
+        <input
+          formControlName="password"
+          id="password"
+          type="password"
+          autocomplete="new-password"
+          required
+          class="input-field"
+          placeholder=" "
+        />
+        <label for="password" class="input-label">Password</label>
+        <p *ngIf="registerForm.get('password')?.invalid && registerForm.get('password')?.touched" class="text-red-500 text-sm mt-1">
+          Password must be at least 6 characters.
+        </p>
+      </div>
+
+      <div class="input-group">
+        <input
+          formControlName="passwordAgain"
+          id="passwordagain"
+          type="password"
+          autocomplete="new-password"
+          required
+          class="input-field"
+          placeholder=" "
+        />
+        <label for="passwordagain" class="input-label">Confirm Password</label>
+      </div>
+
+      <button
+        type="submit"
+        class="register-button"
+        [disabled]="registerForm.invalid"
+      >
+        Register
       </button>
-      </form>
-    </main>
+
+      <div class="relative">
+        <div class="absolute inset-0 flex items-center">
+          <div class="w-full border-t border-gray-700"></div>
+        </div>
+        <div class="relative flex justify-center text-sm">
+          <span class="px-2 bg-gray-900 text-gray-400">Or continue with</span>
+        </div>
+      </div>
+
+      <button 
+        (click)="loginWithGoogle()" 
+        type="button" 
+        class="google-button"
+      >
+        <svg width="24px" height="24px" viewBox="-3 0 262 262" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid">
+          <path d="M255.878 133.451c0-10.734-.871-18.567-2.756-26.69H130.55v48.448h71.947c-1.45 12.04-9.283 30.172-26.69 42.356l-.244 1.622 38.755 30.023 2.685.268c24.659-22.774 38.875-56.282 38.875-96.027" fill="#4285F4"></path>
+          <path d="M130.55 261.1c35.248 0 64.839-11.605 86.453-31.622l-41.196-31.913c-11.024 7.688-25.82 13.055-45.257 13.055-34.523 0-63.824-22.773-74.269-54.25l-1.531.13-40.298 31.187-.527 1.465C35.393 231.798 79.49 261.1 130.55 261.1" fill="#34A853"></path>
+          <path d="M56.281 156.37c-2.756-8.123-4.351-16.827-4.351-25.82 0-8.994 1.595-17.697 4.206-25.82l-.073-1.73L15.26 71.312l-1.335.635C5.077 89.644 0 109.517 0 130.55s5.077 40.905 13.925 58.602l42.356-32.782" fill="#FBBC05"></path>
+          <path d="M130.55 50.479c24.514 0 41.05 10.589 50.479 19.438l36.844-35.974C195.245 12.91 165.798 0 130.55 0 79.49 0 35.393 29.301 13.925 71.947l42.211 32.783c10.59-31.477 39.891-54.251 74.414-54.251" fill="#EB4335"></path>
+        </svg>
+        Continue with Google
+      </button>
+    </form>
+  </div>
+</div>

@@ -96,7 +96,7 @@ export class AuthService {
         return userCredential
       } else {
         this.logout()
-        return alert('Email not verified. Please verify your email before logging in.')
+        throw { code: 'auth/email-not-verified' }
       }
     })
   }
@@ -188,5 +188,13 @@ export class AuthService {
 
   deleteSelfUser() {
     this.auth.currentUser.then(user => user?.delete())
+  }
+
+  resendVerificationEmail() {
+    this.auth.currentUser.then(user => {
+      if (user) {
+        user.sendEmailVerification()
+      }
+    })
   }
 }
