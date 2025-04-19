@@ -37,12 +37,23 @@ export class ProductDetailsComponent implements OnInit {
 
     ngOnInit(): void {
       this.categoryChecker()
+      this.idGetterFix()
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+    }
+
+    idGetterFix(){
       setTimeout(() => {
         if (this.auth.loggedUser?.uid) {
           this.getUserId(this.auth.loggedUser.uid)
         }
-      }, 200)
-      window.scrollTo({ top: 0, behavior: 'smooth' })
+      }, 10)
+      const checkUserInterval = setInterval(() => {
+        if (this.auth.loggedUser?.uid) {
+          clearInterval(checkUserInterval)
+          this.loggedUser = this.auth.loggedUser
+          this.getUserId(this.auth.loggedUser.uid)
+        }
+      }, 10)
     }
 
     categoryChecker(){

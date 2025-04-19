@@ -29,13 +29,17 @@ export class NavbarComponent {
           this.isAdmin = isAdmin
         })
       }
-    );
+    )
     this.isSmall()
+  }
+
+  currentPathFix(){
+    const currentPath = this.router.url.startsWith('/') ? this.router.url : '/' + this.router.url
+    this.base.currentPage = currentPath
   }
 
   ngOnDestroy(): void {
     this.sub?.unsubscribe()
-
   }
 
   logout(){
@@ -46,13 +50,12 @@ export class NavbarComponent {
   setCurrentPage(page:string) {
     this.base.currentPage = "/"+page
   }
-  isCurrent(page:string) {
-    if (this.base.currentPage === "/"+page) {
-      if (page === "admin") {
-        return 'active-admin'
-      }
-      return 'active-link'
-    } return 'inactive-link'
+  isCurrent(path: string): string {
+    const fullPath = '/' + path
+    if (this.base.currentPage === fullPath) {
+      return path === 'admin' ? 'active-admin' : 'active-link'
+    }
+    return 'inactive-link'
   }
   hideShow() {
     var navbar = <HTMLDivElement>document.getElementById('neptune-navbar')
