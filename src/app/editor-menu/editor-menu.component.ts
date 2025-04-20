@@ -66,26 +66,6 @@ export class EditorMenuComponent implements OnInit {
     }
   }
 
-  addTestProduct() {
-    let product = {
-      name: "Test",
-      category: "pcs",
-      brand: "UwU",
-      price: 20,
-      description: "Testing",
-      image_url: "no",
-      stock: 20,
-      id : -1
-    }
-    console.log(product)
-    this.base.addProduct(product).subscribe(
-      {
-        next: () => alert("Test product added!"),
-        error: () => console.log("Failed to create product!")
-      }
-    )
-  }
-
   getImagePath(file:string) {
     return "uploads/"+file
   }
