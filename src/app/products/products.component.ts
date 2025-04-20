@@ -169,4 +169,8 @@ export class ProductsComponent implements OnInit {
     
     this.activeNews = this.categoryNews[this.currentNews]
   }
+
+  openNews(url: string) {
+    window.open(url, '_blank')
+  }
 }

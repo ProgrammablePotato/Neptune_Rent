@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { SearchService } from '../search.service';
 import { AuthService } from '../auth.service';
 import { CartService } from '../cart.service';
+import { CookiesService } from '../cookies.service';
 
 @Component({
   selector: 'app-home',
@@ -35,7 +36,9 @@ export class HomeComponent implements OnInit {
   sqlUserId: string = ''
   errorMessage: string = ''
 
-  constructor(private news:NewsService, private base:BaseService, private router:Router, private search:SearchService, private auth:AuthService, private cart:CartService){
+  recentProducts: any[] = [];
+
+  constructor(private news:NewsService, private base:BaseService, private router:Router, private search:SearchService, private auth:AuthService, private cart:CartService, private cookies: CookiesService){
     this.initCategoryCards()
     this.auth.getLoggedUser().subscribe((user) => {
       this.loggedUser = user
@@ -48,6 +51,7 @@ export class HomeComponent implements OnInit {
     this.getProducts()
     this.cartUserIdFixer()
     this.showError()
+    this.loadRecentProducts()
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
@@ -146,5 +150,13 @@ export class HomeComponent implements OnInit {
 
   getRoute(cat:string) {
     return "../products/"+(cat.toLowerCase())
+  }
+
+  async loadRecentProducts() {
+    const recentProductIds = this.cookies.getRecentProducts()
+    const allProducts = await this.base.getProducts()
+    this.recentProducts = recentProductIds
+      .map(id => allProducts.find(product => product.id.toString() === id))
+      .filter(product => product !== undefined);
   }
 }

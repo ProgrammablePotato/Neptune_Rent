@@ -1,7 +1,6 @@
 import { AuthService } from './auth.service';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { SortPipe } from './sort.pipe';
@@ -55,7 +54,7 @@ import { ProductsComponent } from './products/products.component';
     AppRoutingModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ],
   providers: [provideHttpClient(),AuthService, CookieService],
   bootstrap: [AppComponent]

@@ -6,6 +6,7 @@ import { CartService } from '../cart.service';
 import { AuthService } from '../auth.service';
 import { RentService } from '../rent.service';
 import { HttpClient } from '@angular/common/http';
+import { CookiesService } from '../cookies.service';
 
 @Component({
   selector: 'app-product-details',
@@ -28,19 +29,17 @@ export class ProductDetailsComponent implements OnInit {
   loggedUser: any = null
   showRentalModal: boolean = false
   today: string = new Date().toISOString().split('T')[0]
-  startDate: string = this.today
-  endDate: string = new Date(new Date().getTime() + 30 * 24 * 60 * 60 * 1000).toISOString().split('T')[0]
+  startDate: string = ''
+  endDate: string = ''
   rentalPrice: number = 0
   deposit: number = 0
   totalPrice: number = 0
 
   constructor(
     private activeRouter: ActivatedRoute, private http:HttpClient, private base: BaseService, 
-    private cart: CartService, private auth:AuthService, private rentservice:RentService) {
-    const today = new Date()
-    const nextMonth = new Date(today.getTime() + 30 * 24 * 60 * 60 * 1000)
-    this.endDate = nextMonth.toISOString().split('T')[0]
-  }
+    private cart: CartService, private auth:AuthService, private rentservice:RentService,
+    private cookies: CookiesService
+  ) {}
 
     private userApi = 'http://127.0.0.1:3000/users/firebase/'
     userId : any = ''
@@ -50,6 +49,16 @@ export class ProductDetailsComponent implements OnInit {
       this.categoryChecker()
       this.idGetterFix()
       window.scrollTo({ top: 0, behavior: 'smooth' })
+      this.activeRouter.params.subscribe(params => {
+        const category = params['category']
+        const id = +params['id']
+        this.base.getProductByCategoryAndId(category, id).then(product => {
+          this.product = product
+          if (product) {
+            this.cookies.saveRecentProduct(product.id.toString())
+          }
+        })
+      })
     }
 
     idGetterFix(){
@@ -96,10 +105,13 @@ export class ProductDetailsComponent implements OnInit {
   loadReviews() {
     this.cart.getReviewsByProductId(this.product?.id).subscribe({
       next: (res) => {
-        this.reviews = res as any[]
-        console.log("reviews loaded")
+        this.reviews = Array.isArray(res) ? res : []
+        console.log("reviews loaded:", this.reviews)
       },
-      error: (err) => console.error(err)
+      error: (err) => {
+        console.error("Error loading reviews:", err)
+        this.reviews = []
+      }
     })
   }
 
@@ -178,29 +190,54 @@ export class ProductDetailsComponent implements OnInit {
     })
   }
 
+  onDateChange() {
+    if (this.startDate) {
+      const start = new Date(this.startDate)
+      const today = new Date()
+      today.setHours(0, 0, 0, 0)
+      
+      if (start < today) {
+        this.startDate = ''
+        return
+      }
+    }
+    if (this.startDate && this.endDate) {
+      const start = new Date(this.startDate)
+      const end = new Date(this.endDate)
+      
+      if (end < start) {
+        this.endDate = ''
+        return
+      }
+    }
+    
+    this.calculateRentalPrice()
+  }
+
   calculateRentalPrice() {
+    if (!this.product || !this.startDate || !this.endDate) {
+      this.rentalPrice = 0
+      this.deposit = 0
+      this.totalPrice = 0
+      return
+    }
+    
     const start = new Date(this.startDate)
     const end = new Date(this.endDate)
     const days = Math.ceil((end.getTime() - start.getTime()) / (1000 * 60 * 60 * 24))
+    
     this.rentalPrice = Math.round((this.product.price * 0.1) * days)
     this.deposit = this.product.price
     this.totalPrice = this.rentalPrice + this.deposit
   }
 
-  onDateChange() {
-    if (this.startDate && this.endDate) {
-      const start = new Date(this.startDate)
-      const end = new Date(this.endDate)
-      
-      if (start > end) {
-        this.endDate = new Date(start.setMonth(start.getMonth() + 1)).toISOString().split('T')[0]
-      }
-      this.calculateRentalPrice()
-    }
+  isRentableCategory(): boolean {
+    const rentableCategories = ['pcs', 'servers', 'laptops']
+    return this.product && rentableCategories.includes(this.product.category)
   }
 
   rent() {
-    if (!this.userId || !this.product) return
+    if (!this.userId || !this.product || !this.isRentableCategory()) return
     
     const rentalData = {
       user_id: this.userId,
@@ -208,11 +245,6 @@ export class ProductDetailsComponent implements OnInit {
       start_date: new Date(this.startDate),
       expires: new Date(this.endDate),
       price: this.totalPrice
-    }
-
-    if (!rentalData.price) {
-      console.error('Missing price value')
-      return
     }
 
     this.rentservice.rentProduct(rentalData).subscribe({
