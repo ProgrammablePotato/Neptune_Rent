@@ -32,6 +32,7 @@ const routes: Routes = [
   ]},
   {path: 'producteditor/:category/:id', component: ProductEditorComponent, canActivate:[adminGuard]},
   {path: 'products/:category', component: ProductsComponent, pathMatch:'prefix'},
+  {path: 'products/:category/:id', component: ProductDetailsComponent},
   {path: 'aboutus', component: AboutUsComponent},
   {path: 'details/:category/:id', component: ProductDetailsComponent},
   {path: 'verifymail', component:VerifymailComponent},
