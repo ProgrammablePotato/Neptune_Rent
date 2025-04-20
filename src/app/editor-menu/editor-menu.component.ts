@@ -25,7 +25,6 @@ export class EditorMenuComponent implements OnInit {
   getProducts() {
     this.base.getProducts().then((products:any) => {
       this.products = products
-      console.log("Editor products",this.products)
     })
   }
 

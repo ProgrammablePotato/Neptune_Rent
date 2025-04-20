@@ -34,6 +34,13 @@ export class ProductDetailsComponent implements OnInit {
   rentalPrice: number = 0
   deposit: number = 0
   totalPrice: number = 0
+  showNotification = false
+  notificationType: 'error' | 'success' = 'error'
+  notificationMessage = ''
+  isNotificationHiding = false
+  showQuantityModal = false
+  selectedQuantity = 1
+  totalCartPrice = 0
 
   constructor(
     private activeRouter: ActivatedRoute, private http:HttpClient, private base: BaseService, 
@@ -116,22 +123,9 @@ export class ProductDetailsComponent implements OnInit {
   }
 
   addToCart() {
-    this.cart.buyProduct(this.product.id, { quantity: this.quantity }).subscribe({
-      next: (response) => {
-        console.log('Item added to cart:', response)
-        this.addSuccess = true
-        setTimeout(() => {
-          this.addSuccess = false
-        }, 3000)
-      },
-      error: (error) => {
-        console.error('Error while adding item to cart:', error)
-        this.addError = true
-        setTimeout(() => {
-          this.addError = false
-        }, 3000)
-      }
-    })
+    this.showQuantityModal = true;
+    this.selectedQuantity = 1;
+    this.calculateTotalPrice();
   }
 
   submitReview() {
@@ -236,32 +230,68 @@ export class ProductDetailsComponent implements OnInit {
     return this.product && rentableCategories.includes(this.product.category)
   }
 
+  showNotificationMessage(message: string, type: 'error' | 'success' = 'error') {
+    this.notificationMessage = message
+    this.notificationType = type
+    this.showNotification = true
+    this.isNotificationHiding = false
+
+    setTimeout(() => {
+      this.hideNotification()
+    }, 3000)
+  }
+
+  hideNotification() {
+    this.isNotificationHiding = true
+    setTimeout(() => {
+      this.showNotification = false
+      this.isNotificationHiding = false
+    }, 300)
+  }
+
   rent() {
-    if (!this.userId || !this.product || !this.isRentableCategory()) return
+    if (!this.userId || !this.product || !this.isRentableCategory()) {
+      this.showNotificationMessage("You must be logged in to rent a product!")
+      return
+    }
+
+    if (!this.startDate || !this.endDate) {
+      this.showNotificationMessage("Please select both start and end dates!")
+      return
+    }
+
+    const start = new Date(this.startDate)
+    const end = new Date(this.endDate)
+    const today = new Date()
+    today.setHours(0, 0, 0, 0)
+
+    if (start < today) {
+      this.showNotificationMessage("Start date cannot be in the past!")
+      return
+    }
+
+    if (end <= start) {
+      this.showNotificationMessage("End date must be after start date!")
+      return
+    }
     
     const rentalData = {
       user_id: this.userId,
       product_id: this.product.id,
-      start_date: new Date(this.startDate),
-      expires: new Date(this.endDate),
+      start_date: start,
+      expires: end,
       price: this.totalPrice
     }
 
     this.rentservice.rentProduct(rentalData).subscribe({
       next: (res) => {
         console.log("Successful rent:", res)
-        this.successMessage = true
+        this.showNotificationMessage("Rental successful!", 'success')
         this.showRentalModal = false
-        setTimeout(() => {
-          this.successMessage = false
-        }, 4000)
       },
       error: (err) => {
         console.error("Error:", err)
-        this.addError = true
-        setTimeout(() => {
-          this.addError = false
-        }, 3000)
+        this.showNotificationMessage("Error occurred while processing your rental request!")
       }
     })
   }
@@ -269,5 +299,37 @@ export class ProductDetailsComponent implements OnInit {
   openRentalModal() {
     this.showRentalModal = true
     this.calculateRentalPrice()
+  }
+
+  openQuantityModal() {
+    this.showQuantityModal = true
+    this.calculateTotalPrice()
+  }
+
+  closeQuantityModal() {
+    this.showQuantityModal = false
+    this.selectedQuantity = 1
+  }
+
+  calculateTotalPrice() {
+    this.totalCartPrice = this.product.price * this.selectedQuantity
+  }
+
+  onQuantityChange() {
+    this.calculateTotalPrice()
+  }
+
+  addToCartWithQuantity() {
+    this.cart.buyProduct(this.product.id, { quantity: this.selectedQuantity }).subscribe({
+      next: (response) => {
+        console.log('Item added to cart:', response)
+        this.showNotificationMessage("Item added to cart successfully!", 'success')
+        this.closeQuantityModal()
+      },
+      error: (error) => {
+        console.error('Error while adding item to cart:', error)
+        this.showNotificationMessage("Error occurred while adding item to cart!")
+      }
+    })
   }
 }

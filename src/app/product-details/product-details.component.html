@@ -1,4 +1,10 @@
 <div class="min-h-screen bg-gray-900 text-white">
+  <div *ngIf="showNotification" class="notification" [class.error]="notificationType === 'error'" [class.success]="notificationType === 'success'" [class.hide]="isNotificationHiding">
+    <div class="notification-content">
+      <div class="notification-message">{{ notificationMessage }}</div>
+    </div>
+  </div>
+
   <div *ngIf="loading" class="flex justify-center items-center min-h-screen">
     <div class="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-blue-500"></div>
   </div>
@@ -72,6 +78,45 @@
                   class="flex-1 bg-gray-600 hover:bg-gray-700 text-white font-bold py-3 px-6 rounded-lg transition-colors">
             Add to Cart
           </button>
+        </div>
+
+        <!-- Quantity Selection Modal -->
+        <div *ngIf="showQuantityModal" class="modal-overlay">
+          <div class="modal-content">
+            <h2 class="modal-title">Select Quantity</h2>
+            <input type="number" 
+                   [(ngModel)]="selectedQuantity" 
+                   (ngModelChange)="onQuantityChange()"
+                   min="1" 
+                   max="99"
+                   class="quantity-input">
+            
+            <div class="price-summary">
+              <div class="price-row">
+                <span>Unit Price:</span>
+                <span>${{ product.price | number:'1.2-2' }}</span>
+              </div>
+              <div class="price-row">
+                <span>Quantity:</span>
+                <span>{{ selectedQuantity }}</span>
+              </div>
+              <div class="price-row total-row">
+                <span>Total:</span>
+                <span>${{ totalCartPrice | number:'1.2-2' }}</span>
+              </div>
+            </div>
+
+            <div class="modal-buttons">
+              <button (click)="closeQuantityModal()" 
+                      class="modal-button cancel-button">
+                Cancel
+              </button>
+              <button (click)="addToCartWithQuantity()" 
+                      class="modal-button confirm-button">
+                Add to Cart
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </div>

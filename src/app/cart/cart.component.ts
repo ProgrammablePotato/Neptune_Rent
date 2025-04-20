@@ -46,6 +46,6 @@ export class CartComponent implements OnInit {
     this.successMessage = true
     setTimeout(() => {
       this.successMessage = false
-    }, 3000)
+    }, 6000)
   }
 }
