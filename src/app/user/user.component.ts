@@ -9,6 +9,7 @@ import { Validators } from '@angular/forms';
 import { RentService } from '../rent.service';
 import { BehaviorSubject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
+import { CouponService } from '../coupon.service';
 
 @Component({
   selector: 'app-user',
@@ -46,14 +47,25 @@ export class UserComponent implements OnInit {
 
   today = new Date()
 
+  usedCoupons: any[] = []
+
   ngOnInit() {
     window.scrollTo({ top: 0, behavior: 'smooth' })
     this.getAdmin()
-    this.getLoggedUser()
+    setTimeout(() => {
+      this.getLoggedUser()
+    }, 10)
     this.countryList()
   }
 
-  constructor(private auth:AuthService, private http:HttpClient, private router:Router, private base:BaseService, private rentService: RentService){
+  constructor(
+    private auth:AuthService, 
+    private http:HttpClient, 
+    private router:Router, 
+    private base:BaseService, 
+    private rentService: RentService,
+    private couponService: CouponService
+  ) {
     this.countryList()
     this.getCountry(this.country)
   }
@@ -79,7 +91,10 @@ export class UserComponent implements OnInit {
       next: (res) => {
         this.loggedUser = res
         this.getUserDetails(res.uid)
-        this.getUserId(res.uid)
+        setTimeout(() => {
+          this.getUserId(res.uid)
+          this.getUsedCoupons()
+        }, 10)
       },
       error: (error) => {
         console.error("Error while getting the user's details!", error.message)
@@ -388,5 +403,34 @@ export class UserComponent implements OnInit {
     } catch (error) {
       console.error('Error updating rental:', error)
     }
+  }
+
+  getUsedCoupons() {
+    if (!this.userId) {
+      console.log('No user ID available yet')
+      return
+    }
+
+    this.couponService.getUsedCoupons(parseInt(this.userId)).subscribe({
+      next: (coupons: any) => {
+        this.usedCoupons = coupons || []
+      },
+      error: (error) => {
+        console.error('Error fetching used coupons:', error)
+        this.usedCoupons = []
+      }
+    })
+  }
+
+  formatDiscount(discount: number): string {
+    return `${discount}%`
+  }
+
+  formatCouponDate(date: string): string {
+    return new Date(date).toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric'
+    })
   }
 }

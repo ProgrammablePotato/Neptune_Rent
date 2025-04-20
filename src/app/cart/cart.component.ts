@@ -1,6 +1,8 @@
 import { Component, OnInit} from '@angular/core';
 import { CartService } from '../cart.service';
 import { ActivatedRoute } from '@angular/router';
+import { CouponService } from '../coupon.service';
+
 @Component({
   selector: 'app-cart',
   templateUrl: './cart.component.html',
@@ -11,8 +13,15 @@ export class CartComponent implements OnInit {
   cartItems: any[] = []
   totalPrice: number = 0
   successMessage: boolean = false
+  couponCode: string = ''
+  appliedCoupon: any = null
+  couponError: string = ''
 
-  constructor(private cartService: CartService, private activeRouter: ActivatedRoute) {}
+  constructor(
+    private cartService: CartService, 
+    private activeRouter: ActivatedRoute,
+    private couponService: CouponService
+  ) {}
 
   ngOnInit(): void {
     this.cartId = Number(this.activeRouter.snapshot.paramMap.get('id'))
@@ -30,9 +39,47 @@ export class CartComponent implements OnInit {
   }
 
   calculateTotal(): void {
+    this.totalPrice = 0
     this.cartItems.forEach((item:any) => {
       this.totalPrice += item.price * item.quantity
     })
+  }
+
+  calculateDiscount(): number {
+    if (!this.appliedCoupon) return 0
+    return (this.totalPrice * this.appliedCoupon.discount) / 100
+  }
+
+  calculateFinalPrice(): number {
+    return this.totalPrice - this.calculateDiscount()
+  }
+
+  formatDiscount(discount: number): string {
+    return `${discount}%`
+  }
+
+  applyCoupon(): void {
+    if (!this.couponCode) {
+      this.couponError = 'Please enter a coupon code'
+      return
+    }
+
+    this.couponService.validateCoupon(this.couponCode, this.cartId).subscribe({
+      next: (coupon) => {
+        this.appliedCoupon = coupon
+        this.couponError = ''
+        this.couponCode = ''
+      },
+      error: (error) => {
+        this.couponError = error.error.error || 'Invalid coupon code'
+        this.appliedCoupon = null
+      }
+    })
+  }
+
+  removeCoupon(): void {
+    this.appliedCoupon = null
+    this.couponError = ''
   }
 
   removeFromCart(cartItemId: number): void {

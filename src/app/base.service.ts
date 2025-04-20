@@ -100,4 +100,11 @@ export class BaseService {
   getImages(){
     return this.http.get(`${this.apiUrl}/upload/`)
   }
+
+  getImageUrl(filename: string): string {
+    if (!filename || filename === 'no') {
+      return `${this.apiUrl}/uploads/cat.jfif`
+    }
+    return `${this.apiUrl}/uploads/${filename}`
+  }
 }

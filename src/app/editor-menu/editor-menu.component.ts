@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { BaseService } from '../base.service';
-import { ActivatedRoute } from '@angular/router';
 import { SearchService } from '../search.service';
 
 @Component({
@@ -12,7 +11,7 @@ export class EditorMenuComponent implements OnInit {
   products:any[] = []
   filteredProducts:any = []
   searchTerm: string = ''
-  public id = 0
+  id = 0
 
   ngOnInit(): void {
     window.scrollTo({ top: 0, behavior: 'smooth' })

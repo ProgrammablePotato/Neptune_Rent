@@ -195,6 +195,26 @@
     </div>
   </div>
 
+  <div class="form-section" *ngIf="usedCoupons.length > 0">
+    <h3 class="section-title">Used Coupons</h3>
+    <div class="rentals-grid">
+      <div *ngFor="let coupon of usedCoupons" class="rental-card">
+        <div class="rental-header">
+          <h4 class="rental-title">Code: {{coupon.code}}</h4>
+          <span class="rental-status">
+            Used: {{formatCouponDate(coupon.used_at)}}
+          </span>
+        </div>
+        <div class="rental-details">
+          <p class="rental-price">Discount: {{formatDiscount(coupon.discount)}}</p>
+          <p class="rental-dates">
+            Expires: {{formatCouponDate(coupon.expiry_date)}}
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <div class="toast-container" *ngIf="showToast">
     <div class="toast" [class.hide]="isToastHiding">
       <div class="toast-icon">🔔</div>

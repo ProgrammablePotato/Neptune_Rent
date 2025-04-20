@@ -17,8 +17,49 @@
     </div>
 
     <div class="cart-summary">
+      <div class="coupon-section">
+        <div class="coupon-input">
+          <input 
+            type="text" 
+            [(ngModel)]="couponCode" 
+            placeholder="Enter coupon code"
+            class="coupon-field"
+            (keyup.enter)="applyCoupon()">
+          <button 
+            (click)="applyCoupon()"
+            class="apply-coupon-button">
+            <span>Apply</span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M5 12h14"></path>
+              <path d="m12 5 7 7-7 7"></path>
+            </svg>
+          </button>
+        </div>
+        <div *ngIf="appliedCoupon" class="applied-coupon">
+          <span>Applied: {{appliedCoupon.code}} ({{formatDiscount(appliedCoupon.discount)}})</span>
+          <button 
+            (click)="removeCoupon()"
+            class="remove-coupon-button"
+            title="Remove coupon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M18 6 6 18"></path>
+              <path d="m6 6 12 12"></path>
+            </svg>
+          </button>
+        </div>
+        <div *ngIf="couponError" class="coupon-error">
+          {{couponError}}
+        </div>
+      </div>
+
       <div class="total-price">
-        Total: <span>{{ totalPrice | currency:'EUR' }}</span>
+        Subtotal: <span>{{ totalPrice | currency:'EUR' }}</span>
+      </div>
+      <div *ngIf="appliedCoupon" class="discount-price">
+        Discount: <span>-{{ calculateDiscount() | currency:'EUR' }}</span>
+      </div>
+      <div class="final-price">
+        Total: <span>{{ calculateFinalPrice() | currency:'EUR' }}</span>
       </div>
       <button
         (click)="checkout()"

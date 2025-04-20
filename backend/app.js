@@ -8,6 +8,7 @@ const cors = require('cors')
 const bodyParser = require('body-parser')
 const cookieParser = require('cookie-parser')
 const imagesRouter = require('./routes/image')
+const couponsRouter = require('./routes/coupon')
 const path = require('path')
 require('dotenv').config()
 
@@ -35,6 +36,8 @@ app.use('/buy', buyRouter)
 app.use('/upload', imagesRouter)
 
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')))
+
+app.use('/coupons', couponsRouter)
 
 app.use((req, res, next) => {
     res.status(404).json({ message: "Neptune Rent API v0.5.1" })
